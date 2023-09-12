@@ -1,4 +1,4 @@
-# Фронтенд Шаблон v1.0 (Заменить на название проекта)
+# Лаваш Центр
 
 ## Оглавление
 
@@ -8,25 +8,13 @@
 
 ## Основное
 
-**Верстка** - [html.xpager.ru/xpage/](#)
+**Макет** - [Cсылка на макет в Фигме](https://www.figma.com/file/gShLsmjBSoFH8d5Cud05eq/%D0%BB%D0%B0%D0%B2%D0%B0%D1%88?type=design&node-id=0-1&mode=design)
 
-**Макет** - [Cсылка на макет в Фигме](#)
-
-**Продакшн** - [Ссылка на запущенный сайт](#)
-
-**Gitlab** - [Ссылка на Gitlab](https://gitlab.in-progress.ru/frontend/template)
+**Продакшн** - [Ссылка на запущенный сайт](https://vh74715.rdock.ru/)
 
 #### Краткое описание:
 
-    1. Основной шаблон для верстки сайтов и веб-приложений с использованием Vite, Gulp v4 и Vue 3.
-
-**Верстку выполнил** - ...
-
-**Фронт выполнил** - ...
-
-**Проектный менеджер** - ...
-
-**Бэкенд разработчик** - ...
+    1. Сайт по оптовой и розничной продаже хлебобулочной продукции, а также управление бизнес-процессами
 
 ## Техническая документация шаблона
 
@@ -36,7 +24,7 @@
 использованием [Vite](https://vitejs.dev/), [Gulp v4](https://gulpjs.com/) и [Vue 3](https://v3.vuejs.org/).
 
 В основе шаблона используются следующие
-технологии: [Pug](https://pugjs.org/api/getting-started.html), [Sass](https://sass-lang.com/), [TypeScript](https://www.typescriptlang.org/).
+технологии: [Sass](https://sass-lang.com/), [TypeScript](https://www.typescriptlang.org/).
 
 ## Требования
 
@@ -69,7 +57,7 @@ yarn build
 yarn preview
 ```
 
-Деплой проекта в html.xpager.ru (Не работает. Ждем переноса на новый сервер)
+Деплой проекта
 
 ```
 yarn deploy
@@ -195,9 +183,8 @@ There is a much easier way:
 
 1. [Vite](https://yarn.pm/vite)
 2. [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)
-3. Vite-plugin-pug (Находится внутри проекта)
-4. [vite-plugin-eslint](https://www.npmjs.com/package/vite-plugin-eslint)
-5. [vite-plugin-stylelint](https://www.npmjs.com/package/vite-plugin-stylelint)
+3. [vite-plugin-eslint](https://www.npmjs.com/package/vite-plugin-eslint)
+4. [vite-plugin-stylelint](https://www.npmjs.com/package/vite-plugin-stylelint)
 
 ## Плагины для Gulp
 
@@ -235,10 +222,9 @@ There is a much easier way:
 ## Другие плагины сборки
 
 1. [prettier](https://yarn.pm/prettier)
-2. [pug](https://yarn.pm/pug)
-3. [typescript](https://yarn.pm/typescript)
-4. [vue-tsc](https://yarn.pm/vue-tsc)
-5. [ssh2-sftp-client](https://yarn.pm/ssh2-sftp-client)
+2. [typescript](https://yarn.pm/typescript)
+3. [vue-tsc](https://yarn.pm/vue-tsc)
+4. [ssh2-sftp-client](https://yarn.pm/ssh2-sftp-client)
 
 ## Плагины и зависимости для Vue
 
@@ -256,11 +242,9 @@ There is a much easier way:
 
 ## Зависимости
 
-1. [swiper](https://yarn.pm/swiper)
-2. [maska](https://yarn.pm/maska)
-3. [axios](https://yarn.pm/axios)
-4. [dialog-polyfill](https://yarn.pm/dialog-polyfill)
-5. [lodash](https://yarn.pm/lodash)
-6. [gsap](https://yarn.pm/gsap)
-7. [@popperjs/core](https://yarn.pm/@popperjs/core)
-8. [photoswipe](https://yarn.pm/photoswipe)
+1. [maska](https://yarn.pm/maska)
+2. [axios](https://yarn.pm/axios)
+3. [dialog-polyfill](https://yarn.pm/dialog-polyfill)
+4. [lodash](https://yarn.pm/lodash)
+5. [gsap](https://yarn.pm/gsap)
+6. [@popperjs/core](https://yarn.pm/@popperjs/core)

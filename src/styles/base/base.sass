@@ -1,0 +1,66 @@
+@use "sass:math"
+
+html
+	scroll-behavior: smooth
+	font-size: calc(16 / 1920) * 100vw
+
+	+media('max', 'pc')
+		font-size: calc(16 / 1600) * 100vw
+
+	+media('max', 'laptop-xxl')
+		font-size: calc(16 / 1440) * 100vw
+
+	+media('max', 'laptop')
+		font-size: calc(16 / 1024) * 100vw
+
+	+media('max', 'tablet')
+		font-size: calc(16 / 768) * 100vw
+
+	+media('max', 'mobile-xl')
+		font-size: calc(16 / 375) * 100vw
+
+	+media-until(320)
+		font-size: calc(16 / 320) * 100vw
+
+
+html,
+body
+	height: 100%
+
+body
+	min-width: $minWidth + px
+	margin: 0 auto
+
+	font-family: var(--font-primary)
+	color: var(--color-black)
+
+	background-color: var(--color-white)
+	@include Vscroll
+
+	&.modal-lock
+		overflow: hidden
+
+		padding-right: var(--scrollbar-compensate, 0px)
+
+*::selection
+	color: var(--color-neutral-900)
+	background-color: var(--color-primary-300)
+
+	-webkit-tap-highlight-color: transparent
+
+.scroll-lock
+	overflow: hidden
+
+/* Оболочка */
+.layout
+	display: flex
+	flex-direction: column
+	min-height: 100%
+
+.wrapper
+	@if ($maxWidthContainer > 0)
+		max-width: rem($maxWidthContainer)
+		margin: 0 auto
+
+	@if ($containerPadding > 0)
+		padding: 0 rem(math.div($containerPadding, 2))

@@ -1,0 +1,46 @@
+.link
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	gap: rem(8)
+
+	font-size: inherit
+	line-height: inherit
+	font-weight: inherit
+	color: var(--color-primary-500)
+
+	text-decoration: none
+	cursor: pointer
+	transition: color .3s ease
+
+	&:focus
+		outline: none
+
+	&:focus-visible
+		outline: 2px solid var(--color-primary-300)
+		outline-offset: rem(2)
+
+	+hover
+		color: var(--color-primary-400)
+
+	&:active
+		color: var(--color-primary-600)
+
+	&:disabled,
+	&.disabled
+		color: var(--color-neutral-500)
+		pointer-events: none
+
+		&:focus-visible
+			outline: none
+
+	&--underlined
+		text-decoration: underline
+		text-underline-offset: rem(2)
+
+		+hover
+			text-decoration: none
+
+	&__icon
+		display: inline-block
+		size: rem(18)

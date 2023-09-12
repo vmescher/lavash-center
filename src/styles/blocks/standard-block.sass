@@ -1,0 +1,128 @@
+.standard-block
+	> .wrapper
+		max-width: rem(1440)
+
+	&__banner
+		max-width: rem(1140)
+
+		&:not(:last-child)
+			margin-bottom: rem(100)
+
+			+while-mob
+				margin-bottom: rem(60)
+
+			img
+				display: block
+				width: 100%
+
+		&-text
+			margin-top: rem(8)
+			font-size: rem(14)
+			color: var(--color-neutral-400)
+
+			+while-mob
+				font-size: rem(12)
+
+	&__text
+		max-width: rem(850)
+		width: 100%
+
+		font-size: rem(18)
+		line-height: 1.3
+
+		+while-mob
+			font-size: rem(14)
+
+		&:not(:last-child)
+			margin-bottom: rem(90)
+
+			+while-mob
+				margin-bottom: rem(50)
+
+		img:not([class])
+			display: block
+
+			&:not(:last-child)
+				margin-bottom: rem(20)
+
+			&:not(:first-child)
+				margin-top: rem(20)
+
+	&__slider
+		max-width: rem(850)
+		width: 100%
+		overflow: hidden
+
+		+while-mob
+			padding-left: rem(12)
+			padding-right: rem(12)
+			margin-left: rem(-12)
+			margin-right: rem(-12)
+			width: calc(100% + rem(24))
+
+		&:not(:last-child)
+			margin-bottom: rem(90)
+
+		.swiper-container
+			+while-mob
+				overflow: visible
+				padding-right: rem(50)
+
+		&-img
+			position: relative
+			aspect-ratio: 360/203
+			overflow: hidden
+
+			img
+				position: absolute
+				top: 0
+				left: 0
+				width: 100%
+				height: 100%
+
+		&-text
+			margin-top: rem(8)
+			font-size: rem(14)
+			color: var(--color-neutral-400)
+
+			+while-mob
+				font-size: rem(12)
+
+		.swiper-pagination
+			top: rem(20)
+			left: rem(20)
+
+			width: max-content
+			height: max-content
+
+			text-align: left
+
+		.swiper-buttons
+			display: flex
+			position: absolute
+			top: rem(20)
+			right: rem(20)
+			gap: rem(16)
+
+			+while-mob
+				display: none
+
+		.swiper-button
+			position: relative
+			width: rem(40)
+			height: rem(40)
+			background-color: var(--color-primary-300)
+			border-radius: 50%
+			margin-top: 0
+
+			&-prev
+				padding-right: rem(2)
+				left: 0
+
+			&-next
+				padding-left: rem(2)
+				right: 0
+
+			&::after
+				font-size: rem(18)
+

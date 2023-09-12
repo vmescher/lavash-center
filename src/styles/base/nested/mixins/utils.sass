@@ -1,0 +1,75 @@
+@use "sass:math"
+
+/* Оформление горизонтального скроллбара */
+@mixin Hscroll()
+	scrollbar-color: var(--color-neutral-300) var(--color-primary-500)
+	scrollbar-width: thin
+
+	&::-webkit-scrollbar /* 1 - скроллбар */
+		appearance: none
+		-webkit-appearance: none
+		&:horizontal
+			height: 10px
+
+	&::-webkit-scrollbar-track /* 3 - трек */
+		border-radius: 2px
+		background: var(--color-neutral-300)
+
+	&::-webkit-scrollbar-thumb /* 5 - ползунок */
+		background-color: var(--color-primary-500)
+		border-radius: 2px
+		border: 3px solid var(--color-primary-500)
+
+/* Оформление вертикального скроллбара */
+@mixin Vscroll()
+	scrollbar-color: var(--color-neutral-300) var(--color-primary-500)
+	scrollbar-width: thin
+
+	&::-webkit-scrollbar /* 1 - скроллбар */
+		width: 6px
+		appearance: none
+		-webkit-appearance: none
+
+	&::-webkit-scrollbar-track /* 3 - трек */
+		border-radius: 4px
+		background: var(--color-neutral-300)
+
+	&::-webkit-scrollbar-thumb /* 5 - ползунок */
+		border-radius: 2px
+		background-color: var(--color-primary-500)
+		border: 2px solid var(--color-primary-500)
+
+/*  Скрыть отображение скроллбара */
+@mixin hide-scroll()
+	&::-webkit-scrollbar
+		appearance: none
+		-webkit-appearance: none
+		display: none
+		width: 0
+		&:horizontal
+			height: 0
+
+/*  Кроссбраузерный миксин для плейсхолдеров */
+@mixin placeholder()
+	&::-webkit-input-placeholder
+		@content
+	&:-moz-placeholder
+		@content
+	&::-moz-placeholder
+		@content
+	&:-ms-input-placeholder
+		@content
+
+/* Обрезание строки */
+@mixin cutString($count)
+	overflow: hidden
+	text-overflow: ellipsis
+	display: -webkit-box
+	-webkit-line-clamp: $count
+	-webkit-box-orient: vertical
+
+/* Отключение ховеров в тач устройствах */
+@mixin hover()
+	@media (hover: hover)
+		&:hover
+			@content

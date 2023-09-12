@@ -1,0 +1,8 @@
+coverage
+config
+*.config.ts
+*.d.ts
+node_modules/
+dist/
+.prettierrc.js
+.eslintrc.cjs

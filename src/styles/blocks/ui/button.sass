@@ -1,0 +1,219 @@
+.btn
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	text-align: center
+	gap: rem(16)
+	padding: rem(16) rem(24)
+	min-height: rem(64)
+
+	font-size: var(--fontSizeP1)
+	line-height: var(--lineHeightP1)
+	font-weight: 700
+
+	border: 2px solid transparent
+	border-radius: var(--radius-l)
+
+	text-decoration: none
+	cursor: pointer
+	transition: color .3s ease, border-color .3s ease, background-color .3s ease
+
+	&:focus
+		outline: none
+
+	&:focus-visible
+		outline: 2px solid var(--color-primary-300)
+		outline-offset: rem(2)
+
+	&:disabled,
+	&.disabled
+		pointer-events: none
+
+		&:focus-visible
+			outline: none
+
+	&.loading
+		cursor: wait
+
+		& > *
+			display: none
+
+		&::before
+			content: ''
+			size: rem(20)
+			display: block
+			flex: none
+
+			border-radius: 50%
+			border-width: 2px
+			border-style: solid
+			border-color: currentColor transparent transparent
+
+			transition: border-color .3s ease
+			animation: spin360 .7s linear infinite
+
+	&--color
+		background-color: var(--color-primary-500)
+		color: var(--color-neutral-100)
+
+		+hover
+			background-color: var(--color-primary-400)
+
+		&:active
+			background-color: var(--color-primary-600)
+
+		&:disabled,
+		&.disabled
+			background-color: var(--color-neutral-400)
+
+		&.loading
+			&::before
+				border-color: currentColor currentColor var(--color-primary-400)
+
+			+hover
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-300)
+
+			&:disabled,
+			&.disabled
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-300)
+
+		&-revert
+			background-color: var(--color-neutral-100)
+			color: var(--color-primary-500)
+
+			+hover
+				background-color: var(--color-transparent-80)
+
+			&:active
+				background-color: var(--color-primary-600)
+				color: var(--color-neutral-100)
+
+			&:disabled,
+			&.disabled
+				background-color: var(--color-transparent-30)
+
+			&.loading
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-300)
+
+				+hover
+					&::before
+						border-color: currentColor currentColor var(--color-neutral-400)
+
+				&:active
+					&::before
+						border-color: currentColor currentColor var(--color-primary-400)
+
+				&:disabled,
+				&.disabled
+					&::before
+						border-color: var(--color-transparent-80) var(--color-transparent-80) var(--color-transparent-20)
+
+	&--border
+		color: var(--color-primary-500)
+		border-color: var(--color-primary-500)
+
+		+hover
+			background-color: var(--color-primary-trans-100)
+
+		&:active
+			background-color: var(--color-primary-trans-300)
+
+		&:disabled,
+		&.disabled
+			color: var(--color-neutral-400)
+			border-color: var(--color-neutral-400)
+
+		&.loading
+			&::before
+				border-color: currentColor currentColor var(--color-neutral-300)
+
+			+hover
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-400)
+
+			&:disabled,
+			&.disabled
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-200)
+
+		&-revert
+			color: var(--color-neutral-100)
+			border-color: var(--color-neutral-100)
+
+			+hover
+				background-color: var(--color-transparent-10)
+
+			&:active
+				background-color: var(--color-transparent-30)
+
+			&:disabled,
+			&.disabled
+				color: var(--color-transparent-30)
+				border-color: var(--color-transparent-30)
+
+			&.loading
+				&::before
+					border-color: currentColor currentColor var(--color-primary-400)
+
+				+hover
+					&::before
+						border-color: currentColor currentColor var(--color-transparent-30)
+
+				&:disabled,
+				&.disabled
+					&::before
+						border-color: var(--color-transparent-50) var(--color-transparent-50) var(--color-transparent-10)
+
+	&--trans
+		color: var(--color-primary-500)
+
+		+hover
+			color: var(--color-primary-400)
+
+		&:active
+			color: var(--color-primary-600)
+
+		&:disabled,
+		&.disabled
+			color: var(--color-neutral-400)
+
+		&.loading
+			&::before
+				border-color: currentColor currentColor var(--color-neutral-300)
+
+			&:disabled,
+			&.disabled
+				&::before
+					border-color: currentColor currentColor var(--color-neutral-200)
+
+		&-revert
+			color: var(--color-neutral-100)
+
+			+hover
+				color: var(--color-transparent-80)
+
+			&:active
+				color: var(--color-transparent-50)
+
+			&:disabled,
+			&.disabled
+				color: var(--color-transparent-30)
+
+			&.loading
+				&::before
+					border-color: currentColor currentColor var(--color-primary-400)
+
+				&:disabled,
+				&.disabled
+					&::before
+						border-color: currentColor currentColor var(--color-transparent-10)
+
+	&__icon
+		display: block
+		size: rem(24)
+		flex: none
+
+		color: currentColor

@@ -1,0 +1,98 @@
+@use "sass:map"
+@use "sass:math"
+
+// https://habr.com/ru/articles/513626/
+
+$breakpoints: ( "mobile": 375, "mobile-xl": 480, "tablet": 768, "tablet-xl": 992, "laptop": 1024, "laptop-xl": 1280, "laptop-xxl": 1440, "container": $containerWidth, "pc": 1600)
+
+// сниппет: @md - max-width
+// +media("max", "container")
+
+// сниппет: @mu - min-width
+// +media("min", "container")
+
+@mixin media($minmax, $media)
+	@each $size, $resolution in $breakpoints
+		@if $media == $size
+			@media only screen and ("#{$minmax}-width": em($resolution))
+				@content
+
+@mixin while-mob()
+	@include media("max", "mobile")
+		@content
+
+@mixin while-mob-xl()
+	@include media("max", "mobile-xl")
+		@content
+
+@mixin until-tablet()
+	@include media("max", "tablet")
+		@content
+
+@mixin until-tablet-xl()
+	@include media("max", "tablet-xl")
+		@content
+
+@mixin until-laptop()
+	@include media("max", "laptop")
+		@content
+
+@mixin until-laptop-xl()
+	@include media("max", "laptop-xl")
+		@content
+
+@mixin until-laptop-xxl()
+	@include media("max", "laptop-xxl")
+		@content
+
+@mixin until-container()
+	@include media("max", "container")
+		@content
+
+@mixin until-pc()
+	@include media("max", "pc")
+		@content
+
+@mixin from-mob()
+	@include media("min", "mobile")
+		@content
+
+@mixin from-mob-xl()
+	@include media("min", "mobile-xl")
+		@content
+
+@mixin from-tablet()
+	@include media("min", "tablet")
+		@content
+
+@mixin from-tablet-xl()
+	@include media("min", "tablet-xl")
+		@content
+
+@mixin from-laptop()
+	@include media("min", "laptop")
+		@content
+
+@mixin from-laptop-xl()
+	@include media("min", "laptop-xl")
+		@content
+
+@mixin from-laptop-xxl()
+	@include media("min", "laptop-xxl")
+		@content
+
+@mixin from-container()
+	@include media("min", "container")
+		@content
+
+@mixin from-pc()
+	@include media("min", "pc")
+		@content
+
+@mixin media-until($value)
+	@media (max-width: em($value))
+		@content
+
+@mixin media-from($value)
+	@media (min-width: em($value))
+		@content

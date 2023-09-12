@@ -1,0 +1,13 @@
+extends ../templates/base/_head
+
+block head
+	link(rel="stylesheet" href=`/styles/preview-styles.css`)
+
+block vars
+	- let title = 'Типовая страница'
+	- let layoutClass = 'layout'
+	- let bodyClass = null
+
+block content
+	main.page
+		include ../templates/pages/content

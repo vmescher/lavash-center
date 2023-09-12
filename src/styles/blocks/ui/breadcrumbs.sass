@@ -1,0 +1,29 @@
+.breadcrumbs
+
+	// &__wrapper
+
+	&__items
+		display: flex
+		flex-wrap: wrap
+
+	&__item
+		display: flex
+		align-items: center
+		font-size: var(--breadcrumb-font-size)
+		line-height: var(--breadcrumb-line-height)
+
+		&:not(:last-child)
+			margin-right: var(--breadcrumb-icon-margin)
+
+			&::after
+				content: "–"
+				display: inline-block
+				margin-left: var(--breadcrumb-icon-margin)
+
+		&:last-child
+			.breadcrumbs__link
+				cursor: default
+
+	&__link
+		&[aria-current]
+			text-decoration: none

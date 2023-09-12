@@ -1,9 +1,7 @@
 import {defineConfig} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import {join, resolve} from 'path';
-import {getAllPages} from './config/helpers';
 import {vitePluginDeploy} from './config/plugins/deploy/vite-plugin-deploy';
-import vitePluginPug from './config/plugins/pug/vite-plugin-pug';
 import eslintPlugin from 'vite-plugin-eslint';
 
 import autoprefixer from 'autoprefixer';
@@ -14,9 +12,6 @@ import {
 	BASE_PORT,
 	SOURCE_DIR,
 	OUTPUT_DIR,
-	VIEWS_DIR,
-	PROJECT_NAME,
-	PROJECT_TITLE,
 	FTP_OPTIONS,
 } from './project.config';
 
@@ -27,13 +22,10 @@ export default defineConfig(({mode}) => {
 
 	let BASE_URL = '';
 
-	if (IS_DEPLOY) {
-		BASE_URL = `https://html.xpager.ru/${PROJECT_NAME}/`;
-	} else if (IS_PRODUCTION) {
+	if (IS_PRODUCTION || IS_DEPLOY) {
 		BASE_URL = '/local/layout/dist/';
 	}
 
-	const PAGES = getAllPages(VIEWS_DIR);
 	return {
 		base: BASE_URL,
 		server: {
@@ -42,21 +34,18 @@ export default defineConfig(({mode}) => {
 		root: SOURCE_DIR,
 		envDir: '../',
 		build: {
+			manifest: IS_DEPLOY || IS_PRODUCTION,
 			cssMinify: 'lightningcss',
 			outDir: OUTPUT_DIR,
 			rollupOptions: {
 				input: {
 					index: resolve(SOURCE_DIR, 'index.html'),
-					...PAGES,
 				},
 				output: {
 					chunkFileNames: 'scripts/[name]-chunk-[hash].js',
 					entryFileNames: 'scripts/index-[hash].js',
 					assetFileNames: ({name}) => {
 						if (/\.css$/.test(name ?? '')) {
-							if (Object.keys(PAGES).includes(name.split('.')[0])) {
-								return 'styles/index-[hash][extname]';
-							}
 							return 'styles/[name]-[hash][extname]';
 						}
 						if (/.(woff2|woff)$/.test(name ?? '')) {
@@ -72,7 +61,6 @@ export default defineConfig(({mode}) => {
 					},
 				},
 			},
-			emptyOutDir: true,
 		},
 		css: {
 			devSourcemap: true,
@@ -100,22 +88,6 @@ export default defineConfig(({mode}) => {
 		},
 		plugins: [
 			vue(),
-			vitePluginPug({
-				serve: {
-					locals: {
-						PROJECT_TITLE,
-						IS_DEV,
-						BASE_URL,
-					},
-				},
-				build: {
-					locals: {
-						PROJECT_TITLE,
-						IS_DEV,
-						BASE_URL,
-					},
-				},
-			}),
 			eslintPlugin({
 				lintOnStart: !IS_DEV,
 				include: ['src/**/*.vue', 'src/**/*.ts', 'src/**/*.tsx', 'src/**/*.js', 'src/**/*.jsx'],
@@ -124,7 +96,7 @@ export default defineConfig(({mode}) => {
 				? [
 					vitePluginDeploy({
 						outDir: FTP_OPTIONS.serverPath,
-						sftp: true, // Поменять на true, когда будет доступ к sftp
+						sftp: true,
 						connectionOptions: {
 							host: FTP_OPTIONS.host,
 							username: FTP_OPTIONS.user,

@@ -5,9 +5,8 @@ import '@styles/main.sass';
 import APP from '@scripts/app';
 
 // import vanilla modules
-import initVanillaModules from '@scripts/plugins/vanilla';
+// import initVanillaModules from '@scripts/plugins/vanilla';
 
 document.addEventListener('DOMContentLoaded', () => {
 	APP.mount('#app');
-	initVanillaModules();
 });

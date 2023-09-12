@@ -4,8 +4,6 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-	<link rel="stylesheet" href="/styles/preview-styles.css"/>
-
 	<!--    Favicon-->
 	<link rel="icon" type="image/x-icon" href="/favicons/favicon.ico"/>
 	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
@@ -34,41 +32,7 @@
 	<title>%VITE_APP_TITLE%</title>
 </head>
 <body>
-<div id="app">
-	<!--Закомментировать или удалить, если делаешь SPA-->
-	<!-- ---------------------------------------------------------------------------------------- -->
-	<main>
-		<section class="project-view">
-			<div class="wrapper">
-				<div class="pv-title">
-					<a href="/" class="pv-logo pv-title__logo">
-						<img class="pv-logo__image" src="/img/logo.svg" alt="">
-					</a>
-					<h1 class="pv-title__text">%VITE_APP_TITLE%</h1>
-				</div>
-				<div class="pv-blocks pv-blocks--columns">
-					<div class="pv-block">
-						<h3 class="pv-block__title">Основные страницы</h3>
-						<nav class="pv-block__nav">
-							<a class="pv-link" href="./views/main.html">Главная страница</a>
-							<a class="pv-link">...</a>
-						</nav>
-					</div>
-					<div class="pv-block">
-						<h3 class="pv-block__title">Разное</h3>
-						<nav class="pv-block__nav">
-							<a class="pv-link" href="./views/ui.html">UI Элементы</a>
-							<a class="pv-link" href="./views/content.html">Типовая страница</a>
-							<a class="pv-link" href="./views/404.html">404 страница</a>
-							<a class="pv-link" href="./views/502.html">502 страница</a>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-	<!-- ---------------------------------------------------------------------------------------- -->
-</div>
+<div id="app"></div>
 
 
 <script type="module" src="/scripts/main.ts"></script>

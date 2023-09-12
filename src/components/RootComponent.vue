@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<slot></slot>
+	Здесь будет сайт
 </template>
 
 <style scoped lang="sass"></style>

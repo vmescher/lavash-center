@@ -1,0 +1,107 @@
+.tab
+	--tab-px: #{rem(22)}
+	--tab-py: #{rem(10)}
+	--tab-gap: #{rem(8)}
+
+	--tab-font-family: var(--font-secondary)
+	--tab-font-size: var(--fontSizeP1)
+	--tab-line-height: var(--lineHeightP1)
+	--tab-font-weight: 600
+	--tab-text-transform: uppercase
+
+	--tab-color: var(--color-primary)
+	--tab-color-hover: var(--color-neutral-tertiary)
+	--tab-color-active: var(--color-neutral-tertiary)
+	--tab-color-disabled: var(--color-neutral-secondary)
+
+	--tab-bg: var(--color-neutral-tertiary)
+	--tab-bg-hover: #E36821
+	--tab-bg-active: #BC4500
+	--tab-bg-disabled: #FAF6EE
+
+	--tab-border-size: 2px
+	--tab-border-color: transparent
+	--tab-border-color-hover: transparent
+	--tab-border-color-active: transparent
+	--tab-border-color-disabled: transparent
+
+	--tab-radius: var(--radius-btn)
+
+	--tab-icon-size: #{rem(20)}
+
+	display: flex
+	align-items: center
+	justify-content: center
+	gap: var(--tab-gap)
+	padding: var(--tab-py) var(--tab-px)
+	min-height: calc(var(--tab-font-size) * var(--tab-line-height) + var(--tab-py) * 2 + var(--tab-border-size) * 2)
+
+	font-family: var(--tab-font-family)
+	font-size: var(--tab-font-size)
+	line-height: 1
+	font-weight: var(--tab-font-weight)
+	color: var(--tab-color)
+	text-transform: var(--tab-text-transform)
+	text-align: center
+	text-decoration: none
+
+	background-color: var(--tab-bg)
+	border: var(--tab-border-size) solid var(--tab-border-color)
+	border-radius: var(--tab-radius)
+
+	cursor: pointer
+	transition: color .3s ease, border-color .3s ease, background-color .3s ease
+
+	&:focus
+		outline: none
+
+	&:focus-visible
+		outline: 2px solid var(--tab-bg-hover)
+		outline-offset: 2px
+
+	+hover
+		--tab-color: var(--tab-color-hover)
+		--tab-bg: var(--tab-bg-hover)
+		--tab-border-color: var(--tab-border-color-hover)
+
+	&:active
+		--tab-color: var(--tab-color-active)
+		--tab-bg: var(--tab-bg-active)
+		--tab-border-color: var(--tab-border-color-active)
+
+	&:disabled,
+	&.disabled
+		--tab-color: var(--tab-color-disabled)
+		--tab-bg: var(--tab-bg-disabled)
+		--tab-border-color: var(--tab-border-color-disabled)
+
+		cursor: not-allowed
+
+		&:focus-visible
+			outline: none
+
+	&.disabled
+		pointer-events: none
+
+	&.active
+		--tab-color: var(--color-neutral-tertiary)
+		--tab-color-disabled: var(--color-neutral-tertiary)
+
+		--tab-bg: var(--color-secondary)
+		--tab-bg-disabled: #E29D6E
+
+		pointer-events: none
+
+		&:focus-visible
+			outline: none
+
+	&__text
+		display: block
+		flex: none
+
+	&__icon
+		display: block
+		size: var(--tab-icon-size)
+		flex: none
+
+		color: currentColor

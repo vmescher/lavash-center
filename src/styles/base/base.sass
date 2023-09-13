@@ -32,9 +32,10 @@ body
 	margin: 0 auto
 
 	font-family: var(--font-primary)
-	color: var(--color-black)
+	font-weight: 500
+	color: var(--color-primary)
 
-	background-color: var(--color-white)
+	background-color: var(--color-neutral-primary)
 	@include Vscroll
 
 	&.modal-lock
@@ -43,8 +44,8 @@ body
 		padding-right: var(--scrollbar-compensate, 0px)
 
 *::selection
-	color: var(--color-neutral-900)
-	background-color: var(--color-primary-300)
+	color: var(--color-neutral-tertiary)
+	background-color: var(--color-neutral-fourth)
 
 	-webkit-tap-highlight-color: transparent
 
@@ -52,6 +53,10 @@ body
 	overflow: hidden
 
 /* Оболочка */
+#app
+	height: 100%
+	width: 100%
+
 .layout
 	display: flex
 	flex-direction: column

@@ -1,20 +1,55 @@
 .btn
-	display: inline-flex
+	--btn-px: #{rem(22)}
+	--btn-py: #{rem(14)}
+	--btn-gap: #{rem(8)}
+
+	--btn-font-family: var(--font-secondary)
+	--btn-font-size: var(--fontSizeP1)
+	--btn-line-height: var(--lineHeightP1)
+	--btn-font-weight: 600
+	--btn-text-transform: uppercase
+
+	--btn-color: var(--color-primary)
+	--btn-color-hover: var(--color-neutral-tertiary)
+	--btn-color-active: var(--color-neutral-tertiary)
+	--btn-color-disabled: var(--color-neutral-secondary)
+
+	--btn-bg: var(--color-neutral-tertiary)
+	--btn-bg-hover: #E36821
+	--btn-bg-active: #BC4500
+	--btn-bg-disabled: #FAF6EE
+
+	--btn-border-size: 2px
+	--btn-border-color: transparent
+	--btn-border-color-hover: transparent
+	--btn-border-color-active: transparent
+	--btn-border-color-disabled: transparent
+
+	--btn-radius: var(--radius-btn)
+
+	--btn-loader-color: var(--color-primary-rgb)
+	--btn-icon-size: #{rem(20)}
+
+	display: flex
 	align-items: center
 	justify-content: center
+	gap: var(--btn-gap)
+	padding: var(--btn-py) var(--btn-px)
+	min-height: calc(var(--btn-font-size) * var(--btn-line-height) + var(--btn-py) * 2 + var(--btn-border-size) * 2)
+
+	font-family: var(--btn-font-family)
+	font-size: var(--btn-font-size)
+	line-height: 1
+	font-weight: var(--btn-font-weight)
+	color: var(--btn-color)
+	text-transform: var(--btn-text-transform)
 	text-align: center
-	gap: rem(16)
-	padding: rem(16) rem(24)
-	min-height: rem(64)
-
-	font-size: var(--fontSizeP1)
-	line-height: var(--lineHeightP1)
-	font-weight: 700
-
-	border: 2px solid transparent
-	border-radius: var(--radius-l)
-
 	text-decoration: none
+
+	background-color: var(--btn-bg)
+	border: var(--btn-border-size) solid var(--btn-border-color)
+	border-radius: var(--btn-radius)
+
 	cursor: pointer
 	transition: color .3s ease, border-color .3s ease, background-color .3s ease
 
@@ -22,15 +57,32 @@
 		outline: none
 
 	&:focus-visible
-		outline: 2px solid var(--color-primary-300)
-		outline-offset: rem(2)
+		outline: 2px solid var(--btn-bg-hover)
+		outline-offset: 2px
+
+	+hover
+		--btn-color: var(--btn-color-hover)
+		--btn-bg: var(--btn-bg-hover)
+		--btn-border-color: var(--btn-border-color-hover)
+
+	&:active
+		--btn-color: var(--btn-color-active)
+		--btn-bg: var(--btn-bg-active)
+		--btn-border-color: var(--btn-border-color-active)
 
 	&:disabled,
 	&.disabled
-		pointer-events: none
+		--btn-color: var(--btn-color-disabled)
+		--btn-bg: var(--btn-bg-disabled)
+		--btn-border-color: var(--btn-border-color-disabled)
+
+		cursor: not-allowed
 
 		&:focus-visible
 			outline: none
+
+	&.disabled
+		pointer-events: none
 
 	&.loading
 		cursor: wait
@@ -40,180 +92,38 @@
 
 		&::before
 			content: ''
-			size: rem(20)
+			size: var(--btn-icon-size)
 			display: block
 			flex: none
 
 			border-radius: 50%
 			border-width: 2px
 			border-style: solid
-			border-color: currentColor transparent transparent
+			border-color: currentColor rgba(var(--btn-loader-color), .3) rgba(var(--btn-loader-color), .3)
 
 			transition: border-color .3s ease
 			animation: spin360 .7s linear infinite
 
-	&--color
-		background-color: var(--color-primary-500)
-		color: var(--color-neutral-100)
-
-		+hover
-			background-color: var(--color-primary-400)
-
-		&:active
-			background-color: var(--color-primary-600)
-
-		&:disabled,
-		&.disabled
-			background-color: var(--color-neutral-400)
-
-		&.loading
-			&::before
-				border-color: currentColor currentColor var(--color-primary-400)
-
-			+hover
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-300)
-
-			&:disabled,
-			&.disabled
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-300)
-
-		&-revert
-			background-color: var(--color-neutral-100)
-			color: var(--color-primary-500)
-
-			+hover
-				background-color: var(--color-transparent-80)
-
-			&:active
-				background-color: var(--color-primary-600)
-				color: var(--color-neutral-100)
-
-			&:disabled,
-			&.disabled
-				background-color: var(--color-transparent-30)
-
-			&.loading
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-300)
-
-				+hover
-					&::before
-						border-color: currentColor currentColor var(--color-neutral-400)
-
-				&:active
-					&::before
-						border-color: currentColor currentColor var(--color-primary-400)
-
-				&:disabled,
-				&.disabled
-					&::before
-						border-color: var(--color-transparent-80) var(--color-transparent-80) var(--color-transparent-20)
-
-	&--border
-		color: var(--color-primary-500)
-		border-color: var(--color-primary-500)
-
-		+hover
-			background-color: var(--color-primary-trans-100)
-
-		&:active
-			background-color: var(--color-primary-trans-300)
-
-		&:disabled,
-		&.disabled
-			color: var(--color-neutral-400)
-			border-color: var(--color-neutral-400)
-
-		&.loading
-			&::before
-				border-color: currentColor currentColor var(--color-neutral-300)
-
-			+hover
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-400)
-
-			&:disabled,
-			&.disabled
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-200)
-
-		&-revert
-			color: var(--color-neutral-100)
-			border-color: var(--color-neutral-100)
-
-			+hover
-				background-color: var(--color-transparent-10)
-
-			&:active
-				background-color: var(--color-transparent-30)
-
-			&:disabled,
-			&.disabled
-				color: var(--color-transparent-30)
-				border-color: var(--color-transparent-30)
-
-			&.loading
-				&::before
-					border-color: currentColor currentColor var(--color-primary-400)
-
-				+hover
-					&::before
-						border-color: currentColor currentColor var(--color-transparent-30)
-
-				&:disabled,
-				&.disabled
-					&::before
-						border-color: var(--color-transparent-50) var(--color-transparent-50) var(--color-transparent-10)
-
-	&--trans
-		color: var(--color-primary-500)
-
-		+hover
-			color: var(--color-primary-400)
-
-		&:active
-			color: var(--color-primary-600)
-
-		&:disabled,
-		&.disabled
-			color: var(--color-neutral-400)
-
-		&.loading
-			&::before
-				border-color: currentColor currentColor var(--color-neutral-300)
-
-			&:disabled,
-			&.disabled
-				&::before
-					border-color: currentColor currentColor var(--color-neutral-200)
-
-		&-revert
-			color: var(--color-neutral-100)
-
-			+hover
-				color: var(--color-transparent-80)
-
-			&:active
-				color: var(--color-transparent-50)
-
-			&:disabled,
-			&.disabled
-				color: var(--color-transparent-30)
-
-			&.loading
-				&::before
-					border-color: currentColor currentColor var(--color-primary-400)
-
-				&:disabled,
-				&.disabled
-					&::before
-						border-color: currentColor currentColor var(--color-transparent-10)
+	&__text
+		display: block
+		flex: none
 
 	&__icon
 		display: block
-		size: rem(24)
+		size: var(--btn-icon-size)
 		flex: none
 
 		color: currentColor
+
+	&--color
+		&-secondary
+			--btn-color: var(--color-neutral-tertiary)
+			--btn-color-hover: var(--color-neutral-tertiary)
+			--btn-color-active: var(--color-neutral-tertiary)
+			--btn-color-disabled: var(--color-neutral-tertiary)
+
+			--btn-bg: var(--color-secondary)
+			--btn-bg-disabled: #E29D6E
+
+			--btn-loader-color: var(--color-neutral-tertiary-rgb)
+

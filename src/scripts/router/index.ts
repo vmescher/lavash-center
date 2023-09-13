@@ -1,20 +1,22 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import middlewarePipeline from '@scripts/router/middleware/middlewarePipeline';
 import {Middleware} from '@scripts/router/middleware/types';
+import {RouteNames} from "@scripts/router/types";
+
 // import isLoggedIn from '@scripts/router/middleware/isLoggedIn';
 // import isLogouted from '@scripts/router/middleware/isLogouted';
 // import { LayoutNames, RouteNames } from '@scripts/router/types';
 
 const routes: RouteRecordRaw[] = [
-	// {
-	// 	path: '/',
-	// 	name: RouteNames.MAIN_PAGE,
-	// 	component: () => import('@/views/MainView.vue'),
-	// 	meta: {
-	// 		name: 'Главная',
-	// 		middleware: [isLoggedIn],
-	// 	},
-	// },
+	{
+		path: '/',
+		name: RouteNames.MAIN_PAGE,
+		component: () => import('@components/views/MainView.vue'),
+		meta: {
+			name: 'Главная',
+			middleware: [],
+		},
+	},
 	// {
 	// 	path: '/auth/',
 	// 	name: RouteNames.AUTH_PAGE,

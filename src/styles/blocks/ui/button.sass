@@ -127,3 +127,12 @@
 
 			--btn-loader-color: var(--color-neutral-tertiary-rgb)
 
+	&--rounded
+		--btn-px: #{rem(12)}
+		--btn-py: #{rem(12)}
+
+		--btn-radius: 50%
+
+		min-height: unset
+		height: calc(var(--btn-icon-size) + var(--btn-py) * 2 + var(--btn-border-size) * 2)
+		width: calc(var(--btn-icon-size) + var(--btn-px) * 2 + var(--btn-border-size) * 2)

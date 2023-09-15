@@ -1,27 +1,26 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import BaseHeader from "@components/structural/BaseHeader.vue";
-import BaseFooter from "@components/structural/BaseFooter.vue";
+import WelcomeBanner from "@components/personal-cabinet/WelcomeBanner.vue";
+import CabinetNavigation from "@components/personal-cabinet/CabinetNavigation.vue";
 import SlideInTransition from "@components/utils/transitions/SlideInTransition.vue";
 
 export default defineComponent({
-	name: "MainLayout",
-	components: {SlideInTransition, BaseFooter, BaseHeader}
+	name: "CabinetView",
+	components: {SlideInTransition, CabinetNavigation, WelcomeBanner},
 })
 </script>
 
 <template>
-	<div class="layout">
-		<BaseHeader/>
+	<main class="page">
+		<WelcomeBanner/>
+		<CabinetNavigation/>
 
 		<router-view v-slot="{Component}">
 			<SlideInTransition mode="out-in">
 				<component :is="Component"/>
 			</SlideInTransition>
 		</router-view>
-
-		<BaseFooter/>
-	</div>
+	</main>
 </template>
 
 <style scoped lang="sass">

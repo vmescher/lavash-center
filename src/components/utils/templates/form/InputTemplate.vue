@@ -41,7 +41,7 @@ export default defineComponent({
 				{{ typeof errors[0] === 'string' ? errors[0] : errors[0].$message }}
 			</li>
 		</ul>
-		<div v-if="$slots.underInput" class="default-input__bottom">
+		<div v-if="$slots.underInput && !errors.length" class="default-input__bottom">
 			<slot name="underInput"></slot>
 		</div>
 	</div>
@@ -55,10 +55,9 @@ export default defineComponent({
 	&__label
 		margin-bottom: rem(8)
 
-		font-size: var(--fontSizeP2)
+		font-size: var(--fontSizeP3)
 		line-height: var(--lineHeightP1)
-		font-weight: 400
-		color: var(--color-neutral-400)
+		font-weight: 500
 
 	&__input
 		position: relative
@@ -69,14 +68,14 @@ export default defineComponent({
 		gap: rem(8)
 
 	&__errors
-		margin-top: rem(4)
+		margin-top: rem(8)
 
 	&__error
 		font-size: var(--fontSizeP3)
 		line-height: var(--lineHeightP1)
-		font-weight: 400
+		font-weight: 500
 		color: var(--color-negative)
 
 	&__bottom
-		margin-top: rem(12)
+		margin-top: rem(8)
 </style>

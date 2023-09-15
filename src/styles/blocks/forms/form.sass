@@ -1,17 +1,26 @@
 .form
+	&__top
+		display: flex
+		flex-direction: column
+		gap: rem(16)
+
+		&:not(:last-child)
+			margin-bottom: rem(48)
+
 	&__title
-		font-weight: 600
-		font-size: var(--fontSizeH5)
+		font-family: var(--font-secondary)
+		font-size: var(--fontSizeH2)
+		font-weight: 500
 		line-height: var(--lineHeightH2)
-		margin-bottom: fluid(24, 40)
+		text-transform: uppercase
 
 	&__inputs
 		display: grid
-		grid-gap: fluid(24, 40) fluid(16, 24)
+		grid-gap: rem(32) rem(24)
 		margin: 0
 
 		& + .form__inputs
-			margin-top: fluid(24, 40)
+			margin-top: rem(40)
 
 		&--2
 			grid-template-columns: repeat(2, minmax(0,1fr))
@@ -35,6 +44,18 @@
 		&--4
 			grid-column: span 4
 
+	&__submit
+		margin-top: rem(40)
+		display: flex
+		align-items: center
+		flex-wrap: wrap
+		gap: rem(8)
 
+	&__underhint
+		font-size: var(--fontSizeP3)
+		font-weight: 500
+		line-height: var(--lineHeightP1)
+
+		opacity: .5
 
 

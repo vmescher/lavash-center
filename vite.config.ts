@@ -61,6 +61,7 @@ export default defineConfig(({mode}) => {
 					},
 				},
 			},
+			emptyOutDir: true,
 		},
 		css: {
 			devSourcemap: true,

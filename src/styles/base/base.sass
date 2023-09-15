@@ -36,7 +36,24 @@ body
 	color: var(--color-primary)
 
 	background-color: var(--color-neutral-primary)
-	@include Vscroll
+	overflow-x: hidden
+
+	scrollbar-color: var(--color-neutral-tertiary) var(--color-secondary)
+	scrollbar-width: thin
+
+	&::-webkit-scrollbar /* 1 - скроллбар */
+		width: 6px
+		appearance: none
+		-webkit-appearance: none
+
+	&::-webkit-scrollbar-track /* 3 - трек */
+		border-radius: 10px
+		background: var(--color-neutral-tertiary)
+
+	&::-webkit-scrollbar-thumb /* 5 - ползунок */
+		border-radius: 10px
+		background-color: var(--color-secondary)
+		border: 2px solid var(--color-secondary)
 
 	&.modal-lock
 		overflow: hidden
@@ -60,11 +77,12 @@ body
 .layout
 	display: flex
 	flex-direction: column
+	padding-bottom: rem(24)
 	min-height: 100%
 
 .wrapper
-	@if ($maxWidthContainer > 0)
-		max-width: rem($maxWidthContainer)
+	@if ($containerWidth > 0)
+		max-width: rem($containerWidth)
 		margin: 0 auto
 
 	@if ($containerPadding > 0)

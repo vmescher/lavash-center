@@ -105,6 +105,10 @@ export default defineComponent({
 		<template v-if="$slots.action" #action>
 			<slot name="action"></slot>
 		</template>
+
+		<template v-if="$slots.underInput" #underInput>
+			<slot name="underInput"></slot>
+		</template>
 	</InputTemplate>
 </template>
 
@@ -116,6 +120,7 @@ export default defineComponent({
 	padding: var(--di-py) var(--di-px)
 
 	font-size: var(--di-font-size)
+	font-weight: var(--di-font-weight)
 	line-height: var(--di-line-height)
 	color: var(--di-color)
 
@@ -123,32 +128,45 @@ export default defineComponent({
 	border-width: var(--di-border-width)
 	border-color: var(--di-border-color)
 	border-radius: var(--di-border-radius)
-	background-color: var(--color-neutral-100)
+
+	background-color: var(--di-bg)
 
 	white-space: nowrap
 	overflow: hidden
 	text-overflow: ellipsis
-	transition: border-color .3s ease, background-color .3s ease
+	transition: border-color .3s ease, background-color .3s ease, color .3s ease
 
 	+placeholder
 		color: var(--di-placeholder-color)
 
-	+hover
-		border-color: var(--di-border-color-hover)
+		transition: color .3s ease
 
-	&:focus
-		border-color: var(--di-border-color-active)
+	&:not(:read-only)
+		+hover
+			--di-color: var(--di-color-hover)
+			--di-border-color: var(--di-border-color-hover)
+			--di-bg: var(--di-bg-hover)
+			--di-placeholder-color: var(--di-color-hover)
+
+		&:focus
+			--di-color: var(--di-color-focus)
+			--di-border-color: var(--di-border-color-focus)
+			--di-bg: var(--di-bg-focus)
+			--di-placeholder-color: var(--di-color-focus)
 
 	&:disabled
-		background-color: var(--di-bg-disabled)
-		border-color: var(--di-border-color-disabled)
-		color: var(--di-color-disabled)
+		--di-color: var(--di-color-disabled)
+		--di-border-color: var(--di-border-color-disabled)
+		--di-bg: var(--di-bg-disabled)
+		--di-placeholder-color: var(--di-color-disabled)
+
 		cursor: not-allowed
 
-		+placeholder
-			color: var(--di-color-disabled)
-
 	&:read-only:not(:disabled)
+		--di-color: var(--di-color-readonly)
+		--di-border-color: var(--di-border-color-readonly)
+		--di-bg: var(--di-bg-readonly)
+
 		cursor: help
 
 	&.error

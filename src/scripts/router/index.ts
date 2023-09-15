@@ -17,6 +17,36 @@ const routes: RouteRecordRaw[] = [
 			middleware: [],
 		},
 	},
+	{
+		path: '/personal-cabinet/',
+		name: RouteNames.PERSONAL_CABINET_PAGE,
+		component: () => import('@components/views/CabinetView.vue'),
+		redirect: {name: RouteNames.PROFILE_PAGE},
+		meta: {
+			name: 'Личный кабинет',
+			middleware: [],
+		},
+		children: [
+			{
+				path: 'profile/',
+				name: RouteNames.PROFILE_PAGE,
+				component: () => import('@components/personal-cabinet/views/ProfileView.vue'),
+				meta: {
+					name: 'Личные данные',
+					middleware: [],
+				}
+			},
+			{
+				path: 'orders/',
+				name: RouteNames.HISTORY_PAGE,
+				component: () => import('@components/personal-cabinet/views/HistoryView.vue'),
+				meta: {
+					name: 'Мои заказы',
+					middleware: [],
+				}
+			}
+		]
+	}
 	// {
 	// 	path: '/auth/',
 	// 	name: RouteNames.AUTH_PAGE,

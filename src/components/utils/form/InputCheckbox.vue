@@ -106,6 +106,36 @@ export default defineComponent({
 
 <style scoped lang="sass">
 .input-checkbox
+	--checkbox-size: #{rem(24)}
+
+	--checkbox-color: var(--color-neutral-tertiary)
+	--checkbox-color-focus: var(--color-neutral-tertiary)
+	--checkbox-color-hover: var(--color-neutral-tertiary)
+	--checkbox-color-active: var(--color-neutral-tertiary)
+	--checkbox-color-hover-active: var(--color-neutral-tertiary)
+	--checkbox-color-disabled: #FAF6EE
+	--checkbox-color-disabled-active: var(--color-neutral-tertiary)
+
+	--checkbox-bg: var(--color-neutral-tertiary)
+	--checkbox-bg-focus: var(--color-neutral-tertiary)
+	--checkbox-bg-hover: var(--color-neutral-tertiary)
+	--checkbox-bg-active: var(--color-secondary)
+	--checkbox-bg-hover-active: #BC4500
+	--checkbox-bg-disabled: #FAF6EE
+	--checkbox-bg-disabled-active: #E29D6E
+
+	--checkbox-border-color: var(--color-neutral-tertiary)
+	--checkbox-border-color-focus: var(--color-tertiary)
+	--checkbox-border-color-hover: var(--color-secondary)
+	--checkbox-border-color-active: var(--color-secondary)
+	--checkbox-border-color-hover-active: #BC4500
+	--checkbox-border-color-disabled: #FAF6EE
+	--checkbox-border-color-disabled-active: #E29D6E
+
+	--checkbox-border-width: 2px
+	--checkbox-border-radius: #{rem(8)}
+
+
 	position: relative
 
 	flex: 1 1 auto
@@ -117,15 +147,15 @@ export default defineComponent({
 		display: flex
 		align-items: center
 		justify-content: center
-		size: fluid(20, 40)
-		margin-right: rem(16)
+		size: var(--checkbox-size)
+		margin-right: rem(12)
 
-		color: var(--color-neutral-100)
-		border-radius: var(--di-border-radius)
-		border-width: 2px
+		color: var(--checkbox-color)
+		border-radius: var(--checkbox-border-radius)
+		border-width: var(--checkbox-border-width)
 		border-style: solid
-		border-color: var(--di-border-color)
-		background-color: var(--di-bg)
+		border-color: var(--checkbox-border-color)
+		background-color: var(--checkbox-bg)
 
 		transition: border-color .3s ease, background-color .3s ease
 
@@ -137,9 +167,9 @@ export default defineComponent({
 			flex-shrink: 0
 			flex-grow: 0
 			display: none
-			size: 50%
+			size: 75%
 
-			mask-image: url("@/assets/icons/checkmark.svg")
+			mask-image: url("@img/icons/check.svg")
 			mask-position: center
 			mask-size: contain
 			background-color: currentColor
@@ -147,8 +177,8 @@ export default defineComponent({
 
 	&__value
 		font-size: var(--di-font-size)
+		font-weight: var(--di-font-weight)
 		line-height: var(--di-line-height)
-		color: var(--di-color)
 
 	&__input
 		appearance: none
@@ -162,56 +192,60 @@ export default defineComponent({
 		&:focus-visible:not(&:checked)
 			& + .input-checkbox
 				&__checkmark
-					border-color: var(--di-border-color-active)
-					background-color: var(--di-bg-focus)
+					--checkbox-border-color: var(--checkbox-border-color-focus)
+					--checkbox-bg: var(--checkbox-bg-focus)
+					--checkbox-color: var(--checkbox-color-focus)
 
 		&:checked:focus-visible
 			& + .input-checkbox
 				&__checkmark
-					outline: 2px solid var(--di-bg-focus)
-					outline-offset: rem(2)
-
+					outline: 2px solid var(--checkbox-border-color-focus)
+					outline-offset: 2px
 
 	+hover
-		& .input-checkbox
-			&__checkmark
-				border-color: var(--di-border-color-hover)
+		--checkbox-border-color: var(--checkbox-border-color-hover)
+		--checkbox-bg: var(--checkbox-bg-hover)
+		--checkbox-color: var(--checkbox-color-hover)
 
 	&.disabled
+		--checkbox-border-color: var(--checkbox-border-color-disabled)
+		--checkbox-bg: var(--checkbox-bg-disabled)
+		--checkbox-color: var(--checkbox-color-disabled)
+
 		cursor: not-allowed
 
-		& .input-checkbox
-			&__checkmark
-				border-color: var(--di-border-color-disabled)
-
-			&__value
-				color: var(--di-color-disabled)
-
 	&.readonly:not(.disabled)
+		--checkbox-border-color: var(--checkbox-border-color-readonly)
+		--checkbox-bg: var(--checkbox-bg-readonly)
+		--checkbox-color: var(--checkbox-color-readonly)
+
 		cursor: help
 
 	&.error
-		& .input-checkbox
-			&__checkmark
-				border-color: var(--di-border-color-error)
+		--checkbox-border-color: var(--checkbox-border-color-error)
+		--checkbox-bg: var(--checkbox-bg-error)
+		--checkbox-color: var(--checkbox-color-error)
 
 	&.active
+		--checkbox-color: var(--checkbox-color-active)
+		--checkbox-bg: var(--checkbox-bg-active)
+		--checkbox-border-color: var(--checkbox-border-color-active)
+
 		& .input-checkbox
 			&__checkmark
-				background-color: var(--di-border-color-active)
-				border-color: transparent
 
 				&::before
 					display: block
 
 		+hover
-			& .input-checkbox
-				&__checkmark
-					background-color: var(--di-border-color-hover)
+			--checkbox-color: var(--checkbox-color-hover-active)
+			--checkbox-bg: var(--checkbox-bg-hover-active)
+			--checkbox-border-color: var(--checkbox-border-color-hover-active)
 
 		&.disabled
-			& .input-checkbox
-				&__checkmark
-					background-color: var(--di-border-color-disabled)
-					border-color: transparent
+			--checkbox-border-color: var(--checkbox-border-color-disabled-active)
+			--checkbox-bg: var(--checkbox-bg-disabled-active)
+			--checkbox-color: var(--checkbox-color-disabled-active)
+
+			cursor: not-allowed
 </style>

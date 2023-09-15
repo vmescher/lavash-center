@@ -17,7 +17,7 @@ export default defineComponent({
 			if (this.$route.meta.layout) {
 				return this.$route.meta.layout;
 			}
-			return 'MainLayout';
+			return 'MainLayout' as BaseLayouts;
 		},
 	},
 });

@@ -20,18 +20,27 @@
 	--color-neutral-tertiary-rgb: 255, 255, 255
 	--color-neutral-fourth: #EADDBD
 	--color-neutral-fourth-rgb: 234, 221, 189
+	--color-neutral-fifth: #E3DEDE
+	--color-neutral-fifth-rgb: 227, 222, 222
 
 	// Вспомогательные цвета
-	--color-negative: #EC4646
+	--color-negative: var(--color-secondary)
 	--color-positive: #60CF5D
-	--color-warning: #FFD646
+	--color-warning: var(--color-tertiary)
 	--color-info: #3AA1EC
 
 	// Тени
-	--shadow-primary: 0px -4px 15px 0px rgba(43, 31, 23, 0.08)
+	--shadow-primary-down: 0px 4px 15px 0px rgba(43, 31, 23, 0.08)
+	--shadow-primary-up: 0px -4px 15px 0px rgba(43, 31, 23, 0.08)
+
 
 	// Радиусы
 	--radius-btn: #{rem(50)}
+	--radius-block: #{rem(100)}
+	--radius-block-secondary: #{rem(40)}
+	--radius-picture: #{rem(20)}
+	--radius-divider: #{rem(10)}
+	--radius-product: #{rem(140)}
 
 	// =======================
 	// Типографика
@@ -41,7 +50,7 @@
 	// 40px - min / 64px - default
 	--fontSizeH1: #{fluid(40, 64)}
 	// 32px - min / 64px - default
-	--fontSizeH2: #{fluid(32, 64)}
+	--fontSizeH2: #{fluid(32, 40)}
 	// 20px - min / 28px - default
 	--fontSizeH3: #{fluid(20, 28)}
 	// 18px - min / 24px - default
@@ -61,37 +70,67 @@
 	// =======================
 	// Межстрочный интервал
 	--lineHeightH1: 1.3
-	--lineHeightH2: 1.4
+	--lineHeightH2: 1.35
+	--lineHeightH3: 1.4
 
 	--lineHeightP1: 1.4
 
 	// =======================
+	// Индексы
+	--z-index-base: 0
+	--z-index-above: 1
+	--z-index-below: -1
+	--z-index-dropdown: calc(var(--z-index-above) * 10)
+	--z-index-header: calc(var(--z-index-dropdown) + 1)
+	--z-index-modal: calc(var(--z-index-header) + 1)
+
+	// =======================
 	// Инпуты
-	--di-font-size: #{fluid(14, 16)}
-	--di-line-height: 1.4
-	--di-color: var(--color-neutral-900)
-	--di-color-disabled: var(--color-neutral-trans-500)
-	--di-color-error: var(--color-negative)
+	--di-font-size: var(--fontSizeP2)
+	--di-line-height: var(--lineHeightP1)
+	--di-font-family: var(--font-primary)
+	--di-font-weight: 500
 
-	--di-bg: var(--color-neutral-100)
-	--di-bg-disabled: var(--color-neutral-trans-100)
-	--di-bg-focus: var(--color-primary-300)
+	--di-color: var(--color-primary)
+	--di-color-hover: var(--color-primary)
+	--di-color-focus: var(--color-primary)
+	--di-color-readonly: var(--color-primary)
+	--di-color-disabled: var(--color-neutral-secondary)
+	--di-color-error: var(--color-primary)
 
-	--di-border-color: var(--color-neutral-500)
-	--di-border-color-hover: var(--color-primary-500)
-	--di-border-color-active: var(--color-primary-600)
-	--di-border-color-disabled: var(--color-neutral-trans-500)
+	--di-bg: var(--color-neutral-tertiary)
+	--di-bg-hover: var(--color-neutral-tertiary)
+	--di-bg-focus: var(--color-neutral-tertiary)
+	--di-bg-readonly: var(--color-neutral-tertiary)
+	--di-bg-disabled: #FAF6EE
+	--di-bg-error: var(--color-neutral-tertiary)
+
+	--di-border-color: var(--color-neutral-secondary)
+	--di-border-color-hover: var(--color-primary)
+	--di-border-color-focus: var(--color-tertiary)
+	--di-border-color-readonly: var(--color-neutral-tertiary)
+	--di-border-color-disabled: #FAF6EE
 	--di-border-color-error: var(--color-negative)
 	--di-border-width: 2px
-	--di-border-radius: var(--radius-l)
+	--di-border-radius: var(--radius-btn)
 
-	--di-py: #{fluid(12, 16)}
-	--di-px: #{fluid(16, 24)}
+	--di-py: #{rem(14)}
+	--di-px: #{rem(22)}
 
-	--di-placeholder-color: var(--color-neutral-500)
+	--di-placeholder-color: var(--color-neutral-secondary)
 
 	// =======================
 	// Хлебные крошки
 	--breadcrumb-font-size: inherit
 	--breadcrumb-line-height: inherit
 	--breadcrumb-icon-margin: #{rem(4)}
+
+	// Размеры блоков
+	--scrollbar-compensate: 6px
+	--app-height: 100vh
+	--window-height: var(--app-height)
+	--header-height: #{rem(105)}
+
+@supports (--window-height: 100svh)
+	\:root
+		--window-height: 100svh

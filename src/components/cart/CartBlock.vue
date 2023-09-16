@@ -52,7 +52,7 @@ export default defineComponent({
 
 	&__title
 		font-family: var(--font-secondary)
-		font-size: var(--fontSizeH3)
+		font-size: var(--fontSizeH4)
 		font-weight: 700
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase

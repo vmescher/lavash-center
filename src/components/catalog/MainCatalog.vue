@@ -1,6 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import BaseTabs from "@components/utils/ui/BaseTabs.vue";
+import BaseTabs, {Tab} from "@components/utils/ui/BaseTabs.vue";
 import ProductCard from "@components/catalog/ProductCard.vue";
 import CartBlock from "@components/cart/CartBlock.vue";
 
@@ -8,7 +8,7 @@ export default defineComponent({
 	name: "MainCatalog",
 	components: {CartBlock, ProductCard, BaseTabs},
 	computed: {
-		catalogTabs() {
+		catalogTabs(): Tab[] {
 			return [
 				{
 					label: 'Все',

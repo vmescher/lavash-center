@@ -23,6 +23,9 @@ export default defineComponent({
 
 <style scoped lang="sass">
 .section-title
+	&:first-child
+		padding-top: rem(40)
+
 	&:not(:last-child)
 		margin-bottom: rem(56)
 

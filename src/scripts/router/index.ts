@@ -13,9 +13,18 @@ const routes: RouteRecordRaw[] = [
 		name: RouteNames.MAIN_PAGE,
 		component: () => import('@components/views/MainView.vue'),
 		meta: {
-			name: 'Главная',
+			name: 'Каталог | Лаваш-Центр',
 			middleware: [],
 		},
+	},
+	{
+		path: '/contacts/',
+		name: RouteNames.CONTACTS_PAGE,
+		component: () => import('@components/views/ContactsView.vue'),
+		meta: {
+			name: 'Контакты | Лаваш-Центр',
+			middleware: [],
+		}
 	},
 	{
 		path: '/personal-cabinet/',
@@ -23,7 +32,7 @@ const routes: RouteRecordRaw[] = [
 		component: () => import('@components/views/CabinetView.vue'),
 		redirect: {name: RouteNames.PROFILE_PAGE},
 		meta: {
-			name: 'Личный кабинет',
+			name: 'Личный кабинет | Лаваш-Центр',
 			middleware: [],
 		},
 		children: [
@@ -32,7 +41,7 @@ const routes: RouteRecordRaw[] = [
 				name: RouteNames.PROFILE_PAGE,
 				component: () => import('@components/personal-cabinet/views/ProfileView.vue'),
 				meta: {
-					name: 'Личные данные',
+					name: 'Личные данные | Лаваш-Центр',
 					middleware: [],
 				}
 			},
@@ -41,7 +50,7 @@ const routes: RouteRecordRaw[] = [
 				name: RouteNames.HISTORY_PAGE,
 				component: () => import('@components/personal-cabinet/views/HistoryView.vue'),
 				meta: {
-					name: 'Мои заказы',
+					name: 'Мои заказы | Лаваш-Центр',
 					middleware: [],
 				}
 			}

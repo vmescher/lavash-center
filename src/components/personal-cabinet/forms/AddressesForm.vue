@@ -22,10 +22,12 @@ export default defineComponent({
 				</InputText>
 			</div>
 		</div>
-		<div class="form__submit">
-			<button class="btn btn--color-secondary" disabled>
-				<span class="btn__text">сохранить изменения</span>
-			</button>
+		<div class="form__bottom">
+			<div class="form__submit">
+				<button class="btn btn--color-secondary" disabled>
+					<span class="btn__text">сохранить изменения</span>
+				</button>
+			</div>
 		</div>
 	</form>
 </template>

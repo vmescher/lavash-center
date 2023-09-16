@@ -27,6 +27,8 @@ export default defineComponent({
 	<component :is="layout" >
 		<router-view />
 	</component>
+
+	<div id="modals-container"></div>
 </template>
 
 <style scoped lang="sass"></style>

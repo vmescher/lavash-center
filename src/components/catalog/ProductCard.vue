@@ -33,7 +33,7 @@ export default defineComponent({
 				<span class="btn__text">В корзину</span>
 				<IconSVG name="plus" class="btn__icon"/>
 			</button>
-			<InputCounter class="product-card__action" v-else/>
+			<InputCounter v-else class="product-card__action" />
 		</div>
 	</div>
 </template>
@@ -128,7 +128,7 @@ export default defineComponent({
 
 	&__price
 		font-family: var(--font-secondary)
-		font-size: var(--fontSizeH3)
+		font-size: var(--fontSizeH4)
 		font-weight: 700
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase

@@ -1,5 +1,5 @@
 main,
-.popup
+.modal
 
 	p:not([class])
 		&:not(:last-child)
@@ -199,23 +199,25 @@ main,
 
 	a
 		&:not([class])
-			color: var(--color-primary-500)
-			transition: color .3s ease
+			&:link,
+			&:visited
+				color: inherit
+				text-decoration: underline
+				text-underline-offset: 2px
 
-			&:hover
-				color: var(--color-primary-400)
+				transition: text-decoration .3s ease
 
-			&:focus
-				outline: none
+				+hover
+					text-decoration-color: transparent
 
-			&:focus-visible
-				border-radius: var(--radius-s)
-				outline: 2px solid var(--color-primary-300)
-				outline-offset: 3px
-				text-decoration: none
+				&:focus
+					outline: none
 
-			&:active
-				color: var(--color-primary-600)
+				&:focus-visible
+					border-radius: var(--radius-btn)
+					outline: 2px solid var(--color-primary)
+					outline-offset: 2px
+					text-decoration: none
 
 	.table-wrap
 		width: 100%

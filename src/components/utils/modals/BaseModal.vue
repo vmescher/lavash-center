@@ -1,15 +1,23 @@
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {useModalsStore} from '@scripts/hooks/stateHooks/useModalsStore';
+import { defineComponent, PropType } from 'vue';
+import { useModalsStore } from '@scripts/hooks/stateHooks/useModalsStore';
 
 export default defineComponent({
-	name: 'ModalTemplate',
+	name: 'BaseModal',
 	mixins: [useModalsStore],
 	props: {
 		id: {
 			type: String,
 			required: true,
 		},
+		appearStyle: {
+			type: String as PropType<'scale' | 'slide'>,
+			default: 'slide',
+		},
+		autoOpen: {
+			type: Boolean,
+			default: false,
+		}
 	},
 	computed: {
 		isOpened() {
@@ -17,6 +25,7 @@ export default defineComponent({
 		},
 	},
 	mounted() {
+
 		try {
 			this.registerModal(this.id);
 		} catch (error) {
@@ -24,6 +33,8 @@ export default defineComponent({
 		}
 
 		this.checkSupport();
+
+		if(this.autoOpen) this.showModal()
 	},
 	methods: {
 		showModal() {
@@ -37,7 +48,7 @@ export default defineComponent({
 				return;
 			}
 
-			import('dialog-polyfill').then(({default: polyfill}) => {
+			import('dialog-polyfill').then(({ default: polyfill }) => {
 				polyfill.registerDialog(this.$refs.modal as unknown as HTMLDialogElement);
 			});
 		},
@@ -46,20 +57,22 @@ export default defineComponent({
 </script>
 
 <template>
-	<transition name="modal" :duration="450" appear>
-		<dialog
-			v-if="isOpened"
-			ref="modal"
-			class="modal-window"
-			:open="isOpened"
-			@keydown.esc="hideModal">
-			<div class="modal-window__bg"></div>
+	<teleport to="#modals-container">
+		<transition :name="`modal-${appearStyle}`" :duration="450" appear>
+			<dialog
+					v-if="isOpened"
+					ref="modal"
+					class="modal-window"
+					:open="isOpened"
+					@keydown.esc="hideModal">
+				<div class="modal-window__bg"></div>
 
-			<div class="modal-window__body wrapper" @click.self="hideModal">
-				<slot :close="hideModal"></slot>
-			</div>
-		</dialog>
-	</transition>
+				<div class="modal-window__body wrapper" @click.self="hideModal">
+					<slot :close="hideModal"></slot>
+				</div>
+			</dialog>
+		</transition>
+	</teleport>
 </template>
 
 <style scoped lang="sass">
@@ -67,7 +80,8 @@ export default defineComponent({
 	position: fixed
 	top: 0
 	left: 0
-	z-index: 1000
+	z-index: var(--z-index-modal)
+	transform: translate3d(0, 0, 1px)
 
 	width: 100%
 	height: 100%
@@ -84,22 +98,28 @@ export default defineComponent({
 		flex-direction: column
 		width: 100%
 		height: 100%
+		padding: rem(56)
 
-		overflow-x: hidden
 		overflow-y: auto
+		will-change: transform
+
+		+until-tablet
+			padding: rem(12)
 
 	&__bg
 		position: absolute
-		inset: 0
+		top: 0
+		left: 0
 		z-index: -1
 
 		width: 100%
 		height: 100%
 
-		background: rgba(0, 0, 0, 0.5)
+		background: rgba(var(--color-primary-rgb), .4)
 		pointer-events: none
 
-.modal-enter-active
+.modal-scale-enter-active,
+.modal-slide-enter-active
 	& .modal-window
 		&__bg
 			transition: opacity .3s ease
@@ -107,7 +127,8 @@ export default defineComponent({
 		&__body
 			transition: transform .3s ease .15s, opacity .3s ease .15s
 
-.modal-leave-active
+.modal-scale-leave-active,
+.modal-slide-leave-active
 	& .modal-window
 		&__bg
 			transition: opacity .3s ease .15s
@@ -115,12 +136,24 @@ export default defineComponent({
 		&__body
 			transition: transform .3s ease, opacity .3s ease
 
-.modal-enter-from, .modal-leave-to
+.modal-scale-enter-from,
+.modal-scale-leave-to
 	& .modal-window
 		&__bg
 			opacity: 0
 
 		&__body
-			transform: translateY(25%)
+			transform: scale(.85)
 			opacity: 0
+
+.modal-slide-enter-from,
+.modal-slide-leave-to
+	& .modal-window
+		&__bg
+			opacity: 0
+
+		&__body
+			transform: translateY(-25%)
+			opacity: 0
+
 </style>

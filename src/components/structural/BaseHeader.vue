@@ -4,10 +4,13 @@ import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {RouteNames} from "@scripts/router/types";
 import CartBlock from "@components/cart/CartBlock.vue";
 import CoverDropdown from "@components/utils/ui/CoverDropdown.vue";
+import ContactModal from "@components/modals/ContactModal.vue";
+import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 
 export default defineComponent({
 	name: "BaseHeader",
-	components: {CoverDropdown, CartBlock, IconSVG},
+	components: {ContactModal, CoverDropdown, CartBlock, IconSVG},
+	mixins: [useModalsStore],
 	setup() {
 		return {
 			RouteNames
@@ -26,13 +29,13 @@ export default defineComponent({
 				</router-link>
 
 				<nav class="header__nav">
-					<router-link to="/" class="header__link link">Контакты</router-link>
+					<router-link :to="{name: RouteNames.CONTACTS_PAGE}" class="header__link link">Контакты</router-link>
 				</nav>
 			</div>
 
 			<div class="header__right">
 				<div class="header__actions">
-					<button class="btn header__action">
+					<button class="btn header__action" @click.prevent="openModal('contact-us-modal')">
 						<span class="btn__text">Связаться с нами</span>
 						<IconSVG name="phone" class="btn__icon"/>
 					</button>
@@ -59,6 +62,8 @@ export default defineComponent({
 			</div>
 
 		</div>
+
+		<ContactModal/>
 	</header>
 </template>
 

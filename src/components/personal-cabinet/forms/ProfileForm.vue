@@ -44,24 +44,26 @@ export default defineComponent({
 				<InputCheckbox text="Высылать мне напоминание на телефон, чтобы я не забывал оформить заказ."/>
 			</div>
 		</div>
-		<div class="form__submit">
-			<template v-if="!formEditable">
-				<button class="btn btn--color-secondary" @click="formEditable = true">
-					<span class="btn__text">Редактировать личные данные</span>
-					<IconSVG name="edit" class="btn__icon"/>
-				</button>
-				<button class="btn btn--color-secondary">
-					<span class="btn__text">Изменить пароль</span>
-				</button>
-			</template>
-			<template v-else>
-				<button class="btn btn--color-secondary">
-					<span class="btn__text">Сохранить изменения</span>
-				</button>
-				<button class="btn" @click="formEditable = false">
-					<span class="btn__text">Отменить</span>
-				</button>
-			</template>
+		<div class="form__bottom">
+			<div class="form__submit">
+				<template v-if="!formEditable">
+					<button class="btn btn--color-secondary" @click="formEditable = true">
+						<span class="btn__text">Редактировать личные данные</span>
+						<IconSVG name="edit" class="btn__icon"/>
+					</button>
+					<button class="btn btn--color-secondary">
+						<span class="btn__text">Изменить пароль</span>
+					</button>
+				</template>
+				<template v-else>
+					<button class="btn btn--color-secondary">
+						<span class="btn__text">Сохранить изменения</span>
+					</button>
+					<button class="btn" @click="formEditable = false">
+						<span class="btn__text">Отменить</span>
+					</button>
+				</template>
+			</div>
 		</div>
 	</form>
 </template>

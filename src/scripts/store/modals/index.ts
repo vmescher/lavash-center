@@ -20,6 +20,17 @@ const useModalsStore = defineStore('modals', {
 
 			this.modalsRegister.add(modalName);
 		},
+		unregisterModal(modalName: string) {
+			if (!this.modalsRegister.has(modalName)) {
+				throw new Error(`${modalName} : has not been registered`);
+			}
+
+			if (this.openedModals.has(modalName)) {
+				this.closeModal(modalName);
+			}
+
+			this.modalsRegister.delete(modalName);
+		},
 		openModal(modalName: string) {
 			if (!this.modalsRegister.has(modalName)) {
 				throw new Error(`${modalName} : has not been registered`);

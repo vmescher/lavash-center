@@ -11,10 +11,10 @@ export default defineComponent({
 			required: true,
 		},
 	},
-	data() {
-		return {
-			dropdownShown: false,
-		};
+	computed: {
+		isOpened() {
+			return this.isModalOpened(this.id);
+		},
 	},
 	mounted() {
 		try {
@@ -23,24 +23,22 @@ export default defineComponent({
 			console.error(error);
 		}
 	},
+	unmounted() {
+		try {
+			this.unregisterModal(this.id);
+		} catch (error) {
+			console.error(error);
+		}
+	},
 	methods: {
 		showDropdown() {
-			if (this.dropdownShown) {
-				return;
-			}
-
-			this.dropdownShown = true;
 			this.openModal(this.id);
 		},
 		hideDropdown() {
-			if (!this.dropdownShown) {
-				return;
-			}
 			this.closeModal(this.id);
-			this.dropdownShown = false;
 		},
 		toggleDropdown() {
-			if (this.dropdownShown) {
+			if (this.isOpened) {
 				this.hideDropdown();
 			} else {
 				this.showDropdown();
@@ -53,19 +51,19 @@ export default defineComponent({
 <template>
 	<div
 		class="cover-dropdown"
-		:class="[{ active: dropdownShown }]"
+		:class="[{ active: isOpened }]"
 		>
 
 		<transition name="cover-dropdown" :duration="450" appear>
-			<div v-if="dropdownShown" class="cover-dropdown__blackout" @click="hideDropdown"></div>
+			<div v-if="isOpened" class="cover-dropdown__blackout" @click="hideDropdown"></div>
 		</transition>
 
 		<div ref="trigger" class="cover-dropdown__trigger" @click="toggleDropdown">
-			<slot :dropdown-shown="dropdownShown"></slot>
+			<slot :dropdown-shown="isOpened"></slot>
 		</div>
 
 		<transition name="cover-dropdown" :duration="450" appear>
-			<div v-if="dropdownShown" ref="dropdown" class="cover-dropdown__body">
+			<div v-if="isOpened" ref="dropdown" class="cover-dropdown__body">
 				<div class="cover-dropdown__content">
 					<slot name="dropdown"></slot>
 				</div>

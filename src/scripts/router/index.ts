@@ -27,6 +27,16 @@ const routes: RouteRecordRaw[] = [
 		}
 	},
 	{
+		path: '/order/',
+		name: RouteNames.ORDER_PAGE,
+		component: () => import('@components/views/OrderView.vue'),
+		meta: {
+			name: 'Оформление заказа | Лаваш-Центр',
+			middleware: [],
+			layout: 'SimpleLayout'
+		}
+	},
+	{
 		path: '/personal-cabinet/',
 		name: RouteNames.PERSONAL_CABINET_PAGE,
 		component: () => import('@components/views/CabinetView.vue'),

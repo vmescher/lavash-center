@@ -1,13 +1,19 @@
 <script lang="ts">
-import {defineComponent} from 'vue';
+import {defineComponent, PropType} from 'vue';
 
 export default defineComponent({
 	name: 'FadeTransition',
+	props: {
+		mode: {
+			type: String as PropType<'in-out' | 'out-in' | ''>,
+			default: '',
+		},
+	},
 });
 </script>
 
 <template>
-	<transition name="fade">
+	<transition name="fade" :mode="mode">
 		<slot></slot>
 	</transition>
 </template>

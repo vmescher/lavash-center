@@ -97,6 +97,7 @@ export default defineComponent({
 		</template>
 
 		<DatePicker
+				color="orange"
 			v-model="value"
 			:masks="getDatePickerMasks"
 			:max-date="maxDate"
@@ -134,15 +135,14 @@ export default defineComponent({
 .input-date
 	position: relative
 
-	--calendar-icon-size: #{rem(20)}
-
 	&__input
 		flex: 1 1 auto
 		width: 100%
 		min-height: calc(2 * var(--di-border-width) + var(--di-font-size) * var(--di-line-height) + 2 * var(--di-py))
-		padding: var(--di-py) calc(var(--di-px) + var(--calendar-icon-size) + var(--di-px) / 2) var(--di-py) var(--di-px)
+		padding: var(--di-py) var(--di-px)
 
 		font-size: var(--di-font-size)
+		font-weight: var(--di-font-weight)
 		line-height: var(--di-line-height)
 		color: var(--di-color)
 
@@ -150,47 +150,66 @@ export default defineComponent({
 		border-width: var(--di-border-width)
 		border-color: var(--di-border-color)
 		border-radius: var(--di-border-radius)
-		background-color: var(--color-neutral-100)
+
+		background-color: var(--di-bg)
 
 		white-space: nowrap
 		overflow: hidden
 		text-overflow: ellipsis
-		transition: border-color .3s ease, background-color .3s ease
+		transition: border-color .3s ease, background-color .3s ease, color .3s ease
 
 		+placeholder
 			color: var(--di-placeholder-color)
 
-		+hover
-			border-color: var(--di-border-color-hover)
+			transition: color .3s ease
 
-		&:focus
-			border-color: var(--di-border-color-active)
+		&:not(:read-only)
+			+hover
+				--di-color: var(--di-color-hover)
+				--di-border-color: var(--di-border-color-hover)
+				--di-bg: var(--di-bg-hover)
+				--di-placeholder-color: var(--di-color-hover)
+
+			&:focus
+				--di-color: var(--di-color-focus)
+				--di-border-color: var(--di-border-color-focus)
+				--di-bg: var(--di-bg-focus)
+				--di-placeholder-color: var(--di-color-focus)
 
 		&:disabled
-			background-color: var(--di-bg-disabled)
-			border-color: var(--di-border-color-disabled)
-			color: var(--di-color-disabled)
+			--di-color: var(--di-color-disabled)
+			--di-border-color: var(--di-border-color-disabled)
+			--di-bg: var(--di-bg-disabled)
+			--di-placeholder-color: var(--di-color-disabled)
+
 			cursor: not-allowed
 
-			+placeholder
-				color: var(--di-color-disabled)
+			& + .input-date__icon
+				color: var(--di-border-color-disabled)
 
 		&:read-only:not(:disabled)
+			--di-color: var(--di-color-readonly)
+			--di-border-color: var(--di-border-color-readonly)
+			--di-bg: var(--di-bg-readonly)
+
 			cursor: help
+
+		&.error
+			--di-border-color: var(--di-border-color-error)
+			--di-placeholder-color: var(--di-color-error)
 
 	&__icon
 		position: absolute
-		top: 50%
+		top: calc(50% - var(--di-icon-size) / 2)
 		right: var(--di-px)
 
 		display: inline-block
-		size: var(--calendar-icon-size)
+		size: var(--di-icon-size)
 
-		color: var(--di-border-color)
+		color: var(--di-color)
 
 		transition: color .3s ease
 		pointer-events: none
-		transform: translateY(-50%)
 
 		&-image
 			display: inline-block
@@ -198,30 +217,14 @@ export default defineComponent({
 
 			mask-size: contain
 			background-color: currentColor
-			mask-image: url('@/assets/icons/calendar.svg')
-
-	+hover
-		& .input-date
-			&__icon
-				color: var(--di-border-color-hover)
-
-	&:focus-within
-		& .input-date
-			&__icon
-				color: var(--di-border-color-active)
-
-	&.disabled
-		& .input-date
-			&__icon
-				color: var(--di-border-color-disabled)
+			mask-image: url('@img/icons/calendar.svg')
 
 	&.error
-		& .input-date
-			&__input
-				border-color: var(--di-border-color-error)
-				+placeholder
-					color: var(--di-color-error)
+		--di-border-color: var(--di-border-color-error)
+		--di-placeholder-color: var(--di-color-error)
 
+		& .input-date
 			&__icon
 				color: var(--di-border-color-error)
+
 </style>

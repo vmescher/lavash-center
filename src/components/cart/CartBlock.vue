@@ -1,9 +1,15 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import CartItem from "@components/cart/CartItem.vue";
+import {RouteNames} from "@scripts/router/types";
 
 export default defineComponent({
 	name: "CartBlock",
+	setup() {
+		return {
+			RouteNames
+		}
+	},
 	components: {CartItem}
 })
 </script>
@@ -20,10 +26,10 @@ export default defineComponent({
 			<CartItem v-for="item in Array(12)" :key="item"/>
 		</div>
 		<div class="cart__bottom">
-			<button class="cart__confirm btn btn--color-secondary">
+			<router-link :to="{name: RouteNames.ORDER_PAGE}" class="cart__confirm btn btn--color-secondary">
 				<span class="btn__text">оформить заказ на</span>
 				<span class="btn__text cart__price">1 680 ₽</span>
-			</button>
+			</router-link>
 		</div>
 	</article>
 </template>

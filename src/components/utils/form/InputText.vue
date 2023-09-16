@@ -22,6 +22,10 @@ export default defineComponent({
 			type: String as PropType<'text' | 'email' | 'tel' | 'numeric'>,
 			default: () => 'text',
 		},
+		password: {
+			type: Boolean,
+			default: () => false,
+		},
 		id: {
 			type: String,
 			default: () => '',
@@ -98,7 +102,7 @@ export default defineComponent({
 			:inputmode="type"
 			:title="title"
 			:name="name"
-			type="text"
+			:type="password ? 'password': 'text'"
 			class="input-text"
 			:class="{ error: errors.length }"/>
 
@@ -170,8 +174,7 @@ export default defineComponent({
 		cursor: help
 
 	&.error
-		border-color: var(--di-border-color-error)
+		--di-border-color: var(--di-border-color-error)
+		--di-placeholder-color: var(--di-color-error)
 
-		+placeholder
-			color: var(--di-color-error)
 </style>

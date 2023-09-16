@@ -4,12 +4,11 @@ import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {RouteNames} from "@scripts/router/types";
 import CartBlock from "@components/cart/CartBlock.vue";
 import CoverDropdown from "@components/utils/ui/CoverDropdown.vue";
-import ContactModal from "@components/modals/ContactModal.vue";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 
 export default defineComponent({
 	name: "BaseHeader",
-	components: {ContactModal, CoverDropdown, CartBlock, IconSVG},
+	components: {CoverDropdown, CartBlock, IconSVG},
 	mixins: [useModalsStore],
 	setup() {
 		return {
@@ -62,8 +61,6 @@ export default defineComponent({
 			</div>
 
 		</div>
-
-		<ContactModal/>
 	</header>
 </template>
 

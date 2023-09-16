@@ -27,19 +27,18 @@ export default defineComponent({
 					</div>
 					<div class="form__inputs form__inputs--2">
 						<div class="form__input">
-							<InputText label="Как мы можем к вам обращаться?" placeholder="Введите имя и фамилию"/>
+							<InputText id="contact-form-name" label="Как мы можем к вам обращаться?" placeholder="Введите имя и фамилию"/>
 						</div>
 						<div class="form__input">
-							<InputText label="Ваш телефон" placeholder="Введите номер"/>
+							<InputText id="contact-form-email" label="Ваш телефон" placeholder="Введите номер"/>
 						</div>
 						<div class="form__input form__input--2">
-							<InputTextarea label="Комментарий" placeholder="Любая дополнительная информация или волнующий вас вопрос."/>
+							<InputTextarea id="contact-form-comment" label="Комментарий" placeholder="Любая дополнительная информация или волнующий вас вопрос."/>
 						</div>
 					</div>
 					<div class="form__bottom">
 						<p class="form__policy">
-							Нажимая кнопку «Отправить заявку»,
-							Вы <a href="#">соглашаетесь</a> с условиями <a href="#">политики обработки персональных данных</a>.
+							Нажимая кнопку «Отправить заявку», Вы&nbsp;<a href="#">соглашаетесь</a> с&nbsp;условиями <a href="#">политики обработки персональных данных</a>.
 						</p>
 						<div class="form__submit form__submit--rtl">
 							<button class="btn btn--color-tertiary">

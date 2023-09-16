@@ -19,7 +19,7 @@ export default defineComponent({
 			default: 999,
 		},
 		theme: {
-			type: String as PropType<'dark' | 'light'>,
+			type: String as PropType<'dark' | 'light' | 'bright'>,
 			default: 'dark',
 		},
 		size: {
@@ -168,6 +168,10 @@ export default defineComponent({
 		&-dark
 			--counter-color: var(--color-neutral-tertiary)
 			--counter-bg: var(--color-secondary)
+
+		&-bright
+			--counter-bg: var(--color-neutral-tertiary)
+
 
 	&--size
 		&-small

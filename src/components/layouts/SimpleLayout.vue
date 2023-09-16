@@ -9,7 +9,7 @@ import RecoverPasswordModal from "@components/auth/RecoverPasswordModal.vue";
 import NewPasswordModal from "@components/auth/NewPasswordModal.vue";
 
 export default defineComponent({
-	name: "MainLayout",
+	name: "SimpleLayout",
 	components: {
 		NewPasswordModal,
 		RecoverPasswordModal, AuthModal, ContactModal, SlideInTransition, BaseFooter, BaseHeader}
@@ -18,8 +18,6 @@ export default defineComponent({
 
 <template>
 	<div class="layout">
-		<BaseHeader/>
-
 		<router-view v-slot="{Component}">
 			<SlideInTransition mode="out-in">
 				<component :is="Component"/>
@@ -27,12 +25,6 @@ export default defineComponent({
 		</router-view>
 
 		<BaseFooter/>
-
-		<ContactModal/>
-
-		<AuthModal/>
-		<RecoverPasswordModal/>
-		<NewPasswordModal/>
 	</div>
 </template>
 

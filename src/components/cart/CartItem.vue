@@ -1,16 +1,22 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, PropType} from 'vue'
 import InputCounter from "@components/utils/form/InputCounter.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 
 export default defineComponent({
 	name: "CartItem",
-	components: {IconSVG, InputCounter}
+	components: {IconSVG, InputCounter},
+	props: {
+		theme: {
+			type: String as PropType<'big' | 'default'>,
+			default: 'default',
+		},
+	}
 })
 </script>
 
 <template>
-	<article class="cart-item">
+	<article class="cart-item" :class="`cart-item--theme-${theme}`">
 		<div class="cart-item__picture">
 			<img class="cart-item__image" src="/img/products/product-1.png" alt="Фото лаваша">
 		</div>
@@ -27,7 +33,7 @@ export default defineComponent({
 			</div>
 			<div class="cart-item__total">
 				<span class="cart-item__price">168 ₽</span>
-				<InputCounter class="cart-item__counter" theme="light" size="small"/>
+				<InputCounter class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"/>
 			</div>
 		</div>
 	</article>
@@ -108,7 +114,7 @@ export default defineComponent({
 	&__text
 		font-size: var(--fontSizeP3)
 		font-weight: 500
-		line-height: var(--fontSizeP1)
+		line-height: var(--lineHeightP1)
 		color: var(--color-neutral-secondary)
 
 	&__total
@@ -125,4 +131,28 @@ export default defineComponent({
 		text-transform: uppercase
 		text-align: center
 
+	&--theme
+		&-big
+			gap: rem(24)
+			padding-right: rem(16)
+
+			& .cart-item
+				&__picture
+					size: rem(148)
+					padding: rem(24)
+
+					background-color: var(--color-neutral-fourth)
+
+				&__name
+					font-size: var(--fontSizePBig)
+
+				&__info
+					max-width: rem(360)
+					gap: rem(12)
+
+				&__text
+					font-size: var(--fontSizeP2)
+
+				&__clear
+					opacity: 1
 </style>

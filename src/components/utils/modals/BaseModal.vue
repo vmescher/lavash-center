@@ -19,9 +19,17 @@ export default defineComponent({
 			default: false,
 		}
 	},
+	emits: ['close', 'open'],
 	computed: {
 		isOpened() {
 			return this.isModalOpened(this.id);
+		},
+	},
+	watch: {
+		isOpened(isOpened) {
+			if (isOpened) {
+				this.$emit('open');
+			}
 		},
 	},
 	mounted() {
@@ -36,12 +44,20 @@ export default defineComponent({
 
 		if(this.autoOpen) this.showModal()
 	},
+	unmounted() {
+		try {
+			this.unregisterModal(this.id);
+		} catch (error) {
+			console.error(error);
+		}
+	},
 	methods: {
 		showModal() {
 			this.openModal(this.id);
 		},
 		hideModal() {
 			this.closeModal(this.id);
+			this.$emit('close');
 		},
 		checkSupport() {
 			if (window.HTMLDialogElement) {
@@ -102,6 +118,7 @@ export default defineComponent({
 
 		overflow-y: auto
 		will-change: transform
+		+hide-scroll
 
 		+until-tablet
 			padding: rem(12)

@@ -52,7 +52,7 @@ export default defineComponent({
 		--ms-bg-disabled: var(--di-bg-disabled)
 		--ms-border-color: var(--di-border-color)
 		--ms-border-width: var(--di-border-width)
-		--ms-border-color-active: var(--di-border-color-active)
+		--ms-border-color-active: var(--di-border-color-focus)
 		--ms-border-width-active: var(--di-border-width)
 		--ms-radius: var(--di-border-radius)
 		--ms-py: var(--di-py)
@@ -60,27 +60,27 @@ export default defineComponent({
 		--ms-ring-width: 0
 		--ms-ring-color: none
 		--ms-placeholder-color: var(--di-placeholder-color)
-		--ms-max-height: #{rem(225)}
+		--ms-max-height: #{rem(230)}
 
-		--ms-spinner-color: var(--di-border-color-active)
-		--ms-caret-color: var(--di-border-color)
-		--ms-clear-color: var(--di-border-color)
-		--ms-clear-color-hover: var(--di-border-color-active)
+		--ms-spinner-color: var(--di-color)
+		--ms-caret-color: var(--di-color)
+		--ms-clear-color: var(--di-color-disabled)
+		--ms-clear-color-hover: var(--di-color)
 
 		--ms-tag-font-size: #{fluid(12, 14)}
 		--ms-tag-line-height: #{rem(20)}
 		--ms-tag-font-weight: 700
-		--ms-tag-bg: var(--color-primary-400)
-		--ms-tag-bg-disabled: var(--color-neutral-400)
-		--ms-tag-color: var(--color-neutral-100)
-		--ms-tag-color-disabled: var(--color-neutral-200)
-		--ms-tag-radius: var(--radius-s)
+		--ms-tag-bg: var(--color-secondary)
+		--ms-tag-bg-disabled: #FAF6EE
+		--ms-tag-color: var(--color-neutral-tertiary)
+		--ms-tag-color-disabled: var(--color-neutral-secondary)
+		--ms-tag-radius: #{rem(8)}
 		--ms-tag-py: #{rem(2)}
 		--ms-tag-px: #{rem(8)}
 		--ms-tag-my: #{rem(4)}
 		--ms-tag-mx: #{rem(4)}
 
-		--ms-tag-remove-radius: var(--radius-s)
+		--ms-tag-remove-radius: #{rem(8)}
 		--ms-tag-remove-py: #{rem(4)}
 		--ms-tag-remove-px: #{rem(4)}
 		--ms-tag-remove-my: 0
@@ -89,36 +89,36 @@ export default defineComponent({
 		--ms-dropdown-bg: var(--di-bg)
 		--ms-dropdown-border-color: transparent
 		--ms-dropdown-border-width: 0
-		--ms-dropdown-radius: var(--di-border-radius)
+		--ms-dropdown-radius: var(--radius-picture)
 
 		--ms-group-label-py: #{fluid(10, 14.5)}
 		--ms-group-label-px: #{fluid(12, 16)}
 		--ms-group-label-line-height: var(--di-line-height)
 		--ms-group-label-bg: transparent
 		--ms-group-label-color: var(--di-color)
-		--ms-group-label-bg-pointed: var(--color-primary-400)
-		--ms-group-label-color-pointed: var(--color-neutral-100)
-		--ms-group-label-bg-disabled: var(--color-neutral-200)
-		--ms-group-label-color-disabled: var(--color-neutral-500)
-		--ms-group-label-bg-selected: var(--color-primary-500)
-		--ms-group-label-color-selected: var(--color-neutral-100)
-		--ms-group-label-bg-selected-pointed: var(--color-primary-trans-300)
-		--ms-group-label-color-selected-pointed: var(--color-neutral-100)
-		--ms-group-label-bg-selected-disabled: var(--color-neutral-400)
-		--ms-group-label-color-selected-disabled: var(--color-neutral-200)
+		--ms-group-label-bg-pointed: #E36821
+		--ms-group-label-color-pointed: var(--color-neutral-tertiary)
+		--ms-group-label-bg-disabled: #FAF6EE
+		--ms-group-label-color-disabled: var(--color-neutral-secondary)
+		--ms-group-label-bg-selected: var(--color-secondary)
+		--ms-group-label-color-selected: var(--color-neutral-tertiary)
+		--ms-group-label-bg-selected-pointed: #BC4500
+		--ms-group-label-color-selected-pointed: var(--color-neutral-tertiary)
+		--ms-group-label-bg-selected-disabled: #FAF6EE
+		--ms-group-label-color-selected-disabled: var(--color-neutral-secondary)
 
 		--ms-option-font-size: var(--di-font-size)
 		--ms-option-line-height: var(--di-line-height)
-		--ms-option-bg-pointed: var(--color-primary-trans-100)
-		--ms-option-color-pointed: var(--color-primary-500)
-		--ms-option-bg-selected: var(--color-primary-trans-100)
-		--ms-option-color-selected: var(--color-primary-500)
-		--ms-option-bg-disabled: var(--color-transparent-30)
-		--ms-option-color-disabled: var(--color-neutral-trans-500)
-		--ms-option-bg-selected-pointed: var(--color-primary-500)
-		--ms-option-color-selected-pointed: var(--color-neutral-100)
-		--ms-option-bg-selected-disabled: var(--color-neutral-200)
-		--ms-option-color-selected-disabled: var(--color-neutral-trans-500)
+		--ms-option-bg-pointed: #E36821
+		--ms-option-color-pointed: var(--color-neutral-tertiary)
+		--ms-option-bg-selected: var(--color-secondary)
+		--ms-option-color-selected: var(--color-neutral-tertiary)
+		--ms-option-bg-disabled: #FAF6EE
+		--ms-option-color-disabled: var(--color-neutral-secondary)
+		--ms-option-bg-selected-pointed: #BC4500
+		--ms-option-color-selected-pointed: var(--color-neutral-tertiary)
+		--ms-option-bg-selected-disabled: #FAF6EE
+		--ms-option-color-selected-disabled: var(--color-neutral-secondary)
 		--ms-option-py: #{fluid(10, 14.5)}
 		--ms-option-px: #{fluid(12, 16)}
 
@@ -129,8 +129,6 @@ export default defineComponent({
 		transition: border-color .3s ease
 
 		&.is-open
-			--ms-caret-color: var(--di-border-color-active)
-
 			border-radius: var(--ms-radius)
 
 		&.is-disabled:not(.is-readonly)
@@ -164,24 +162,24 @@ export default defineComponent({
 				min-height: calc(var(--ms-font-size) * var(--ms-line-height) + 2 * var(--ms-py))
 
 			&-caret
-				size: rem(20)
+				size: var(--di-icon-size)
 
-				mask-image: url('@/assets/icons/chevron-down.svg')
+				mask-image: url('@img/icons/chevron-down.svg')
 
 			&-clear
-				size: rem(20)
+				size: var(--di-icon-size)
 				padding: 0
 				margin: 0 calc(var(--ms-px) / 2) 0 0
 
 				&-icon
 					size: 100%
 
-					mask-image: url('@/assets/icons/close.svg')
+					mask-image: url('@img/icons/close.svg')
 
 			&-spinner
-				size: rem(20)
+				size: var(--di-icon-size)
 
-				mask-image: url('@/assets/icons/spinner.svg')
+				mask-image: url('@img/icons/spinner.svg')
 
 			&-dropdown
 				padding: fluid(4, 8)

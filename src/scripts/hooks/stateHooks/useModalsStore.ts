@@ -11,6 +11,7 @@ export const useModalsStore = {
 	methods: {
 		...mapActions(modalsStore, {
 			registerModal: 'registerModal',
+			unregisterModal: 'unregisterModal',
 			openModal: 'openModal',
 			closeModal: 'closeModal',
 		}),

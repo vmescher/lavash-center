@@ -51,16 +51,16 @@ export default defineComponent({
 						<span class="btn__text">Редактировать личные данные</span>
 						<IconSVG name="edit" class="btn__icon"/>
 					</button>
-					<button class="btn btn--color-secondary">
+					<button class="btn">
 						<span class="btn__text">Изменить пароль</span>
 					</button>
 				</template>
 				<template v-else>
+					<button class="btn" @click="formEditable = false">
+						<span class="btn__text">Не сохранять</span>
+					</button>
 					<button class="btn btn--color-secondary">
 						<span class="btn__text">Сохранить изменения</span>
-					</button>
-					<button class="btn" @click="formEditable = false">
-						<span class="btn__text">Отменить</span>
 					</button>
 				</template>
 			</div>

@@ -59,7 +59,7 @@ export default defineComponent({
 
 	&--default
 		&::after
-			border-color: var(--color-primary-500) var(--color-primary-500) var(--color-neutral-300)
+			border-color: var(--color-secondary) var(--color-secondary) #FAF6EE
 
 	&--dark
 		&::after

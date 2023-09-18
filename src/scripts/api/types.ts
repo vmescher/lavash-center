@@ -5,10 +5,8 @@ export type BaseResponse<T> = {
 };
 
 export type ErrorResponse = {
-	data: null;
-	error: {
-		code: number;
-		message: string;
-	};
-	success: boolean;
+	code: number;
+	message: string;
+	success: false;
+	time: number;
 };

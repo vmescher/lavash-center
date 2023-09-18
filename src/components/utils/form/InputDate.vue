@@ -97,8 +97,8 @@ export default defineComponent({
 		</template>
 
 		<DatePicker
-				color="orange"
 			v-model="value"
+			color="orange"
 			:masks="getDatePickerMasks"
 			:max-date="maxDate"
 			:min-date="minDate">
@@ -139,7 +139,7 @@ export default defineComponent({
 		flex: 1 1 auto
 		width: 100%
 		min-height: calc(2 * var(--di-border-width) + var(--di-font-size) * var(--di-line-height) + 2 * var(--di-py))
-		padding: var(--di-py) var(--di-px)
+		padding: var(--di-py) calc(var(--di-px) + var(--di-icon-size) + var(--di-px) / 2) var(--di-py) var(--di-px)
 
 		font-size: var(--di-font-size)
 		font-weight: var(--di-font-weight)

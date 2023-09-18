@@ -99,36 +99,27 @@ export default defineComponent({
 
 	&__body
 		position: absolute
-		top: calc(100% + rem(12))
+		top: calc(100% + rem(8))
 		left: 0
 		z-index: var(--z-index-dropdown)
 
+		padding: rem(16) 0
 		max-width: rem(280)
 
-	&__content
-		padding: rem(26)
-
-		background: var(--color-neutral-100)
-		border-radius: var(--radius-l)
+		background: var(--color-neutral-tertiary)
+		border-radius: var(--radius-picture)
 		border: var(--dropdown-border-width) var(--dropdown-border-style) var(--dropdown-border-color)
+		box-shadow: var(--shadow-primary-down)
 
-		+until-tablet
-			padding: rem(16)
+	&__content
+		padding: 0 rem(24)
+		max-height: rem(320)
+
+		overflow-y: auto
+		+Vscroll
 
 	&__icon
 		transition: transform .3s ease
-
-	&__nav
-		display: flex
-		flex-direction: column
-		gap: rem(12)
-
-	&__divider
-		display: block
-		width: 100%
-		height: 2px
-
-		background-color: var(--color-neutral-200)
 
 	&.active
 		& .dropdown
@@ -136,7 +127,7 @@ export default defineComponent({
 				transform: rotate(180deg)
 
 	&--bordered
-		--dropdown-border-color: var(--color-primary-500)
+		--dropdown-border-color: var(--color-neutral-secondary)
 
 	&--rtl
 		& .dropdown

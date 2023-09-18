@@ -5,11 +5,12 @@ import {RouteNames} from "@scripts/router/types";
 import CartBlock from "@components/cart/CartBlock.vue";
 import CoverDropdown from "@components/utils/ui/CoverDropdown.vue";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
+import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 
 export default defineComponent({
 	name: "BaseHeader",
 	components: {CoverDropdown, CartBlock, IconSVG},
-	mixins: [useModalsStore],
+	mixins: [useModalsStore, useUsersStore],
 	setup() {
 		return {
 			RouteNames
@@ -53,10 +54,14 @@ export default defineComponent({
 				</div>
 
 				<div class="header__actions">
-					<router-link :to="{name: RouteNames.PROFILE_PAGE}" class="link header__action">
+					<router-link v-if="isLoggedIn" :to="{name: RouteNames.PROFILE_PAGE}" class="link header__action">
 						личный кабинет
 						<IconSVG name="user" class="link__icon"/>
 					</router-link>
+					<button v-else class="link header__action" @click="openModal('auth-modal')">
+						личный кабинет
+						<IconSVG name="user" class="link__icon"/>
+					</button>
 				</div>
 			</div>
 

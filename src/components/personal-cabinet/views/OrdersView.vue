@@ -2,26 +2,34 @@
 import {defineComponent} from 'vue'
 import HistorySection from "@components/history/HistorySection.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
-import UserHistory from "@components/history/UserHistory.vue";
+import HistoryFilter from "@components/history/HistoryFilter.vue";
+import ManagerHistory from "@components/history/ManagerHistory.vue";
 
 export default defineComponent({
-	name: "HistoryView",
-	components: {UserHistory, IconSVG, HistorySection},
+	name: "OrdersView",
+	components: {ManagerHistory, HistoryFilter, IconSVG, HistorySection},
 })
 </script>
 
 <template>
 	<HistorySection>
-		<template #title>Мои заказы</template>
+		<template #title>Все заказы</template>
 
 		<template #actions>
 			<button class="btn">
 				<IconSVG name="reload" class="btn__icon"/>
 				<span class="btn__text">Обновить статусы заказов</span>
 			</button>
+			<button class="btn btn--color-secondary">
+				<span class="btn__text">Создать заказ</span>
+			</button>
 		</template>
 
-		<UserHistory/>
+		<template #filter>
+			<HistoryFilter/>
+		</template>
+
+		<ManagerHistory/>
 
 	</HistorySection>
 </template>

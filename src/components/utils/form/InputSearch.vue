@@ -1,8 +1,11 @@
 <script lang="ts">
 import {defineComponent, PropType} from 'vue';
+import InputTemplate from "@components/utils/templates/form/InputTemplate.vue";
+import {ErrorObject} from "@vuelidate/core";
 
 export default defineComponent({
 	name: 'InputSearch',
+	components: {InputTemplate},
 	props: {
 		modelValue: {
 			type: String,
@@ -20,6 +23,10 @@ export default defineComponent({
 			type: String,
 			default: () => '',
 		},
+		label: {
+			type: String,
+			default: () => '',
+		},
 		placeholder: {
 			type: String,
 			default: () => '',
@@ -31,6 +38,10 @@ export default defineComponent({
 		title: {
 			type: String,
 			default: () => '',
+		},
+		errors: {
+			type: Array as PropType<string[] | ErrorObject[]>,
+			default: () => [],
 		},
 	},
 	emits: ['update:modelValue', 'search'],
@@ -69,90 +80,95 @@ export default defineComponent({
 </script>
 
 <template>
-	<div v-click-outside="handleFocusOut" class="input-search" @focusin="handleFocusIn">
-		<div class="input-search__wrapper">
-			<input
-				:id="id"
-				v-model="value"
-				:placeholder="placeholder"
-				:disabled="disabled"
-				inputmode="text"
-				:title="title"
-				:name="name"
-				type="text"
-				class="input-search__input"/>
+	<InputTemplate :id="id" :label="label" :errors="errors">
+		<template v-if="$slots.label" #label="{ labelValue }">
+			<slot name="label" :label-value="labelValue"></slot>
+		</template>
 
-			<div class="input-search__icons">
+		<div v-click-outside="handleFocusOut" class="input-search" @focusin="handleFocusIn">
+			<div class="input-search__wrapper">
+				<input
+						:id="id"
+						v-model="value"
+						:placeholder="placeholder"
+						:disabled="disabled"
+						inputmode="text"
+						:title="title"
+						:name="name"
+						type="text"
+						class="input-search__input"/>
+
+				<div class="input-search__icons">
 				<span
-					v-if="value"
-					aria-hidden="true"
-					tabindex="0"
-					role="button"
-					class="input-search__clear"
-					@click="setValue('')"
-					@keydown.enter="setValue('')">
+						v-if="value"
+						aria-hidden="true"
+						tabindex="0"
+						role="button"
+						class="input-search__clear"
+						@click="setValue('')"
+						@keydown.enter="setValue('')">
 					<span class="input-search__clear-icon"></span>
 				</span>
-				<span
-					v-if="isFocus"
-					aria-hidden="true"
-					tabindex="0"
-					role="button"
-					class="input-search__confirm"
-					@click="handleSearch"
-					@keydown.enter="handleSearch">
-					<span class="input-search__confirm-icon"></span>
-				</span>
-				<span
-					v-else
-					aria-hidden="true"
-					tabindex="0"
-					role="button"
-					class="input-search__lens"
-					:class="{ disabled: disabled }"
-					@click="handleSearch"
-					@keydown.enter="handleSearch">
+					<span
+						aria-hidden="true"
+						tabindex="0"
+						role="button"
+						class="input-search__lens"
+						:class="{ disabled: disabled }"
+						@click="handleSearch"
+						@keydown.enter="handleSearch">
 					<span class="input-search__lens-icon"></span>
 				</span>
+				</div>
+			</div>
+			<div v-show="tooltips.length && isFocus" class="input-search__dropdown">
+				<ul class="input-search__tooltips">
+					<li
+							v-for="tooltip in tooltips"
+							:key="tooltip"
+							tabindex="0"
+							role="button"
+							class="input-search__tooltip"
+							@click="setValue(tooltip)"
+							@keydown.enter="setValue(tooltip)">
+						{{ tooltip }}
+					</li>
+				</ul>
 			</div>
 		</div>
-		<div v-show="tooltips.length && isFocus" class="input-search__dropdown">
-			<ul class="input-search__tooltips">
-				<li
-					v-for="tooltip in tooltips"
-					:key="tooltip"
-					tabindex="0"
-					role="button"
-					class="input-search__tooltip"
-					@click="setValue(tooltip)"
-					@keydown.enter="setValue(tooltip)">
-					{{ tooltip }}
-				</li>
-			</ul>
-		</div>
-	</div>
+
+		<template v-if="$slots.action" #action>
+			<slot name="action"></slot>
+		</template>
+
+		<template v-if="$slots.underInput" #underInput>
+			<slot name="underInput"></slot>
+		</template>
+
+	</InputTemplate>
 </template>
 
 <style lang="sass">
 .input-search
 	position: relative
 
-	--search-lens-size: #{rem(20)}
-	--search-clear-size: #{rem(20)}
-	--search-confirm-size: #{rem(20)}
+	flex: 1 1 auto
+	width: 100%
 
 	&__wrapper
 		position: relative
 		display: flex
-		min-width: rem(250)
+		min-width: rem(400)
+
 
 	&__input
 		flex: 1 1 auto
 		width: 100%
 		min-height: calc(2 * var(--di-border-width) + var(--di-font-size) * var(--di-line-height) + 2 * var(--di-py))
-		padding: var(--di-py) calc(var(--search-confirm-size) + var(--search-clear-size) + var(--di-px) / 2 + var(--di-px)) var(--di-py) var(--di-px)
+		padding: var(--di-py) calc(var(--di-icon-size) * 2 + var(--di-px) / 2 + var(--di-px)) var(--di-py) var(--di-px)
 
 		font-size: var(--di-font-size)
+		font-weight: var(--di-font-weight)
 		line-height: var(--di-line-height)
 		color: var(--di-color)
 
@@ -160,47 +176,65 @@ export default defineComponent({
 		border-width: var(--di-border-width)
 		border-color: var(--di-border-color)
 		border-radius: var(--di-border-radius)
+
 		background-color: var(--di-bg)
 
 		white-space: nowrap
 		overflow: hidden
 		text-overflow: ellipsis
-		transition: border-color .3s ease, background-color .3s ease
+		transition: border-color .3s ease, background-color .3s ease, color .3s ease
 
 		+placeholder
 			color: var(--di-placeholder-color)
 
-		+hover
-			border-color: var(--di-border-color-hover)
+			transition: color .3s ease
 
-		&:focus
-			border-color: var(--di-border-color-active)
+		&:not(:read-only)
+			+hover
+				--di-color: var(--di-color-hover)
+				--di-border-color: var(--di-border-color-hover)
+				--di-bg: var(--di-bg-hover)
+				--di-placeholder-color: var(--di-color-hover)
+
+			&:focus
+				--di-color: var(--di-color-focus)
+				--di-border-color: var(--di-border-color-focus)
+				--di-bg: var(--di-bg-focus)
+				--di-placeholder-color: var(--di-color-focus)
 
 		&:disabled
-			background-color: var(--di-bg-disabled)
-			border-color: var(--di-border-color-disabled)
-			color: var(--di-color-disabled)
+			--di-color: var(--di-color-disabled)
+			--di-border-color: var(--di-border-color-disabled)
+			--di-bg: var(--di-bg-disabled)
+			--di-placeholder-color: var(--di-color-disabled)
+
 			cursor: not-allowed
 
-			+placeholder
-				color: var(--di-color-disabled)
+		&:read-only:not(:disabled)
+			--di-color: var(--di-color-readonly)
+			--di-border-color: var(--di-border-color-readonly)
+			--di-bg: var(--di-bg-readonly)
+
+			cursor: help
+
+		&.error
+			--di-border-color: var(--di-border-color-error)
+			--di-placeholder-color: var(--di-color-error)
 
 	&__icons
 		position: absolute
-		top: 50%
+		top: calc(50% - var(--di-icon-size) / 2)
 		right: var(--di-px)
 
 		display: flex
 		align-items: center
 		gap: calc(var(--di-px) / 4)
 
-		transform: translateY(-50%)
-
 	&__lens,
-	&__clear,
-	&__confirm
+	&__clear
 		flex-shrink: 0
 		flex-grow: 0
+		size: var(--di-icon-size)
 		cursor: pointer
 
 		transition: color .3s ease
@@ -208,45 +242,32 @@ export default defineComponent({
 		&-icon
 			display: inline-block
 			size: 100%
+
+			background-color: currentColor
 			mask-size: contain
 			mask-repeat: no-repeat
 
 	&__lens
-		size: var(--search-lens-size)
-		color: var(--di-border-color)
+		color: var(--di-color)
 
 		&-icon
-			background-color: currentColor
-			mask-image: url('@/assets/icons/lens.svg')
+			mask-image: url('@img/icons/search.svg')
 
 		+hover
-			color: var(--di-border-color-active)
+			color: var(--color-secondary)
 
 		&.disabled
 			cursor: not-allowed
-			color: var(--di-border-color-disabled)
+			color: var(--di-color-disabled)
 
 	&__clear
-		size: var(--search-clear-size)
-		color: var(--di-border-color)
+		color: var(--di-color-disabled)
 
 		&-icon
-			background-color: currentColor
 			mask-image: url('@/assets/icons/close.svg')
 
 		+hover
-			color: var(--di-border-color-active)
-
-	&__confirm
-		size: var(--search-clear-size)
-		color: var(--di-border-color-hover)
-
-		&-icon
-			background-color: currentColor
-			mask-image: url('@/assets/icons/arrow-right.svg')
-
-		+hover
-			color: var(--di-border-color-active)
+			color: var(--di-color)
 
 	&__dropdown
 		position: absolute
@@ -260,7 +281,7 @@ export default defineComponent({
 		padding: fluid(4, 8)
 		margin-top: calc(var(--di-border-width, 1px) * -1)
 		outline: none
-		max-height: rem(225)
+		max-height: rem(298)
 
 		border-radius: var(--di-border-radius)
 		background: var(--di-bg, #FFFFFF)
@@ -292,11 +313,12 @@ export default defineComponent({
 		cursor: pointer
 
 		+hover
-			background-color: var(--color-primary-trans-100)
+			background-color: var(--color-secondary)
 
 		&:focus
 			outline: none
 
 		&:focus-visible
-			background-color: var(--color-primary-trans-100)
+			outline: 2px solid var(--color-tertiary)
+			outline-offset: 2px
 </style>

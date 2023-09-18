@@ -1,14 +1,35 @@
 export type User = {
 	id: number;
-	active: boolean;
 	name: string;
-	surname: string;
+	lastName: string;
 	email: string;
 	phone: string;
+	workCompany: string;
+	isNotifiable: boolean;
+	role: 'client' | 'admin' | 'manager';
 };
 
-export type RegisterPayload = Pick<User, 'name' | 'phone'>;
+export type RegisterPayload = Pick<User, 'name' | 'phone' | 'lastName' | 'email'> & {
+	password: string;
+	confirmPassword: string;
+};
 
-export type UpdatePayload = Omit<User, 'id' | 'active'>;
+export type UpdatePayload = Partial<Pick<User, 'name' | 'lastName' | 'phone' | 'workCompany' | 'isNotifiable'>>;
 
-export type AuthPayload = Pick<User, 'phone'>;
+export type AuthPayload = Pick<User, 'email'> & {
+	password: string;
+};
+
+export type RecoveryPasswordPayload = Pick<User, 'email'>;
+
+export type RecoveryPasswordConfirmPayload = {
+	password: string;
+	confirmPassword: string;
+	token: string;
+}
+
+export type UpdatePasswordPayload = {
+	currentPassword: string;
+	password: string;
+	confirmPassword: string;
+}

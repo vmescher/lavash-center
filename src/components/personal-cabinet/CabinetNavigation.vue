@@ -25,6 +25,11 @@ export default defineComponent({
 					label: 'Мои заказы',
 					to: RouteNames.HISTORY_PAGE,
 					disabled: false,
+				},
+				{
+					label: 'Заказы',
+					to: RouteNames.ORDERS_PAGE,
+					disabled: false,
 				}
 			]
 		}

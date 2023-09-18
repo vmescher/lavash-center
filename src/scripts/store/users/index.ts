@@ -1,6 +1,13 @@
 import {defineStore} from 'pinia';
 import {UsersState} from '@scripts/store/users/types';
-import {AuthPayload, RegisterPayload, User} from '@scripts/api/users/types';
+import {
+	AuthPayload,
+	RecoveryPasswordConfirmPayload,
+	RecoveryPasswordPayload,
+	RegisterPayload, UpdatePasswordPayload,
+	UpdatePayload,
+	User
+} from '@scripts/api/users/types';
 import useBaseStore from '@scripts/store/base';
 import {usersApi} from '@scripts/api/users';
 import {AxiosError} from 'axios';
@@ -52,7 +59,7 @@ const useUsersStore = defineStore('users', {
 					});
 			});
 		},
-		requestRegister(data: RegisterPayload): Promise<User> {
+		requestRegister(data: RegisterPayload): Promise<true> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestRegister');
 
@@ -60,8 +67,6 @@ const useUsersStore = defineStore('users', {
 				usersApi
 					.create(data)
 					.then((response) => {
-						this.isLoggedIn = true;
-						this.userData = response.data;
 						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {
@@ -93,11 +98,87 @@ const useUsersStore = defineStore('users', {
 					});
 			});
 		},
+		requestUpdateUserData(data: UpdatePayload): Promise<User> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestUpdateUser');
+
+			return new Promise((resolve, reject) => {
+				usersApi
+					.update(data)
+					.then((response) => {
+						this.userData = response.data;
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestUpdateUser');
+					});
+			});
+		},
+		requestRecoveryPassword(data: RecoveryPasswordPayload): Promise<true> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestRecoveryPassword');
+
+			return new Promise((resolve, reject) => {
+				usersApi
+					.recoverPassword(data)
+					.then((response) => {
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestRecoveryPassword');
+					});
+			});
+		},
+		requestResetPassword(data: RecoveryPasswordConfirmPayload): Promise<true> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestResetPassword');
+
+			return new Promise((resolve, reject) => {
+				usersApi
+					.resetPassword(data)
+					.then((response) => {
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestResetPassword');
+					});
+			});
+		},
+		requestUpdatePassword(data: UpdatePasswordPayload): Promise<true> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestUpdatePassword');
+
+			return new Promise((resolve, reject) => {
+				usersApi
+					.updatePassword(data)
+					.then((response) => {
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestUpdatePassword');
+					});
+			})
+		}
 	},
 	getters: {
 		getUserId(): number | null {
 			return this.userData?.id || null;
 		},
+		isAdmin(): boolean {
+			return this.userData?.role === 'admin' || this.userData?.role === 'manager';
+		}
 	},
 });
 

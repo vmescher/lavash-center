@@ -32,11 +32,11 @@ export default defineComponent({
 			default: () => false,
 		},
 		arrowsStyle: {
-			type: String as PropType<'default' | 'simple' | 'small'>,
+			type: String as PropType<'default'>,
 			default: () => 'default',
 		},
 		colorScheme: {
-			type: String as PropType<'default' | 'light'>,
+			type: String as PropType<'default'>,
 			default: () => 'default',
 		},
 	},
@@ -61,13 +61,9 @@ export default defineComponent({
 			return (direction: 'left' | 'right') => {
 				switch (this.arrowsStyle) {
 					case 'default':
-						return direction === 'left' ? 'arrow-left' : 'arrow-right';
-					case 'simple':
 						return direction === 'left' ? 'chevron-left' : 'chevron-right';
-					case 'small':
-						return direction === 'left' ? 'chevron-left-sm' : 'chevron-right-sm';
 					default:
-						return direction === 'left' ? 'arrow-left' : 'arrow-right';
+						return direction === 'left' ? 'chevron-left' : 'chevron-right';
 				}
 			};
 		},
@@ -109,15 +105,20 @@ export default defineComponent({
 	display: flex
 	justify-content: center
 	align-items: center
-	gap: rem(4)
+	gap: rem(2)
 
 	&__button
 		display: inline-flex
 		align-items: center
 		justify-content: center
-		size: rem(32)
+		size: rem(36)
 
-		border-radius: var(--radius-l)
+		font-family: var(--font-secondary)
+		font-size: var(--fontSizeP2)
+		line-height: 1
+		font-weight: 600
+
+		border-radius: 50%
 		border: none
 		background-color: transparent
 
@@ -135,15 +136,6 @@ export default defineComponent({
 		&:disabled
 			pointer-events: none
 
-		&--number
-			font-size: var(--fontSizeP2)
-			line-height: var(--lineHeightP1)
-			font-weight: 400
-
-			&.active
-				&:focus-visible
-					outline-width: 5px
-
 		&--back,
 		&--next
 			padding: rem(4)
@@ -155,95 +147,48 @@ export default defineComponent({
 			&-default
 
 				&:focus-visible
-					outline-color: var(--color-primary-trans-100)
+					outline-color: var(--color-tertiary)
 
 				&.pagination__button
 					&--number
-						color: var(--color-neutral-900)
+						color: var(--color-primary)
 
 						+hover
-							background-color: var(--color-primary-trans-100)
+							background-color: var(--color-neutral-tertiary)
 
 						&:active
-							background-color: var(--color-primary-500)
-							color: var(--color-neutral-100)
+							background-color: var(--color-secondary)
+							color: var(--color-neutral-tertiary)
 
 						&.disabled,
 						&:disabled
-							color: var(--color-neutral-500)
+							color: var(--color-neutral-secondary)
+							background-color: var(--color-neutral-fifth)
 
 						&.active
-							background-color: var(--color-primary-500)
-							color: var(--color-neutral-100)
+							background-color: var(--color-secondary)
+							color: var(--color-neutral-tertiary)
 
-							+hover
-								background-color: var(--color-primary-400)
+							pointer-events: none
 
-							&.disabled,
-							&:disabled
-								background-color: var(--color-neutral-300)
+							&:focus-visible
+								outline: none
 
 					&--back,
 					&--next
-						color: var(--color-primary-500)
+						color: var(--color-primary)
 
 						+hover
-							color: var(--color-primary-400)
-
-						&:active
-							color: var(--color-primary-600)
+							color: var(--color-secondary)
 
 						&.disabled,
 						&:disabled
-							color: var(--color-neutral-500)
-
-			&-light
-
-				&:focus-visible
-					outline-color: var(--color-transparent-20)
-
-				&.pagination__button
-					&--number
-						color: var(--color-neutral-100)
-
-						+hover
-							background-color: var(--color-transparent-10)
-
-						&:active
-							background-color: var(--color-neutral-100)
-							color: var(--color-primary-500)
-
-						&.disabled,
-						&:disabled
-							color: var(--color-transparent-50)
-
-						&.active
-							background-color: var(--color-neutral-100)
-							color: var(--color-primary-500)
-
-							+hover
-								background-color: var(--color-transparent-80)
-
-							&.disabled,
-							&:disabled
-								background-color: var(--color-transparent-30)
-								color: var(--color-primary-500)
-
-					&--back,
-					&--next
-						color: var(--color-neutral-100)
-
-						+hover
-							color: var(--color-transparent-50)
-
-						&:active
-							color: var(--color-transparent-80)
-
-						&.disabled,
-						&:disabled
-							color: var(--color-transparent-30)
+							color: var(--color-neutral-secondary)
 
 	&__button-icon
 		display: block
-		size: 100%
+		size: rem(24)
+
+		color: currentColor
+
 </style>

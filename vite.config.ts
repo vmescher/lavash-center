@@ -30,6 +30,16 @@ export default defineConfig(({mode}) => {
 		base: BASE_URL,
 		server: {
 			port: BASE_PORT,
+			proxy: {
+				'/api': {
+					target: 'https://vh74715.rdock.ru/',
+					changeOrigin: true,
+					secure: false,
+					cookieDomainRewrite: {
+						'*': '',
+					},
+				}
+			}
 		},
 		root: SOURCE_DIR,
 		envDir: '../',

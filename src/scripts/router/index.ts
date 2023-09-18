@@ -2,10 +2,8 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router';
 import middlewarePipeline from '@scripts/router/middleware/middlewarePipeline';
 import {Middleware} from '@scripts/router/middleware/types';
 import {RouteNames} from "@scripts/router/types";
-
-// import isLoggedIn from '@scripts/router/middleware/isLoggedIn';
-// import isLogouted from '@scripts/router/middleware/isLogouted';
-// import { LayoutNames, RouteNames } from '@scripts/router/types';
+import useModalsStore from "@scripts/store/modals";
+import isLoggedIn from "@scripts/router/middleware/isLoggedIn";
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -32,7 +30,7 @@ const routes: RouteRecordRaw[] = [
 		component: () => import('@components/views/OrderView.vue'),
 		meta: {
 			name: 'Оформление заказа | Лаваш-Центр',
-			middleware: [],
+			middleware: [isLoggedIn],
 			layout: 'SimpleLayout'
 		}
 	},
@@ -43,7 +41,7 @@ const routes: RouteRecordRaw[] = [
 		redirect: {name: RouteNames.PROFILE_PAGE},
 		meta: {
 			name: 'Личный кабинет | Лаваш-Центр',
-			middleware: [],
+			middleware: [isLoggedIn],
 		},
 		children: [
 			{
@@ -52,40 +50,29 @@ const routes: RouteRecordRaw[] = [
 				component: () => import('@components/personal-cabinet/views/ProfileView.vue'),
 				meta: {
 					name: 'Личные данные | Лаваш-Центр',
-					middleware: [],
+					middleware: [isLoggedIn],
 				}
 			},
 			{
-				path: 'orders/',
+				path: 'history/',
 				name: RouteNames.HISTORY_PAGE,
 				component: () => import('@components/personal-cabinet/views/HistoryView.vue'),
 				meta: {
 					name: 'Мои заказы | Лаваш-Центр',
-					middleware: [],
+					middleware: [isLoggedIn],
+				}
+			},
+			{
+				path: 'orders/',
+				name: RouteNames.ORDERS_PAGE,
+				component: () => import('@components/personal-cabinet/views/OrdersView.vue'),
+				meta: {
+					name: 'Заказы | Лаваш-Центр',
+					middleware: [isLoggedIn],
 				}
 			}
 		]
 	}
-	// {
-	// 	path: '/auth/',
-	// 	name: RouteNames.AUTH_PAGE,
-	// 	component: () => import('@/views/AuthView.vue'),
-	// 	meta: {
-	// 		name: 'Авторизация',
-	// 		layout: LayoutNames.AUTH_LAYOUT,
-	// 		middleware: [isLogouted],
-	// 	},
-	// },
-	// {
-	// 	path: '/register/',
-	// 	name: RouteNames.REGISTER_PAGE,
-	// 	component: () => import('@/views/RegisterView.vue'),
-	// 	meta: {
-	// 		name: 'Регистрация',
-	// 		layout: LayoutNames.AUTH_LAYOUT,
-	// 		middleware: [isLogouted],
-	// 	},
-	// },
 ];
 
 const router = createRouter({
@@ -99,6 +86,14 @@ router.beforeResolve((to, _, next) => {
 	}
 	next();
 });
+
+router.afterEach((to, from) => {
+	if (from.meta.loginFailed) {
+		from.meta.loginFailed = false;
+		const modalsStore = useModalsStore();
+		modalsStore.openModal('auth-modal')
+	}
+})
 
 router.beforeEach((to, from, next) => {
 	const additionalMiddleware: Array<Middleware> = to.meta.middleware || [];

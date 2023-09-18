@@ -5,8 +5,7 @@ export enum RouteNames {
 	PERSONAL_CABINET_PAGE = 'CabinetView',
 	PROFILE_PAGE = 'ProfileView',
 	HISTORY_PAGE = 'HistoryView',
-	AUTH_PAGE = 'AuthView',
-	REGISTER_PAGE = 'RegisterView',
+	ORDERS_PAGE = 'OrdersView',
 }
 
 export type BaseRoutes = (typeof RouteNames)[keyof typeof RouteNames];
@@ -16,4 +15,4 @@ export enum LayoutNames {
 	SIMPLE_LAYOUT = 'SimpleLayout',
 }
 
-export type BaseLayouts = (typeof LayoutNames)[keyof typeof LayoutNames];
+export type BaseLayouts = 'MainLayout' | 'SimpleLayout';

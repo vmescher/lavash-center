@@ -15,7 +15,7 @@ const isLoggedIn: Middleware = ({from, next, abort}) => {
 			})
 			.catch(() => {
 				from.meta.loginFailed = true;
-				abort({name: RouteNames.AUTH_PAGE});
+				abort({name: RouteNames.MAIN_PAGE});
 			});
 	}
 };

@@ -1,5 +1,12 @@
 import BaseAPI from '@scripts/api';
-import {AuthPayload, RegisterPayload, UpdatePayload, User} from '@scripts/api/users/types';
+import {
+	AuthPayload,
+	RecoveryPasswordConfirmPayload,
+	RecoveryPasswordPayload,
+	RegisterPayload, UpdatePasswordPayload,
+	UpdatePayload,
+	User
+} from '@scripts/api/users/types';
 import {objectToFormData} from '@scripts/utils/objectToFormData';
 import {BaseResponse} from '@scripts/api/types';
 import {AxiosResponse} from 'axios';
@@ -7,13 +14,13 @@ import {AxiosResponse} from 'axios';
 class UsersApi extends BaseAPI {
 	protected endpoint = 'users';
 
-	create(data: RegisterPayload): Promise<BaseResponse<User>> {
+	create(data: RegisterPayload): Promise<BaseResponse<true>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<User>>(`${this.endpoint}/register/`, body)
-				.then((response: AxiosResponse<BaseResponse<User>>) => {
+				.post<BaseResponse<true>>(`${this.endpoint}/register/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {
@@ -40,7 +47,7 @@ class UsersApi extends BaseAPI {
 
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<User>>(`${this.endpoint}/current/`, body)
+				.post<BaseResponse<User>>(`${this.endpoint}/update/`, body)
 				.then((response: AxiosResponse<BaseResponse<User>>) => {
 					resolve(response.data);
 				})
@@ -55,7 +62,7 @@ class UsersApi extends BaseAPI {
 
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<User>>(`${this.endpoint}/logIn/`, body)
+				.post<BaseResponse<User>>(`${this.endpoint}/login/`, body)
 				.then((response: AxiosResponse<BaseResponse<User>>) => {
 					resolve(response.data);
 				})
@@ -68,7 +75,7 @@ class UsersApi extends BaseAPI {
 	logOut(): Promise<BaseResponse<null>> {
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<null>>(`${this.endpoint}/logOut/`)
+				.post<BaseResponse<null>>(`${this.endpoint}/logout/`)
 				.then((response: AxiosResponse<BaseResponse<null>>) => {
 					resolve(response.data);
 				})
@@ -76,6 +83,51 @@ class UsersApi extends BaseAPI {
 					reject(error);
 				});
 		});
+	}
+
+	recoverPassword(data: RecoveryPasswordPayload): Promise<BaseResponse<true>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<true>>(`${this.endpoint}/recovery-password/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+	resetPassword(data: RecoveryPasswordConfirmPayload): Promise<BaseResponse<true>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<true>>(`${this.endpoint}/reset-password-confirm/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	}
+
+	updatePassword(data: UpdatePasswordPayload): Promise<BaseResponse<true>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<true>>(`${this.endpoint}/update/password/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
 	}
 }
 

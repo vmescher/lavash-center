@@ -23,7 +23,7 @@ export default defineComponent({
 					value: 'delivery',
 					disabled: true
 				}
-			] as RadioTab
+			] as RadioTab[]
 		}
 	}
 })
@@ -33,7 +33,7 @@ export default defineComponent({
 	<div class="order__block">
 		<h4 class="order__title">Выберите способ получения</h4>
 
-		<RadioTabs :tabs="tabsList" v-model="tab"/>
+		<RadioTabs v-model="tab" :tabs="tabsList"/>
 	</div>
 </template>
 

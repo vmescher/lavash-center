@@ -31,6 +31,7 @@ module.exports = {
 		'no-param-reassign': 0,
 		'no-shadow': 0,
 		'@typescript-eslint/no-shadow': 2,
+		'vue/no-v-html': 0,
 		...(process.env.NODE_ENV !== 'production' ? {
 			'import/no-absolute-path': 0,
 			'import/no-unresolved': 0,

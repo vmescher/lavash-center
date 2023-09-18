@@ -5,6 +5,7 @@ export const useUsersStore = {
 	computed: {
 		...mapState(usersStore, {
 			isLoggedIn: 'isLoggedIn',
+			isAdmin: 'isAdmin',
 			getUserData: 'userData',
 			getUserId: 'getUserId',
 		}),
@@ -15,6 +16,10 @@ export const useUsersStore = {
 			requestLogOut: 'requestLogOut',
 			requestRegister: 'requestRegister',
 			requestUserData: 'requestUserData',
+			requestUpdateUserData: 'requestUpdateUserData',
+			requestUpdatePassword: 'requestUpdatePassword',
+			requestRecoveryPassword: 'requestRecoveryPassword',
+			requestResetPassword: 'requestResetPassword',
 		}),
 	},
 };

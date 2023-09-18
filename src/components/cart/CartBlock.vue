@@ -5,12 +5,12 @@ import {RouteNames} from "@scripts/router/types";
 
 export default defineComponent({
 	name: "CartBlock",
+	components: {CartItem},
 	setup() {
 		return {
 			RouteNames
 		}
 	},
-	components: {CartItem}
 })
 </script>
 

@@ -34,7 +34,7 @@ const useBaseStore = defineStore('main', {
 			let message;
 
 			if (error instanceof AxiosError) {
-				message = error.response?.data.error.message || error.message;
+				message = error.response?.data.error || error.message;
 			} else {
 				message = error;
 			}

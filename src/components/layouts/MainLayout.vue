@@ -12,7 +12,18 @@ export default defineComponent({
 	name: "MainLayout",
 	components: {
 		NewPasswordModal,
-		RecoverPasswordModal, AuthModal, ContactModal, SlideInTransition, BaseFooter, BaseHeader}
+		RecoverPasswordModal,
+		AuthModal,
+		ContactModal,
+		SlideInTransition,
+		BaseFooter,
+		BaseHeader
+	},
+	beforeRouteEnter(to, from, next) {
+		next(vm => {
+			vm.$store.commit('setPageTitle', to.meta.title)
+		})
+	},
 })
 </script>
 

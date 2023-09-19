@@ -19,11 +19,6 @@ export default defineComponent({
 		BaseFooter,
 		BaseHeader
 	},
-	beforeRouteEnter(to, from, next) {
-		next(vm => {
-			vm.$store.commit('setPageTitle', to.meta.title)
-		})
-	},
 })
 </script>
 

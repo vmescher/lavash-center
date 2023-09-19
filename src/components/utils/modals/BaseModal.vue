@@ -84,7 +84,7 @@ export default defineComponent({
 				<div class="modal-window__bg"></div>
 
 				<div class="modal-window__body wrapper" @click.self="hideModal">
-					<slot :close="hideModal"></slot>
+					<slot :close="hideModal" :open="showModal"></slot>
 				</div>
 			</dialog>
 		</transition>

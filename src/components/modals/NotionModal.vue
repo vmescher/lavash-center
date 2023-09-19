@@ -24,7 +24,7 @@ export default defineComponent({
 		},
 		closeButton: {
 			type: String,
-			default: ''
+			default: 'Понятно'
 		},
 	},
 	emits: ['close'],
@@ -40,7 +40,7 @@ export default defineComponent({
 
 			<h3 v-if="title" class="modal__title" v-html="title"></h3>
 
-			<p v-if="text" class="popup__text" v-html="text"></p>
+			<p v-if="text" class="modal__text" v-html="text"></p>
 
 			<div class="modal__bottom">
 				<div class="modal__buttons">

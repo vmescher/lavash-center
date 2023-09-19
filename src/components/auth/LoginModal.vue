@@ -44,7 +44,7 @@ export default defineComponent({
 				},
 				password: {
 					required: this.withMessage(this.errorMessages.required, required),
-					maxLength: this.withMessage(this.errorMessages.maxLength(50), maxLength(250)),
+					maxLength: this.withMessage(this.errorMessages.maxLength(250), maxLength(250)),
 				},
 			}
 		}
@@ -73,12 +73,10 @@ export default defineComponent({
 						},
 						{ deep: true }
 					);
-
 				})
 			})
 		}
 	}
-
 })
 </script>
 

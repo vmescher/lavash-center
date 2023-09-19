@@ -4,6 +4,7 @@ import {Middleware} from '@scripts/router/middleware/types';
 import {RouteNames} from "@scripts/router/types";
 import useModalsStore from "@scripts/store/modals";
 import isLoggedIn from "@scripts/router/middleware/isLoggedIn";
+import withUserData from "@scripts/router/middleware/withUserData";
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -12,8 +13,18 @@ const routes: RouteRecordRaw[] = [
 		component: () => import('@components/views/MainView.vue'),
 		meta: {
 			name: 'Каталог | Лаваш-Центр',
-			middleware: [],
+			middleware: [withUserData],
 		},
+	},
+	{
+		path: '/recovery-password/',
+		name: RouteNames.RECOVERY_PASS_PAGE,
+		redirect: to => ({ name: RouteNames.MAIN_PAGE, query: { passToken: to.query.token } })
+	},
+	{
+		path: '/register-confirm/',
+		name: RouteNames.REGISTER_CONFIRM_PAGE,
+		redirect: () => ({ name: RouteNames.MAIN_PAGE })
 	},
 	{
 		path: '/contacts/',
@@ -21,7 +32,7 @@ const routes: RouteRecordRaw[] = [
 		component: () => import('@components/views/ContactsView.vue'),
 		meta: {
 			name: 'Контакты | Лаваш-Центр',
-			middleware: [],
+			middleware: [withUserData],
 		}
 	},
 	{

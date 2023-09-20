@@ -3,7 +3,7 @@ import useBaseStore from "@scripts/store/base";
 import {productsApi} from "@scripts/api/products";
 import {AxiosError} from "axios";
 import {ErrorResponse} from "@scripts/api/types";
-import {Product} from "@scripts/api/products/types";
+import {Product, ProductCategory} from "@scripts/api/products/types";
 import {ProductsState} from "@scripts/store/products/types";
 
 const useProductsStore = defineStore('products', {
@@ -32,7 +32,7 @@ const useProductsStore = defineStore('products', {
 			})
 		},
 
-		requestCategories(): Promise<Product[]> {
+		requestCategories(): Promise<ProductCategory[]> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestCategories');
 

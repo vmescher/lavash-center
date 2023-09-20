@@ -12,7 +12,7 @@ export default defineComponent({
 	mixins: [useProductsStore, useBasketStore],
 	data() {
 		return {
-			activeTab: 'all',
+			activeTab: 'all' as string | number,
 		}
 	},
 	computed: {
@@ -41,7 +41,7 @@ export default defineComponent({
 			return result;
 		},
 		productCards() {
-			if (this.activeTab === 'all') {
+			if (this.activeTab === 'all' || typeof this.activeTab === 'string') {
 				return this.getProducts;
 			}
 

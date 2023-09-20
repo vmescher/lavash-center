@@ -1,7 +1,9 @@
-export const imageLoadHandler = {
+import {ComponentOptionsMixin} from "vue";
+
+export const imageLoadHandler : ComponentOptionsMixin = {
 	data() {
 		return {
-			imageLoadError: false,
+			imageLoadError: false as boolean
 		};
 	},
 	methods: {

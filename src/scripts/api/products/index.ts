@@ -6,7 +6,7 @@ import { Product, ProductCategory } from "@scripts/api/products/types";
 class ProductsApi extends BaseAPI {
 	protected endpoint = 'products';
 
-	read(): Promise<AxiosResponse<BaseResponse<Product[]>>> {
+	read(): Promise<BaseResponse<Product[]>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<Product[]>>(`${this.endpoint}/list/`)
@@ -19,7 +19,7 @@ class ProductsApi extends BaseAPI {
 		})
 	}
 
-	readCategories(): Promise<AxiosResponse<BaseResponse<ProductCategory[]>>> {
+	readCategories(): Promise<BaseResponse<ProductCategory[]>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<ProductCategory[]>>(`${this.endpoint}/categories/list/`)

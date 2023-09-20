@@ -12,7 +12,7 @@ import {objectToFormData} from "@scripts/utils/objectToFormData";
 class BasketApi extends BaseAPI {
 	protected endpoint = 'baskets';
 
-	read(): Promise<AxiosResponse<BaseResponse<ProductInBasket[]>>> {
+	read(): Promise<BaseResponse<ProductInBasket[]>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<ProductInBasket[]>>(`${this.endpoint}/list/`)
@@ -25,7 +25,7 @@ class BasketApi extends BaseAPI {
 		})
 	}
 
-	addToBasket(data: AddProductPayload): Promise<AxiosResponse<BaseResponse<ProductInBasket[]>>> {
+	addToBasket(data: AddProductPayload): Promise<BaseResponse<ProductInBasket[]>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
@@ -40,7 +40,7 @@ class BasketApi extends BaseAPI {
 		})
 	}
 
-	deleteFromBasket(data: DeleteProductPayload): Promise<AxiosResponse<BaseResponse<ProductInBasket[]>>> {
+	deleteFromBasket(data: DeleteProductPayload): Promise<BaseResponse<ProductInBasket[]>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
@@ -55,7 +55,7 @@ class BasketApi extends BaseAPI {
 		})
 	}
 
-	changeQuantity(data: ChangeProductQuantityPayload): Promise<AxiosResponse<BaseResponse<ProductInBasket[]>>> {
+	changeQuantity(data: ChangeProductQuantityPayload): Promise<BaseResponse<ProductInBasket[]>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ class BasketApi extends BaseAPI {
 		})
 	}
 
-	clearBasket(): Promise<AxiosResponse<BaseResponse<ProductInBasket[]>>> {
+	clearBasket(): Promise<BaseResponse<ProductInBasket[]>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.post<BaseResponse<ProductInBasket[]>>(`${this.endpoint}/clear/`)

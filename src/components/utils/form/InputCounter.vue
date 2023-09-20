@@ -68,7 +68,7 @@ export default defineComponent({
 				this.value -= 1;
 			}
 		},
-		inputHandler(e: InputEvent) {
+		inputHandler(e: Event) {
 			const target = e.target as HTMLInputElement;
 			let value = Number(target.value);
 

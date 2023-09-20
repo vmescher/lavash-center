@@ -2,14 +2,55 @@
 import {defineComponent, PropType} from 'vue'
 import InputCounter from "@components/utils/form/InputCounter.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
+import {ProductInBasket} from "@scripts/api/basket/types";
+import debounce from "@scripts/utils/debounce";
+import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
+import {imageLoadHandler} from "@scripts/mixins/imageLoadHandler";
 
 export default defineComponent({
 	name: "CartItem",
 	components: {IconSVG, InputCounter},
+	mixins: [useBasketStore, imageLoadHandler],
 	props: {
+		productData: {
+			type: Object as PropType<ProductInBasket>,
+			required: true,
+			default: () => ({}),
+		},
 		theme: {
 			type: String as PropType<'big' | 'default'>,
 			default: 'default',
+		},
+	},
+	data() {
+		return {
+			changeQuantityHandler: debounce(this.changeQuantity, 500),
+		}
+	},
+	computed: {
+		getProductPrice(): string {
+			return this.productData.price.toLocaleString('ru-RU', {
+				style: 'currency',
+				currency: 'RUB',
+				minimumFractionDigits: 0,
+				maximumFractionDigits: 2,
+			})
+		},
+		productQuantity() {
+			return this.getBasketProductById(this.productData.id)?.quantity || 0;
+		}
+	},
+	methods: {
+		deleteFromBasket(): void {
+			this.requestDeleteFromBasket({
+				productId: this.productData.id,
+			})
+		},
+		changeQuantity(value: number): void {
+			this.requestChangeQuantity({
+				productId: this.productData.id,
+				quantity: value,
+			})
 		},
 	}
 })
@@ -18,22 +59,22 @@ export default defineComponent({
 <template>
 	<article class="cart-item" :class="`cart-item--theme-${theme}`">
 		<div class="cart-item__picture">
-			<img class="cart-item__image" src="/img/products/product-1.png" alt="Фото лаваша">
+			<img v-if="!imageLoadError && productData.picture" class="cart-item__image" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
 		</div>
 		<div class="cart-item__body">
 			<div class="cart-item__clear">
-				<button class="link link--color-secondary">
+				<button class="link link--color-secondary" @click="deleteFromBasket">
 					<IconSVG name="close" class="link__icon"/>
 				</button>
 			</div>
 
 			<div class="cart-item__info">
-				<p class="cart-item__name">Лаваш острый красный тонкий на огне</p>
-				<span class="cart-item__text">100 г/шт</span>
+				<p class="cart-item__name">{{ productData.name }}</p>
+				<span class="cart-item__text">{{ productData.unit }}</span>
 			</div>
 			<div class="cart-item__total">
-				<span class="cart-item__price">168 ₽</span>
-				<InputCounter class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"/>
+				<span class="cart-item__price">{{ getProductPrice }}</span>
+				<InputCounter :model-value="productQuantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</div>
 	</article>

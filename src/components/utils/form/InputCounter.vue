@@ -27,7 +27,7 @@ export default defineComponent({
 			default: 'default',
 		}
 	},
-	emits: ['update:modelValue'],
+	emits: ['update:modelValue', 'increment', 'decrement', 'change'],
 	data() {
 		return {
 			currentValue: 1,
@@ -58,14 +58,30 @@ export default defineComponent({
 	methods: {
 		increment() {
 			if (this.value < this.max) {
+				this.$emit('increment', this.value + 1);
 				this.value += 1;
 			}
 		},
 		decrement() {
 			if (this.value > this.min) {
+				this.$emit('decrement', this.value - 1);
 				this.value -= 1;
 			}
 		},
+		inputHandler(e: InputEvent) {
+			const target = e.target as HTMLInputElement;
+			let value = Number(target.value);
+
+			if (value < this.min) {
+				value = this.min;
+			}
+
+			if (value > this.max) {
+				value = this.max;
+			}
+
+			this.$emit('change', value);
+		}
 	},
 })
 </script>
@@ -77,7 +93,7 @@ export default defineComponent({
 			<IconSVG name="minus" class="counter__button-icon"/>
 		</button>
 
-		<input v-model="value" class="counter__input" type="number" :min="min" :max="max"/>
+		<input v-model="value" class="counter__input" type="number" :min="min" :max="max" @input="inputHandler"/>
 
 		<button class="counter__button" @click.prevent="increment">
 			<IconSVG name="plus" class="counter__button-icon"/>

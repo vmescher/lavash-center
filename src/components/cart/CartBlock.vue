@@ -2,15 +2,27 @@
 import {defineComponent} from 'vue'
 import CartItem from "@components/cart/CartItem.vue";
 import {RouteNames} from "@scripts/router/types";
+import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 
 export default defineComponent({
 	name: "CartBlock",
 	components: {CartItem},
+	mixins: [useBasketStore],
 	setup() {
 		return {
 			RouteNames
 		}
 	},
+	computed: {
+		getBasketTotalPriceFormatted(): string {
+			return this.getBasketTotalPrice.toLocaleString('ru-RU', {
+				style: 'currency',
+				currency: 'RUB',
+				minimumFractionDigits: 0,
+				maximumFractionDigits: 2,
+			})
+		}
+	}
 })
 </script>
 
@@ -18,17 +30,17 @@ export default defineComponent({
 	<article class="cart">
 		<div class="cart__top">
 			<h4 class="cart__title">Корзина</h4>
-			<button class="cart__clear link">
+			<button class="cart__clear link" @click="requestClearBasket">
 				очистить корзину
 			</button>
 		</div>
 		<div class="cart__items">
-			<CartItem v-for="item in Array(12)" :key="item"/>
+			<CartItem v-for="product in getBasket" :key="product.id" :product-data="product"/>
 		</div>
 		<div class="cart__bottom">
 			<router-link :to="{name: RouteNames.ORDER_PAGE}" class="cart__confirm btn btn--color-secondary">
 				<span class="btn__text">оформить заказ на</span>
-				<span class="btn__text cart__price">1 680 ₽</span>
+				<span class="btn__text cart__price">{{ getBasketTotalPriceFormatted }}</span>
 			</router-link>
 		</div>
 	</article>

@@ -5,6 +5,7 @@ import {RouteNames} from "@scripts/router/types";
 import useModalsStore from "@scripts/store/modals";
 import isLoggedIn from "@scripts/router/middleware/isLoggedIn";
 import withUserData from "@scripts/router/middleware/withUserData";
+import withBasketOnly from "@scripts/router/middleware/withBasketOnly";
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -41,7 +42,7 @@ const routes: RouteRecordRaw[] = [
 		component: () => import('@components/views/OrderView.vue'),
 		meta: {
 			name: 'Оформление заказа | Лаваш-Центр',
-			middleware: [isLoggedIn],
+			middleware: [isLoggedIn, withBasketOnly],
 			layout: 'SimpleLayout'
 		}
 	},

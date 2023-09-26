@@ -38,6 +38,11 @@ export default defineConfig(({mode}) => {
 					cookieDomainRewrite: {
 						'*': '',
 					},
+				},
+				'/upload': {
+					target: 'https://vh74715.rdock.ru/',
+					changeOrigin: true,
+					secure: false,
 				}
 			}
 		},

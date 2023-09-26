@@ -6,6 +6,7 @@ const errorMessages = {
 	phone: 'Некорректный номер телефона',
 	maxLength: (max: number) => `Максимальное количество символов ${max}`,
 	minLength: (min: number) => `Минимальное количество символов ${min}`,
+	minDate: (date: Date) => `Дата не может быть раньше ${date.toLocaleDateString()}`,
 }
 
 export { errorMessages };

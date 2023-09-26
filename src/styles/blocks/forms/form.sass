@@ -54,7 +54,8 @@
 		display: flex
 		align-items: flex-start
 		justify-content: space-between
-		gap: rem(48)
+		flex-wrap: wrap
+		gap: rem(24) rem(48)
 
 	&__policy
 		flex: 0 1 rem(390)
@@ -75,6 +76,11 @@
 
 		&--rtl
 			justify-content: flex-end
+
+		&--full
+			flex: 0 1 100%
+			& > *
+				flex: 1 1 auto
 
 	&__underhint
 		font-size: var(--fontSizeP3)

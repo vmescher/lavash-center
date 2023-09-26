@@ -4,7 +4,15 @@ import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 
 export default defineComponent({
 	name: "MainBanner",
-	components: {IconSVG}
+	components: {IconSVG},
+	methods: {
+		scrollToCatalog() {
+			const catalog = document.getElementById('products')
+			if (catalog) {
+				catalog.scrollIntoView({behavior: 'smooth'})
+			}
+		}
+	}
 })
 </script>
 
@@ -24,11 +32,11 @@ export default defineComponent({
 					<p class="main-banner__text">На протяжении 12 лет предоставляем лаваши <br>более чем 200 заведениям города.</p>
 
 					<div class="main-banner__actions">
-						<a href="#products" class="main-banner__action btn btn--color-secondary">Смотреть товары</a>
+						<a href="#products" class="main-banner__action btn btn--color-secondary" @click.prevent="scrollToCatalog">Смотреть товары</a>
 					</div>
 				</div>
 
-				<a href="#products" class="main-banner__anchor btn btn--rounded">
+				<a href="#products" class="main-banner__anchor btn btn--rounded" @click.prevent="scrollToCatalog">
 					<IconSVG class="main-banner__anchor-arrow btn__icon" name="arrow-down"/>
 				</a>
 

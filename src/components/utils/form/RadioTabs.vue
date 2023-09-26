@@ -16,6 +16,10 @@ export default defineComponent({
 			type: [String, Number],
 			default: () => null,
 		},
+		name: {
+			type: String,
+			default: 'radio-tabs',
+		},
 		tabs: {
 			type: Array as PropType<RadioTab[]>,
 			required: true,
@@ -51,7 +55,7 @@ export default defineComponent({
 					<span v-if="tab.description" class="radio-tab__description">{{ tab.description }}</span>
 					<span v-if="tab.note" class="radio-tab__note">{{ tab.note }}</span>
 					<span class="radio-tab__checkmark"></span>
-					<input v-model="value" type="radio" :value="tab.value" :disabled="tab.disabled" name="radio-tabs" class="radio-tab__input">
+					<input v-model="value" type="radio" :value="tab.value" :disabled="tab.disabled" :name="name" class="radio-tab__input">
 				</label>
 			</li>
 		</ul>

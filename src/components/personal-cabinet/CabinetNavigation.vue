@@ -4,10 +4,13 @@ import BaseTabs, {RouterTab} from "@components/utils/ui/BaseTabs.vue";
 import {RouteNames} from "@scripts/router/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import SectionTitle from "@components/utils/templates/structural/SectionTitle.vue";
+import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
+import ConfirmModal from "@components/modals/ConfirmModal.vue";
 
 export default defineComponent({
 	name: "CabinetNavigation",
-	components: {SectionTitle, IconSVG, BaseTabs},
+	components: {ConfirmModal, SectionTitle, IconSVG, BaseTabs},
+	mixins: [useUsersStore],
 	setup() {
 		return {
 			RouteNames
@@ -33,6 +36,15 @@ export default defineComponent({
 				}
 			]
 		}
+	},
+	methods: {
+		logout() {
+			this.$refs.logoutConfirm.show().then(() => {
+				this.requestLogOut().then(() => {
+					this.$router.push({name: RouteNames.MAIN_PAGE})
+				})
+			}).catch(() => {})
+		}
 	}
 })
 </script>
@@ -47,16 +59,17 @@ export default defineComponent({
 				</nav>
 
 				<div class="cabinet-navigation__actions">
-					<button class="link">
+					<button class="link" @click="logout">
 						Выйти из профиля
 						<IconSVG class="link__icon" name="exit"/>
 					</button>
 				</div>
 
+				<ConfirmModal id="logout-confirm" ref="logoutConfirm" title="Вы уверены, что хотите выйти?" confirm-button="Да, выйти" cancel-button="Остаться"/>
+
 			</section>
 		</template>
 	</SectionTitle>
-
 </template>
 
 <style scoped lang="sass">

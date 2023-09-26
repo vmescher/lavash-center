@@ -5,7 +5,7 @@ import BaseModal from "@components/utils/modals/BaseModal.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 
 export default defineComponent({
-	name: "ModalConfirm",
+	name: "ConfirmModal",
 	components: {IconSVG, BaseModal},
 	mixins: [useModalsStore],
 	props: {

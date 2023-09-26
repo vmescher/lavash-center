@@ -5,7 +5,6 @@ export type User = {
 	email: string;
 	phone: string;
 	workCompany: string;
-	isNotifiable: boolean;
 	role: 'client' | 'admin' | 'manager';
 };
 
@@ -14,7 +13,7 @@ export type RegisterPayload = Pick<User, 'name' | 'phone' | 'lastName' | 'email'
 	confirmPassword: string;
 };
 
-export type UpdatePayload = Partial<Pick<User, 'name' | 'lastName' | 'phone' | 'workCompany' | 'isNotifiable'>>;
+export type UpdatePayload = Partial<Pick<User, 'name' | 'lastName' | 'phone' | 'workCompany'>>;
 
 export type AuthPayload = Pick<User, 'email'> & {
 	password: string;

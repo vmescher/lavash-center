@@ -114,8 +114,7 @@ const useBasketStore = defineStore('basket', {
 						useMainStore.stopLoading('requestClearBasket');
 					});
 			})
-		}
-
+		},
 	},
 	getters: {
 		getBasketProductById(): (id: number) => ProductInBasket | null {
@@ -129,6 +128,9 @@ const useBasketStore = defineStore('basket', {
 		},
 		getBasketTotalPrice(): number {
 			return this.basket.reduce((total, product) => total + product.price * product.quantity, 0);
+		},
+		isDeliveryFree(): boolean {
+			return this.basket.reduce((total, product) => total + product.quantity, 0) >= 20;
 		}
 	}
 });

@@ -4,12 +4,11 @@ import BaseTabs, {Tab} from "@components/utils/ui/BaseTabs.vue";
 import ProductCard from "@components/catalog/ProductCard.vue";
 import CartBlock from "@components/cart/CartBlock.vue";
 import {useProductsStore} from "@scripts/hooks/stateHooks/useProductsStore";
-import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 
 export default defineComponent({
 	name: "MainCatalog",
 	components: {CartBlock, ProductCard, BaseTabs},
-	mixins: [useProductsStore, useBasketStore],
+	mixins: [useProductsStore],
 	data() {
 		return {
 			activeTab: 'all' as string | number,
@@ -49,9 +48,12 @@ export default defineComponent({
 		}
 	},
 	created() {
-		this.requestCategories();
-		this.requestProducts();
-		this.requestBasket();
+		if (this.getCategories.length === 0) {
+			this.requestCategories();
+		}
+		if (this.getProducts.length === 0) {
+			this.requestProducts();
+		}
 	}
 })
 </script>

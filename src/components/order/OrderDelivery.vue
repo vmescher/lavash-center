@@ -1,30 +1,46 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import RadioTabs, {RadioTab} from "@components/utils/form/RadioTabs.vue";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 
 export default defineComponent({
 	name: "OrderDelivery",
 	components: {RadioTabs},
+	mixins: [useOrdersStore],
+	props: {
+		modelValue: {
+			type: Number,
+			default: null,
+		},
+	},
+	emits: ['update:modelValue'],
 	data() {
 		return {
-			tab: 'pickup',
-			tabsList: [
-				{
-					title: 'Самовывоз',
-					description: 'Самовывоз осуществляется по адресу г. Челябинск, ул. Шашлычная, д. 24',
-					note: 'Бесплатно',
-					value: 'pickup',
-					disabled: false
-				},
-				{
-					title: 'Доставка',
-					description: 'Оформление курьерской доставки возможно при заказе от 10 товаров. Доставка осуществляется только по городам Челябинск и Копейск.',
-					note: 'Бесплатно',
-					value: 'delivery',
-					disabled: true
-				}
-			] as RadioTab[]
+			currentValue: null as number | null,
 		}
+	},
+	computed: {
+		tabsList(): RadioTab[] {
+			return this.getDeliveryTypes.map((item) => ({
+				title: item.name,
+				description: item.description,
+				note: item.cost,
+				value: item.id,
+				disabled: item.xmlId === 'courier' ? !this.isDeliveryFree : false,
+			}));
+		},
+		value: {
+			get(): number | null {
+				return this.modelValue ?? this.currentValue;
+			},
+			set(value: number | null) {
+				this.currentValue = value;
+				this.$emit('update:modelValue', value);
+			}
+		}
+	},
+	created() {
+		if (!this.getDeliveryTypes.length) this.requestDeliveryTypes();
 	}
 })
 </script>
@@ -33,7 +49,7 @@ export default defineComponent({
 	<div class="order__block">
 		<h4 class="order__title">Выберите способ получения</h4>
 
-		<RadioTabs v-model="tab" :tabs="tabsList"/>
+		<RadioTabs v-model="value" :tabs="tabsList"/>
 	</div>
 </template>
 

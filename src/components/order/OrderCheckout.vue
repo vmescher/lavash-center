@@ -6,7 +6,13 @@ import OrderDelivery from "@components/order/OrderDelivery.vue";
 
 export default defineComponent({
 	name: "OrderCheckout",
-	components: {OrderDelivery, OrderForm, OrderCart}
+	components: {OrderDelivery, OrderForm, OrderCart},
+	emits: ['submit'],
+	data() {
+		return {
+			deliveryTypeId: 1,
+		}
+	}
 })
 </script>
 
@@ -14,8 +20,8 @@ export default defineComponent({
 	<section class="order">
 		<div class="order__wrapper wrapper">
 			<OrderCart/>
-			<OrderDelivery/>
-			<OrderForm/>
+			<OrderDelivery v-model="deliveryTypeId"/>
+			<OrderForm :delivery-type-id="deliveryTypeId" @submit="$emit('submit')"/>
 		</div>
 	</section>
 </template>

@@ -93,6 +93,9 @@ export default defineComponent({
 		display: flex
 		flex-direction: column
 
+		& > *:only-child
+			height: 100%
+
 	&__blackout
 		position: fixed
 		top: 0

@@ -56,7 +56,7 @@ export default defineComponent({
 	<div class="product-card">
 		<div class="product-card__body">
 			<div class="product-card__picture">
-				<img class="product-card__image" :class="{'product-card__image--hidden' : !imageLoadError || !productData.picture }" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
+				<img class="product-card__image" :class="{'product-card__image--hidden' : imageLoadError || !productData.picture }" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
 			</div>
 			<div class="product-card__content">
 				<div class="product-card__info">

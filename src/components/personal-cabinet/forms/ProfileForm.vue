@@ -84,7 +84,7 @@ export default defineComponent({
 			})
 		},
 		submitForm() {
-			this.v$.$validate().then((result) => {
+			this.v$.formData.$validate().then((result) => {
 				if (!result) return;
 
 				this.requestUpdateUserData({
@@ -100,7 +100,7 @@ export default defineComponent({
 		toggleFormEditable() {
 			if (this.formEditable) {
 				this.hydrateUserData();
-				this.v$.$reset();
+				this.v$.formData.$reset();
 			}
 
 			this.formEditable = !this.formEditable;
@@ -122,7 +122,7 @@ export default defineComponent({
 				<InputText id="user-lastName" v-model="formData.lastName" :errors="v$.formData.lastName.$errors" label="Фамилия" placeholder="Введите фамилию" :read-only="!formEditable"/>
 			</div>
 			<div class="form__input">
-				<InputText id="user-email" v-model="formData.email" :errors="v$.formData.email.$errors" label="E-mail" placeholder="Введите e-mail" type="email" :read-only="!formEditable"/>
+				<InputText id="user-email" v-model="formData.email" :errors="v$.formData.email.$errors" label="E-mail" :disabled="formEditable" placeholder="Введите e-mail" type="email" :read-only="!formEditable"/>
 			</div>
 			<div class="form__input">
 				<InputText id="user-phone" v-model="formData.phone" :errors="v$.formData.phone.$errors" label="Телефон" placeholder="Введите телефон" type="tel" mask-type="phoneMask" :read-only="!formEditable"/>
@@ -150,7 +150,7 @@ export default defineComponent({
 					<button class="btn" type="button" @click="toggleFormEditable">
 						<span class="btn__text">Не сохранять</span>
 					</button>
-					<button class="btn btn--color-secondary" type="submit" :disabled="(v$.$error && v$.$dirty) || isAppLoading">
+					<button class="btn btn--color-secondary" type="submit" :disabled="(v$.formData.$error && v$.formData.$dirty) || isAppLoading">
 						<span class="btn__text">Сохранить изменения</span>
 					</button>
 				</template>

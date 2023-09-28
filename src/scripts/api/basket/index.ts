@@ -70,11 +70,11 @@ class BasketApi extends BaseAPI {
 		})
 	}
 
-	clearBasket(): Promise<BaseResponse<ProductInBasket[]>> {
+	clearBasket(): Promise<BaseResponse<true>> {
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<ProductInBasket[]>>(`${this.endpoint}/clear/`)
-				.then((response: AxiosResponse<BaseResponse<ProductInBasket[]>>) => {
+				.post<BaseResponse<true>>(`${this.endpoint}/clear/`)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {

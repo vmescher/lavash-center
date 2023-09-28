@@ -104,7 +104,7 @@ const useBasketStore = defineStore('basket', {
 				basketApi
 					.clearBasket()
 					.then((response) => {
-						this.basket = response.data;
+						this.basket = [];
 						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {

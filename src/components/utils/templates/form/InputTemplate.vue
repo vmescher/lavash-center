@@ -65,7 +65,7 @@ export default defineComponent({
 		min-width: rem(250)
 		display: flex
 		align-items: center
-		gap: rem(8)
+		gap: rem(12)
 
 	&__errors
 		margin-top: rem(8)

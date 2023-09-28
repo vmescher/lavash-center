@@ -58,7 +58,7 @@ export default defineComponent({
 	},
 	methods: {
 		submitForm() {
-			this.v$.$validate().then((result) => {
+			this.v$.formData.$validate().then((result) => {
 				if (!result) return;
 
 				this.requestUpdatePassword({
@@ -85,7 +85,7 @@ export default defineComponent({
 			})
 		},
 		resetForm() {
-			this.v$.$reset();
+			this.v$.formData.$reset();
 			this.formData = {
 				currentPassword: '',
 				password: '',
@@ -125,7 +125,7 @@ export default defineComponent({
 						<button class="btn" type="button" @click="close">
 							<span class="btn__text">Не сохранять</span>
 						</button>
-						<button class="btn btn--color-secondary" type="submit" :disabled="(v$.$error && v$.$dirty) || isAppLoading">
+						<button class="btn btn--color-secondary" type="submit" :disabled="(v$.formData.$error && v$.formData.$dirty) || isAppLoading">
 							<span class="btn__text">Сохранить изменения</span>
 						</button>
 					</div>

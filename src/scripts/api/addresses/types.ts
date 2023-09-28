@@ -1,6 +1,6 @@
 export type Address = {
 	id: number;
-	name: string;
+	address: string;
 }
 
 export type SaveAddressesPayload = {

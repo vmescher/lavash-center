@@ -2,10 +2,17 @@ import {MaskOptions} from 'maska';
 
 type MaskType = 'phoneMask' | 'decimalMask' | 'integerMask';
 
-const phoneMask: MaskOptions = {
-	mask: '+7 (###) ###-##-##',
+const phoneMask: MaskInputOptions = {
+	mask: '+# (###) ###-##-##',
+	preProcess: (value: string) => {
+		if (value.startsWith('9') || value.startsWith('+9')) {
+			return value.replace(/^9|^\+\d/, '79');
+		}
+		return value.replace(/^\d|^\+\d/, '7');
+	},
 	eager: true,
 };
+
 
 const decimalMask: MaskOptions = {
 	mask: '0.9',

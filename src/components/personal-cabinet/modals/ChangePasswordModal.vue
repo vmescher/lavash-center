@@ -58,7 +58,7 @@ export default defineComponent({
 	},
 	methods: {
 		submitForm() {
-			this.v$.formData.$validate().then((result) => {
+			this.v$.formData.$validate().then((result: boolean) => {
 				if (!result) return;
 
 				this.requestUpdatePassword({

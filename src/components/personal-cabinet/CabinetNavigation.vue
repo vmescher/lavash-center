@@ -39,11 +39,14 @@ export default defineComponent({
 	},
 	methods: {
 		logout() {
-			this.$refs.logoutConfirm.show().then(() => {
-				this.requestLogOut().then(() => {
-					this.$router.push({name: RouteNames.MAIN_PAGE})
+			const logoutConfirmModal = this.$refs.logoutConfirm as typeof ConfirmModal
+			if (logoutConfirmModal) {
+				logoutConfirmModal.show().then(() => {
+					this.requestLogOut().then(() => {
+						this.$router.push({name: RouteNames.MAIN_PAGE})
+					})
 				})
-			}).catch(() => {})
+			}
 		}
 	}
 })

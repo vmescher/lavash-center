@@ -84,7 +84,7 @@ export default defineComponent({
 			})
 		},
 		submitForm() {
-			this.v$.formData.$validate().then((result) => {
+			this.v$.formData.$validate().then((result: boolean) => {
 				if (!result) return;
 
 				this.requestUpdateUserData({

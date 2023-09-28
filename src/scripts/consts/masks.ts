@@ -1,4 +1,4 @@
-import {MaskOptions} from 'maska';
+import {MaskInputOptions, MaskOptions} from 'maska';
 
 type MaskType = 'phoneMask' | 'decimalMask' | 'integerMask';
 

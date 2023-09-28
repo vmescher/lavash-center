@@ -96,7 +96,7 @@ const useBasketStore = defineStore('basket', {
 			})
 		},
 
-		requestClearBasket(): Promise<ProductInBasket[]> {
+		requestClearBasket(): Promise<true> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestClearBasket');
 

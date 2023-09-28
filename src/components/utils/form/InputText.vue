@@ -11,7 +11,7 @@ export default defineComponent({
 	mixins: [getMask],
 	props: {
 		modelValue: {
-			type: [String, Number],
+			type: [String, Number] as PropType<string | number | null>,
 			default: () => null,
 		},
 		unmaskAsNumber: {
@@ -70,7 +70,7 @@ export default defineComponent({
 	emits: ['update:modelValue'],
 	computed: {
 		value: {
-			get(): string | number {
+			get(): string | number | null {
 				return this.modelValue;
 			},
 			set(value: string) {

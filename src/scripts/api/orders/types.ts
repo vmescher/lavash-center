@@ -42,7 +42,7 @@ export type ReadOrdersParams = {
 
 export type CreateOrderPayload = {
 	deliveryTypeId: number;
-	date: string;
+	date: string | Date;
 	time?: string;
 	address?: string;
 }

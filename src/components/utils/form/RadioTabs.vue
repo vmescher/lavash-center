@@ -13,7 +13,7 @@ export default defineComponent({
 	name: "RadioTabs",
 	props: {
 		modelValue: {
-			type: [String, Number],
+			type: [String, Number] as PropType<string | number | null>,
 			default: () => null,
 		},
 		name: {
@@ -34,7 +34,7 @@ export default defineComponent({
 	},
 	computed: {
 		value: {
-			get(): number | string {
+			get(): number | string | null {
 				return this.modelValue ?? this.activeTab;
 			},
 			set(value: string | number) {

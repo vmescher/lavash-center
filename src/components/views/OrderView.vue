@@ -11,19 +11,16 @@ export default defineComponent({
 	name: "OrderView",
 	components: {ConfirmModal, OrderCheckout, SectionTitle, BackHeader},
 	mixins: [useBasketStore],
-	beforeRouteLeave(to, from, next) {
+	beforeRouteLeave() {
 		if (this.isFormSubmitted) {
 			this.requestBasket();
-			next()
-		} else {
-			this.$refs.confirmLeave.show().then((res: boolean) => {
-				if (res) {
-					next()
-				} else {
-					next(false)
-				}
-			})
+			return true;
 		}
+
+		const confirmLeaveModal = this.$refs.confirmLeave as typeof ConfirmModal;
+		if (!confirmLeaveModal) return true;
+
+		return confirmLeaveModal.show().then(() => true).catch(() => false);
 	},
 	setup() {
 		return {

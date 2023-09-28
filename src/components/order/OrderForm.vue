@@ -6,7 +6,7 @@ import TimeSelect from "@components/utils/selects/TimeSelect.vue";
 // import AddressSelect from "@components/utils/selects/AddressSelect.vue";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import InputText from "@components/utils/form/InputText.vue";
-import {helpers, maxLength, minLength, minValue, required, requiredIf} from "@vuelidate/validators";
+import {helpers, maxLength, minLength, required, requiredIf} from "@vuelidate/validators";
 import {errorMessages} from "@scripts/consts/validation";
 import useVuelidate from "@vuelidate/core";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
@@ -53,7 +53,6 @@ export default defineComponent({
 			formData: {
 				date: {
 					required: this.withMessage(this.errorMessages.required, required),
-					minValue: this.withMessage(this.errorMessages.minDate(new Date()), minValue(new Date())),
 				},
 				time: {
 					requiredIf: this.withMessage(this.errorMessages.required, requiredIf(() => this.deliveryTypeId === 1)),
@@ -89,12 +88,12 @@ export default defineComponent({
 				if (!result) return;
 
 				this.requestCreateOrder({
-					date: this.formData.date,
+					date: this.formData.date as Date,
 					...(this.deliveryTypeId === 1 && {
-						time: this.formData.time,
+						time: this.formData.time as string,
 					}),
 					...(this.deliveryTypeId === 2 && {
-						address: this.formData.address,
+						address: this.formData.address as string,
 					}),
 					deliveryTypeId: this.deliveryTypeId,
 				}).then(() => {

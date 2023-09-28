@@ -12,7 +12,7 @@ export default defineComponent({
 	},
 	props: {
 		modelValue: {
-			type: [String, Date],
+			type: [String, Date] as PropType<string | Date | null>,
 			default: () => null,
 		},
 		id: {
@@ -78,7 +78,7 @@ export default defineComponent({
 			};
 		},
 		value: {
-			get(): Date | string {
+			get(): Date | string | null {
 				return this.modelValue ?? this.date;
 			},
 			set(value: Date) {

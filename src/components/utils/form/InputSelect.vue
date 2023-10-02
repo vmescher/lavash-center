@@ -34,6 +34,10 @@ export default defineComponent({
 		<template v-if="$slots.action" #action>
 			<slot name="action"></slot>
 		</template>
+
+		<template v-if="$slots.underInput" #underInput>
+			<slot name="underInput"></slot>
+		</template>
 	</InputTemplate>
 </template>
 

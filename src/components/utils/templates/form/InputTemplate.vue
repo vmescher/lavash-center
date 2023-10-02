@@ -71,10 +71,10 @@ export default defineComponent({
 		margin-top: rem(8)
 
 	&__error
-		font-size: var(--fontSizeP3)
-		line-height: var(--lineHeightP1)
-		font-weight: 500
-		color: var(--color-negative)
+		font-size: var(--di-error-font-size)
+		line-height: var(--di-error-line-height)
+		font-weight: var(--di-error-font-weight)
+		color: var(--di-error-color)
 
 	&__bottom
 		margin-top: rem(8)

@@ -6,3 +6,7 @@ export type Address = {
 export type SaveAddressesPayload = {
 	addresses: string[];
 }
+
+export type FindAddressesPayload = {
+	query: string;
+}

@@ -11,6 +11,7 @@ export const useAddressesStore = {
 		...mapActions(addressesStore, {
 			requestAddresses: 'requestAddresses',
 			requestSaveAddresses: 'requestSaveAddresses',
+			requestFindAddress: 'requestFindAddress',
 		}),
 	},
 };

@@ -4,7 +4,7 @@ import {addressesApi} from "@scripts/api/addresses";
 import {AxiosError} from "axios";
 import {ErrorResponse} from "@scripts/api/types";
 import {AddressesState} from "@scripts/store/addresses/types";
-import {Address, SaveAddressesPayload} from "@scripts/api/addresses/types";
+import {Address, FindAddressesPayload, SaveAddressesPayload} from "@scripts/api/addresses/types";
 
 const useAddressesStore = defineStore('addresses', {
 	state: (): AddressesState => ({
@@ -27,6 +27,25 @@ const useAddressesStore = defineStore('addresses', {
 					})
 					.finally(() => {
 						useMainStore.stopLoading('requestAddresses');
+					});
+			})
+		},
+
+		requestFindAddress(params: FindAddressesPayload): Promise<string[]> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestFindAddress');
+
+			return new Promise((resolve, reject) => {
+				addressesApi
+					.find(params)
+					.then((response) => {
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestFindAddress');
 					});
 			})
 		},

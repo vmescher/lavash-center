@@ -2,16 +2,33 @@ import BaseAPI from '@scripts/api';
 import {AxiosResponse} from 'axios';
 import {BaseResponse} from '@scripts/api/types';
 import {objectToFormData} from "@scripts/utils/objectToFormData";
-import {Address, SaveAddressesPayload} from "@scripts/api/addresses/types";
+import {Address, FindAddressesPayload, SaveAddressesPayload} from "@scripts/api/addresses/types";
 
 class AddressesApi extends BaseAPI {
 	protected endpoint = 'addresses';
+
+	protected mapEndpoint = 'maps';
 
 	read(): Promise<BaseResponse<Address[]>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<Address[]>>(`${this.endpoint}/list/`)
 				.then((response: AxiosResponse<BaseResponse<Address[]>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	find(params: FindAddressesPayload): Promise<BaseResponse<string[]>> {
+		return new Promise((resolve, reject) => {
+			this.http
+				.get<BaseResponse<string[]>>(`${this.mapEndpoint}/addresses/`, {
+					params
+				})
+				.then((response: AxiosResponse<BaseResponse<string[]>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {

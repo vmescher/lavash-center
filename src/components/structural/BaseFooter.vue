@@ -2,10 +2,12 @@
 import {defineComponent} from 'vue'
 import {RouteNames} from "@scripts/router/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
+import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 
 export default defineComponent({
 	name: "BaseFooter",
 	components: {IconSVG},
+	mixins: [useModalsStore],
 	setup() {
 		return {
 			RouteNames
@@ -41,7 +43,7 @@ export default defineComponent({
 					</address>
 
 					<div class="footer__actions">
-						<button class="btn btn--color-secondary footer__action">
+						<button class="btn btn--color-secondary footer__action" @click.prevent="openModal('contact-us-modal')">
 							<span class="btn__text">Связаться с нами</span>
 							<IconSVG name="phone" class="btn__icon"/>
 						</button>

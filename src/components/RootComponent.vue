@@ -4,6 +4,7 @@ import BaseLoader from "@components/utils/ui/BaseLoader.vue";
 import {BaseLayouts} from "@scripts/router/types";
 import FadeTransition from "@components/utils/transitions/FadeTransition.vue";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
+import {useContentsStore} from "@scripts/hooks/stateHooks/useContentsStore";
 
 export default defineComponent({
 	name: 'RootComponent',
@@ -19,7 +20,7 @@ export default defineComponent({
 			loader: () => import('@components/layouts/SimpleLayout.vue'),
 		}),
 	},
-	mixins: [useBaseStore],
+	mixins: [useBaseStore, useContentsStore],
 	computed: {
 		layout(): BaseLayouts {
 			if (this.$route.meta.layout) {
@@ -28,6 +29,9 @@ export default defineComponent({
 			return 'MainLayout' as BaseLayouts;
 		},
 	},
+	created() {
+		this.requestLegalDocs();
+	}
 });
 </script>
 

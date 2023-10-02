@@ -1,6 +1,5 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import InputText from "@components/utils/form/InputText.vue";
 import {useAddressesStore} from "@scripts/hooks/stateHooks/useAddressesStore";
 import {helpers, maxLength, minLength, required} from "@vuelidate/validators";
 import {errorMessages} from "@scripts/consts/validation";
@@ -8,10 +7,11 @@ import useVuelidate from "@vuelidate/core";
 import {Address} from "@scripts/api/addresses/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
+import AddressSelect from "@components/utils/selects/AddressSelect.vue";
 
 export default defineComponent({
 	name: "AddressesForm",
-	components: {IconSVG, InputText},
+	components: {AddressSelect, IconSVG},
 	mixins: [useAddressesStore, useBaseStore],
 	setup() {
 		const { withMessage } = helpers;
@@ -57,6 +57,7 @@ export default defineComponent({
 					.then((addresses) => {
 						if (!addresses.length) {
 							this.formData.addresses = [{id: 1, address: ''}];
+							this.formEditable = true;
 						} else {
 							this.formData.addresses = addresses;
 						}
@@ -87,7 +88,6 @@ export default defineComponent({
 					addresses: this.formData.addresses.map((address) => address.address)
 				}).then(() => {
 					this.toggleFormEditable();
-					this.requestAddresses();
 				}).catch(() => {
 					this.toggleFormEditable();
 				})
@@ -104,7 +104,7 @@ export default defineComponent({
 		</div>
 		<div class="form__inputs form__inputs--2">
 			<div v-for="(address, index) in formData.addresses" :key="address.id" class="form__input form__input--new-row">
-				<InputText v-model="address.address" :errors="v$.formData.addresses.$errors.length ? v$.formData.addresses.$each.$response.$errors[index].address : []" :read-only="!formEditable" :label="`Адрес доставки #${index + 1}`" placeholder="Введите адрес">
+				<AddressSelect  v-model="address.address" :errors="v$.formData.addresses.$errors.length ? v$.formData.addresses.$each.$response.$errors[index].address : []" :read-only="!formEditable" :label="`Адрес доставки #${index + 1}`" placeholder="Введите адрес" :with-user-addresses="false">
 					<template v-if="index === 0 && !getAddresses.length" #underInput>
 						<span class="form__underhint">Заполните поле, чтобы мы знали куда доставлять ваш заказ.</span>
 					</template>
@@ -113,7 +113,7 @@ export default defineComponent({
 							<IconSVG name="close" class="link__icon" />
 						</button>
 					</template>
-				</InputText>
+				</AddressSelect>
 			</div>
 		</div>
 		<div class="form__bottom">
@@ -125,7 +125,7 @@ export default defineComponent({
 				<button v-else class="btn btn--color-secondary" type="submit" :disabled="(v$.formData.$error && v$.formData.$dirty) || isAppLoading">
 					<span class="btn__text">сохранить изменения</span>
 				</button>
-				<button v-if="formData.addresses.length < 15" class="btn" type="button" @click="addAddress">
+				<button v-if="formData.addresses.length < 15 && getAddresses.length" class="btn" type="button" @click="addAddress">
 					<span class="btn__text">добавить еще один адрес доставки</span>
 					<IconSVG name="plus" class="btn__icon"/>
 				</button>

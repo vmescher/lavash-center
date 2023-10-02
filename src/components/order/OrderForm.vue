@@ -3,9 +3,8 @@ import {defineComponent, ref} from 'vue'
 import InputDate from "@components/utils/form/InputDate.vue";
 import BaseNotion from "@components/utils/ui/BaseNotion.vue";
 import TimeSelect from "@components/utils/selects/TimeSelect.vue";
-// import AddressSelect from "@components/utils/selects/AddressSelect.vue";
+import AddressSelect from "@components/utils/selects/AddressSelect.vue";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
-import InputText from "@components/utils/form/InputText.vue";
 import {helpers, maxLength, minLength, required, requiredIf} from "@vuelidate/validators";
 import {errorMessages} from "@scripts/consts/validation";
 import useVuelidate from "@vuelidate/core";
@@ -17,7 +16,7 @@ import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
 
 export default defineComponent({
 	name: "OrderForm",
-	components: {NotionModal, InputText, TimeSelect, BaseNotion, InputDate},
+	components: {AddressSelect, NotionModal, TimeSelect, BaseNotion, InputDate},
 	mixins: [useBasketStore, useModalsStore, useOrdersStore, useBaseStore],
 	props: {
 		deliveryTypeId: {
@@ -116,9 +115,7 @@ export default defineComponent({
 		<div class="order__form form">
 			<div class="form__inputs form__inputs--4">
 				<div v-if="deliveryTypeId === 2" class="form__input form__input--2" >
-<!--					TODO: Добавить выбор адреса -->
-<!--					<AddressSelect v-model="formData.address"/>-->
-					<InputText id="order-address" v-model="formData.address" :errors="v$.formData.address.$errors" placeholder="Введите адрес" label="Адрес доставки" />
+					<AddressSelect id="order-address" v-model="formData.address" :errors="v$.formData.address.$errors" placeholder="Введите адрес" label="Адрес доставки"/>
 				</div>
 				<div class="form__input">
 					<InputDate id="order-date" v-model="formData.date" :errors="v$.formData.date.$errors" label="Дата" placeholder="ДД.ММ.ГГГГ" :min-date="new Date()"/>

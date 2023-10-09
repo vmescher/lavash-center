@@ -1,86 +1,73 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, PropType} from 'vue'
 import BaseTableRow from "@components/utils/templates/table/BaseTableRow.vue";
 import BaseTableColumnText from "@components/utils/templates/table/table-columns/BaseTableColumnText.vue";
 import BaseTableColumnImages, {
 	TableImage
 } from "@components/utils/templates/table/table-columns/BaseTableColumnImages.vue";
 import BaseTableColumnActions from "@components/utils/templates/table/table-columns/BaseTableColumnActions.vue";
-import StatusToggler, {Status} from "@components/utils/ui/StatusToggler.vue";
+import StatusToggler from "@components/utils/ui/StatusToggler.vue";
+import {getFormattedDate} from "@scripts/mixins/getFormattedDate";
+import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
+import {Order} from "@scripts/api/orders/types";
+import {RouteNames} from "@scripts/router/types";
 
 export default defineComponent({
 	name: "UserHistoryItem",
 	components: {StatusToggler, BaseTableColumnActions, BaseTableColumnImages, BaseTableColumnText, BaseTableRow},
-	data() {
-		return {
-			images: [
-				{
-					src: '/img/products/product-1.png',
-				},
-				{
-					src: '/img/products/product-1.png',
-				},
-				{
-					src: '/img/products/product-1.png',
-				},
-				{
-					src: '/img/products/product-1.png',
-				},
-				{
-					src: '/img/products/product-1.png',
-				},
-			] as TableImage[],
-			statuses: [
-				{
-					"id": 1,
-					"name": "Новый",
-					xmlId: 'new'
-
-				},
-				{
-					"id": 2,
-					"name": "В обработке",
-					xmlId: 'in_progress'
-				},
-				{
-					"id": 3,
-					"name": "На доставке",
-					xmlId: 'on_delivery'
-				},
-				{
-					"id": 4,
-					"name": "Готов",
-					xmlId: 'ready'
-				},
-				{
-					"id": 5,
-					"name": "Отменен",
-					xmlId: 'canceled'
-				}
-			] as Status[]
+	mixins: [getFormattedDate, getFormattedPrice, useOrdersStore],
+	props: {
+		orderData: {
+			type: Object as PropType<Order>,
+			required: true,
+			default: () => null
 		}
 	},
+	setup() {
+		return {
+			RouteNames
+		}
+	},
+	computed: {
+		getOrderItemsImages(): TableImage[] {
+			return this.orderData.items.map((item) => ({
+				src: item.picture,
+				alt: item.name
+			}))
+		}
+	}
 })
 </script>
 
 <template>
-	<BaseTableRow>
-		<BaseTableColumnText>1234567890</BaseTableColumnText>
+	<router-link :to="{name: RouteNames.ORDER_DETAIL_PAGE, params: {id: orderData.id}}" custom v-slot="{navigate}">
+		<BaseTableRow @click="navigate">
+			<BaseTableColumnText>{{orderData.id}}</BaseTableColumnText>
 
-		<BaseTableColumnText type="grey">21.05.2024, 14:56</BaseTableColumnText>
+			<BaseTableColumnText type="grey">{{ getFormattedDate(orderData.dateCreate, false) }}</BaseTableColumnText>
 
-		<BaseTableColumnImages :images="images"/>
+			<BaseTableColumnImages :images="getOrderItemsImages"/>
 
-		<BaseTableColumnText>г. Челябинск, ул. Лавашная, д 13, офис 123</BaseTableColumnText>
+			<template v-if="orderData.deliveryTypeId === 1">
+				<BaseTableColumnText>Самовывоз</BaseTableColumnText>
 
-		<BaseTableColumnText>24.05.2024, 18:00</BaseTableColumnText>
+				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
+			</template>
 
-		<BaseTableColumnText type="bold">1 680 ₽</BaseTableColumnText>
+			<template v-else>
+				<BaseTableColumnText>{{ orderData.address }}</BaseTableColumnText>
 
-		<BaseTableColumnActions>
-			<StatusToggler :model-value="2" :statuses="statuses"/>
-		</BaseTableColumnActions>
-	</BaseTableRow>
+				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}</BaseTableColumnText>
+			</template>
+
+			<BaseTableColumnText type="bold" no-wrap>{{ getFormattedPrice(orderData.sum) }}</BaseTableColumnText>
+
+			<BaseTableColumnActions>
+				<StatusToggler :model-value="orderData.orderStatusId" :statuses="getOrderStatuses"/>
+			</BaseTableColumnActions>
+		</BaseTableRow>
+	</router-link>
 </template>
 
 <style scoped lang="sass">

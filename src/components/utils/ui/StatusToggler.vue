@@ -148,15 +148,15 @@ export default defineComponent({
 
 		&--color
 			&-new,
-			&-unpaid
+			&-not-paid
 				--status-toggler-color: var(--color-neutral-tertiary)
 				--status-toggler-bg: var(--color-secondary)
 
-			&-in_progress
+			&-in-processing
 				--status-toggler-color: var(--color-neutral-tertiary)
 				--status-toggler-bg: #E70
 
-			&-on_delivery
+			&-on-delivery
 				--status-toggler-color: var(--color-primary)
 				--status-toggler-bg: var(--color-tertiary)
 
@@ -169,7 +169,7 @@ export default defineComponent({
 				--status-toggler-color: var(--color-primary)
 				--status-toggler-bg: var(--color-neutral-fifth)
 
-			&-canceled
+			&-cancelled
 				--status-toggler-color: var(--color-neutral-tertiary)
 				--status-toggler-bg: var(--color-neutral-secondary)
 

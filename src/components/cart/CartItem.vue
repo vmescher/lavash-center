@@ -6,11 +6,12 @@ import {ProductInBasket} from "@scripts/api/basket/types";
 import debounce from "@scripts/utils/debounce";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import {imageLoadHandler} from "@scripts/mixins/imageLoadHandler";
+import {getFormattedPrice} from "../../scripts/mixins/getFormattedPrice";
 
 export default defineComponent({
 	name: "CartItem",
 	components: {IconSVG, InputCounter},
-	mixins: [useBasketStore, imageLoadHandler],
+	mixins: [useBasketStore, imageLoadHandler, getFormattedPrice],
 	props: {
 		productData: {
 			type: Object as PropType<ProductInBasket>,
@@ -28,14 +29,6 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		getProductPrice(): string {
-			return this.productData.price.toLocaleString('ru-RU', {
-				style: 'currency',
-				currency: 'RUB',
-				minimumFractionDigits: 0,
-				maximumFractionDigits: 2,
-			})
-		},
 		productQuantity() {
 			return this.getBasketProductById(this.productData.id)?.quantity || 0;
 		}
@@ -73,7 +66,7 @@ export default defineComponent({
 				<span class="cart-item__text">{{ productData.unit }}</span>
 			</div>
 			<div class="cart-item__total">
-				<span class="cart-item__price">{{ getProductPrice }}</span>
+				<span class="cart-item__price">{{ getFormattedPrice(productData.price) }}</span>
 				<InputCounter :model-value="productQuantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</div>

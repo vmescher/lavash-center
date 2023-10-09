@@ -28,13 +28,13 @@ export default defineComponent({
 
 				<tbody class="table__body">
 
-				<slot></slot>
+					<slot></slot>
 
-				<BaseTableRow v-if="!$slots.default && $slots.emptyText">
-					<BaseTableColumnText is-wide>
-						<slot name="emptyText"></slot>
-					</BaseTableColumnText>
-				</BaseTableRow>
+					<BaseTableRow v-if="!$slots.default && $slots.emptyText">
+						<BaseTableColumnText is-wide>
+							<slot name="emptyText"></slot>
+						</BaseTableColumnText>
+					</BaseTableRow>
 				</tbody>
 			</table>
 		</div>

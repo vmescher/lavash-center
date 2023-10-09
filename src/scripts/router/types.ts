@@ -8,6 +8,8 @@ export enum RouteNames {
 	PROFILE_PAGE = 'ProfileView',
 	HISTORY_PAGE = 'HistoryView',
 	ORDERS_PAGE = 'OrdersView',
+	ORDER_EDIT_PAGE = 'OrderEditView',
+	ORDER_DETAIL_PAGE = 'OrderDetailView',
 }
 
 export type BaseRoutes = (typeof RouteNames)[keyof typeof RouteNames];

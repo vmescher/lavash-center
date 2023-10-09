@@ -127,7 +127,7 @@ export default defineComponent({
 			<div class="form__input">
 				<InputText id="user-phone" v-model="formData.phone" :errors="v$.formData.phone.$errors" label="Телефон" placeholder="Введите телефон" type="tel" mask-type="phoneMask" :read-only="!formEditable"/>
 			</div>
-			<div class="form__input form__input--2">
+			<div v-if="!isAdmin" class="form__input form__input--2">
 				<InputText id="user-workCompany" v-model="formData.workCompany" :errors="v$.formData.workCompany.$errors" label="Название организации" placeholder="Введите название вашей фирмы" :read-only="!formEditable">
 					<template #underInput>
 						<span class="form__underhint">Заполните поле, чтобы нам было проще вас узнать.</span>

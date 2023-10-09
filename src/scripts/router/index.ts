@@ -6,6 +6,9 @@ import useModalsStore from "@scripts/store/modals";
 import isLoggedIn from "@scripts/router/middleware/isLoggedIn";
 import withUserData from "@scripts/router/middleware/withUserData";
 import withBasketOnly from "@scripts/router/middleware/withBasketOnly";
+import managerOnly from "@scripts/router/middleware/managerOnly";
+import userOnly from "@scripts/router/middleware/userOnly";
+import withOrderDataOnly from "@scripts/router/middleware/withOrderDataOnly";
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -71,8 +74,19 @@ const routes: RouteRecordRaw[] = [
 				component: () => import('@components/personal-cabinet/views/HistoryView.vue'),
 				meta: {
 					name: 'Мои заказы | Лаваш-Центр',
-					middleware: [isLoggedIn],
-				}
+					middleware: [isLoggedIn, userOnly],
+				},
+				children: [
+					{
+						path: 'order/:id/',
+						name: RouteNames.ORDER_DETAIL_PAGE,
+						component: () => import('@components/personal-cabinet/views/OrderDetailView.vue'),
+						meta: {
+							name: 'Заказ | Лаваш-Центр',
+							middleware: [isLoggedIn, userOnly, withOrderDataOnly],
+						}
+					}
+				]
 			},
 			{
 				path: 'orders/',
@@ -80,8 +94,19 @@ const routes: RouteRecordRaw[] = [
 				component: () => import('@components/personal-cabinet/views/OrdersView.vue'),
 				meta: {
 					name: 'Заказы | Лаваш-Центр',
-					middleware: [isLoggedIn],
-				}
+					middleware: [isLoggedIn, managerOnly],
+				},
+				children: [
+					{
+						path: 'order/:id/',
+						name: RouteNames.ORDER_EDIT_PAGE,
+						component: () => import('@components/personal-cabinet/views/OrderDetailView.vue'),
+						meta: {
+							name: 'Заказ | Лаваш-Центр',
+							middleware: [isLoggedIn, managerOnly, withOrderDataOnly],
+						}
+					}
+				]
 			}
 		]
 	}

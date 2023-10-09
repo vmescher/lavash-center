@@ -1,16 +1,64 @@
 import BaseAPI from '@scripts/api';
 import { AxiosResponse } from 'axios';
 import { BaseResponse } from '@scripts/api/types';
-import {CreateOrderPayload, Delivery, ReadOrdersParams, ReadOrdersResponse, Status} from "@scripts/api/orders/types";
+import {
+	CreateManagerOrderPayload,
+	CreateOrderPayload,
+	Delivery, Order,
+	ReadOrdersParams,
+	ReadOrdersResponse,
+	Status, UpdateManagerOrderPayload, UpdateOrderStatusPayload
+} from "@scripts/api/orders/types";
 import {objectToFormData} from "@scripts/utils/objectToFormData";
 
 class OrdersApi extends BaseAPI {
 	protected endpoint = 'orders';
 
+	readOrder(orderId: number): Promise<BaseResponse<Order>> {
+		return new Promise((resolve, reject) => {
+			this.http
+				.get<BaseResponse<Order>>(`${this.endpoint}/item/${orderId}/`)
+				.then((response: AxiosResponse<BaseResponse<Order>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	readManagerOrder(orderId: number): Promise<BaseResponse<Order>> {
+		return new Promise((resolve, reject) => {
+			this.http
+				.get<BaseResponse<Order>>(`${this.endpoint}/manager/item/${orderId}/`)
+				.then((response: AxiosResponse<BaseResponse<Order>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
 	readOrders(params: ReadOrdersParams): Promise<BaseResponse<ReadOrdersResponse>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<ReadOrdersResponse>>(`${this.endpoint}/list/`, {
+					params
+				})
+				.then((response: AxiosResponse<BaseResponse<ReadOrdersResponse>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	readManagerOrders(params: ReadOrdersParams): Promise<BaseResponse<ReadOrdersResponse>> {
+		return new Promise((resolve, reject) => {
+			this.http
+				.get<BaseResponse<ReadOrdersResponse>>(`${this.endpoint}/manager/list/`, {
 					params
 				})
 				.then((response: AxiosResponse<BaseResponse<ReadOrdersResponse>>) => {
@@ -29,6 +77,66 @@ class OrdersApi extends BaseAPI {
 			this.http
 				.post<BaseResponse<true>>(`${this.endpoint}/create/`, body)
 				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	createManagerOrder(data: CreateManagerOrderPayload): Promise<BaseResponse<true>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<true>>(`${this.endpoint}/manager/create/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	updateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<BaseResponse<true>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<true>>(`${this.endpoint}/manager/${orderId}/update/`, body)
+				.then((response: AxiosResponse<BaseResponse<true>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	updateManagerOrderStatus(data: UpdateOrderStatusPayload, orderId: number): Promise<BaseResponse<Partial<Order>>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<Partial<Order>>>(`${this.endpoint}/manager/${orderId}/update/order-status/`, body)
+				.then((response: AxiosResponse<BaseResponse<Partial<Order>>>) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		})
+	}
+
+	updateManagerOrderPaymentStatus(data: UpdateOrderStatusPayload, orderId: number): Promise<BaseResponse<Partial<Order>>> {
+		const body = objectToFormData(data);
+
+		return new Promise((resolve, reject) => {
+			this.http
+				.post<BaseResponse<Partial<Order>>>(`${this.endpoint}/manager/${orderId}/update/payment-status/`, body)
+				.then((response: AxiosResponse<BaseResponse<Partial<Order>>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {

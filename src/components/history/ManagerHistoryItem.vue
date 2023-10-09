@@ -1,100 +1,82 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, PropType} from 'vue'
 import BaseTableRow from "@components/utils/templates/table/BaseTableRow.vue";
 import BaseTableColumnText from "@components/utils/templates/table/table-columns/BaseTableColumnText.vue";
 import BaseTableColumnActions from "@components/utils/templates/table/table-columns/BaseTableColumnActions.vue";
 import StatusToggler, {Status} from "@components/utils/ui/StatusToggler.vue";
 import BaseTableColumnList from "@components/utils/templates/table/table-columns/BaseTableColumnList.vue";
+import {Order} from "@scripts/api/orders/types";
+import {getFormattedDate} from "@scripts/mixins/getFormattedDate";
+import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 
 export default defineComponent({
 	name: "ManagerHistoryItem",
 	components: {BaseTableColumnList, StatusToggler, BaseTableColumnActions, BaseTableColumnText, BaseTableRow},
-	data() {
-		return {
-			statuses: [
-				{
-					"id": 1,
-					"name": "Новый",
-					xmlId: 'new'
-
-				},
-				{
-					"id": 2,
-					"name": "В обработке",
-					xmlId: 'in_progress'
-				},
-				{
-					"id": 3,
-					"name": "На доставке",
-					xmlId: 'on_delivery'
-				},
-				{
-					"id": 4,
-					"name": "Готов",
-					xmlId: 'ready'
-				},
-				{
-					"id": 5,
-					"name": "Отменен",
-					xmlId: 'canceled'
-				}
-			] as Status[],
-			payStatuses: [
-				{
-					"id": 1,
-					"name": "Не оплачен",
-					xmlId: 'unpaid'
-
-				},
-				{
-					"id": 2,
-					"name": "Оплачен",
-					xmlId: 'paid'
-				}
-			] as Status[],
+	mixins: [getFormattedDate, getFormattedPrice, useOrdersStore],
+	props: {
+		orderData: {
+			type: Object as PropType<Order>,
+			required: true,
+			default: () => null
 		}
 	},
+	methods: {
+		updateOrderStatus(statusId: number) {
+			this.requestUpdateManagerOrderStatus({
+				statusId
+			}, this.orderData.id);
+		},
+		updatePaymentStatus(statusId: number) {
+			this.requestUpdateManagerOrderPaymentStatus({
+				statusId
+			}, this.orderData.id);
+		}
+	}
 })
 </script>
 
 <template>
 	<BaseTableRow>
-		<BaseTableColumnText>1234567890</BaseTableColumnText>
+		<BaseTableColumnText>{{orderData.id}}</BaseTableColumnText>
 
-		<BaseTableColumnText type="grey">21.05.2024, 14:56</BaseTableColumnText>
+		<BaseTableColumnText type="grey">{{ getFormattedDate(orderData.dateCreate, false) }}</BaseTableColumnText>
 
 		<BaseTableColumnList type="grey">
-			<li class="table-list__item">
-				<span>Лаваш острый</span>
-				<span>1 шт</span>
-			</li>
-			<li class="table-list__item">
-				<span>Лаваш итальянский</span>
-				<span>3 шт</span>
-			</li>
-			<li class="table-list__item">
-				<span>Лаваш классический</span>
-				<span>100 шт</span>
+			<li v-for="product in orderData.items" :key="product.id" class="table-list__item">
+				<span>{{ product.name }}</span>
+				<span>{{ product.quantity }} шт</span>
 			</li>
 		</BaseTableColumnList>
 
 		<BaseTableColumnText>
-			ООО Люблю лаваш очень сильно <br>
-			<a href="#" class="link link--secondary link--size-small link--color-fourth">8 900 000 00 00</a>
+			{{ orderData.client }}
+			<template v-if="orderData.contact">
+				<br>
+				<a v-if="orderData.contact" :href="`tel:${orderData.contact}`" class="link link--secondary link--size-small link--color-fourth">{{ orderData.contact }}</a>
+			</template>
 		</BaseTableColumnText>
 
-		<BaseTableColumnText>г. Челябинск, ул. Лавашная, д 13, офис 123</BaseTableColumnText>
+		<template v-if="orderData.deliveryTypeId === 1">
+			<BaseTableColumnText>Самовывоз</BaseTableColumnText>
 
-		<BaseTableColumnText no-wrap>24.05.2024, 18:00</BaseTableColumnText>
+			<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
+		</template>
 
-		<BaseTableColumnText type="bold" no-wrap>1 680 ₽</BaseTableColumnText>
+		<template v-else>
+			<BaseTableColumnText>{{ orderData.address }}</BaseTableColumnText>
+
+			<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}</BaseTableColumnText>
+		</template>
+
+		<BaseTableColumnText type="bold" no-wrap>{{ getFormattedPrice(orderData.sum) }}</BaseTableColumnText>
 
 		<BaseTableColumnActions>
-			<StatusToggler :model-value="2" is-editable :statuses="statuses"/>
+			<StatusToggler :model-value="orderData.orderStatusId" is-editable :statuses="getOrderStatuses" @update:model-value="updateOrderStatus"/>
 		</BaseTableColumnActions>
 
 		<BaseTableColumnActions>
-			<StatusToggler :model-value="2" is-editable :statuses="payStatuses"/>
+			<StatusToggler :model-value="orderData.paymentStatusId" is-editable :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus"/>
 		</BaseTableColumnActions>
 	</BaseTableRow>
 </template>

@@ -18,8 +18,15 @@ export const useOrdersStore = {
 	},
 	methods: {
 		...mapActions(ordersStore, {
+			requestOrder: 'requestOrder',
+			requestManagerOrder: 'requestManagerOrder',
 			requestOrders: 'requestOrders',
+			requestManagerOrders: 'requestManagerOrders',
 			requestCreateOrder: 'requestCreateOrder',
+			requestCreateManagerOrder: 'requestCreateManagerOrder',
+			requestUpdateManagerOrder: 'requestUpdateManagerOrder',
+			requestUpdateManagerOrderStatus: 'requestUpdateManagerOrderStatus',
+			requestUpdateManagerOrderPaymentStatus: 'requestUpdateManagerOrderPaymentStatus',
 			requestDeliveryTypes: 'requestDeliveryTypes',
 			requestPaymentStatuses: 'requestPaymentStatuses',
 			requestOrderStatuses: 'requestOrderStatuses',

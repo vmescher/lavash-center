@@ -56,19 +56,19 @@ export default defineComponent({
 				this.requestAddresses()
 					.then((addresses) => {
 						if (!addresses.length) {
-							this.formData.addresses = [{id: 1, address: ''}];
+							this.formData.addresses = [{id: 1, address: null}];
 							this.formEditable = true;
 						} else {
 							this.formData.addresses = addresses;
 						}
 					})
 					.catch(() => {
-						this.formData.addresses = [{id: 1, address: ''}]
+						this.formData.addresses = [{id: 1, address: null}]
 					})
 			}
 		},
 		addAddress() {
-			this.formData.addresses.push({id: this.formData.addresses.length + 1, address: ''})
+			this.formData.addresses.push({id: this.formData.addresses.length + 1, address: null})
 
 			if (!this.formEditable) {
 				this.toggleFormEditable();

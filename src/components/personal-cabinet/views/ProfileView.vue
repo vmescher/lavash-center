@@ -2,10 +2,12 @@
 import {defineComponent} from 'vue'
 import ProfileForm from "@components/personal-cabinet/forms/ProfileForm.vue";
 import AddressesForm from "@components/personal-cabinet/forms/AddressesForm.vue";
+import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 
 export default defineComponent({
 	name: "ProfileView",
-	components: {AddressesForm, ProfileForm}
+	components: {AddressesForm, ProfileForm},
+	mixins: [useUsersStore]
 })
 </script>
 
@@ -16,7 +18,7 @@ export default defineComponent({
 				<ProfileForm/>
 			</div>
 
-			<div class="profile__section">
+			<div v-if="!isAdmin" class="profile__section">
 				<AddressesForm/>
 			</div>
 		</div>

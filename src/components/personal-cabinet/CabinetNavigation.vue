@@ -25,15 +25,10 @@ export default defineComponent({
 					disabled: false,
 				},
 				{
-					label: 'Мои заказы',
-					to: RouteNames.HISTORY_PAGE,
+					label: this.isAdmin ? 'Заказы' : 'Мои заказы',
+					to: this.isAdmin ? RouteNames.ORDERS_PAGE : RouteNames.HISTORY_PAGE,
 					disabled: false,
 				},
-				{
-					label: 'Заказы',
-					to: RouteNames.ORDERS_PAGE,
-					disabled: false,
-				}
 			]
 		}
 	},

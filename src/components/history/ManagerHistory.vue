@@ -4,13 +4,24 @@ import BaseTable from "@components/utils/templates/table/BaseTable.vue";
 import {managerHistoryTableHead} from "@scripts/consts/tables";
 import BasePagination from "@components/utils/ui/BasePagination.vue";
 import ManagerHistoryItem from "@components/history/ManagerHistoryItem.vue";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 
 export default defineComponent({
 	name: "ManagerHistory",
 	components: {ManagerHistoryItem, BasePagination, BaseTable},
+	mixins: [useOrdersStore],
 	setup() {
 		return {
 			managerHistoryTableHead
+		}
+	},
+	created() {
+		this.requestManagerOrders();
+		if (!this.getOrderStatuses.length) {
+			this.requestOrderStatuses();
+		}
+		if (!this.getPaymentStatuses.length) {
+			this.requestPaymentStatuses();
 		}
 	}
 })
@@ -19,16 +30,16 @@ export default defineComponent({
 <template>
 	<BaseTable :table-head="managerHistoryTableHead">
 
-		<template #default>
-			<ManagerHistoryItem v-for="item in Array(10)" :key="item" />
+		<template v-if="getOrders.length" #default>
+			<ManagerHistoryItem v-for="order in getOrders" :key="order.id" :order-data="order"/>
 		</template>
 
 		<template #emptyText>
-			<p>У вас пока нет заказов</p>
+			<p>Заказов еще не поступало</p>
 		</template>
 
-		<template #pagination>
-			<BasePagination :total="100"/>
+		<template v-if="getOrdersPagination.total > getOrdersPagination.limit" #pagination>
+			<BasePagination :total="getOrdersPagination.total" :limit="getOrdersPagination.limit"/>
 		</template>
 
 	</BaseTable>

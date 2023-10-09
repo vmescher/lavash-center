@@ -21,6 +21,7 @@ export type Order = {
 	date: string;
 	time: string;
 	client: string;
+	contact: string;
 	address: string;
 	deliveryTypeId: number;
 	orderStatusId: number;
@@ -45,4 +46,21 @@ export type CreateOrderPayload = {
 	date: string | Date;
 	time?: string;
 	address?: string;
+}
+
+export type OrderProduct = {
+	id: number;
+	quantity: number;
+}
+
+export type CreateManagerOrderPayload = CreateOrderPayload & {
+	phone: string;
+	name: string;
+	products: OrderProduct[];
+}
+
+export type UpdateManagerOrderPayload = CreateManagerOrderPayload
+
+export type UpdateOrderStatusPayload = {
+	statusId: number;
 }

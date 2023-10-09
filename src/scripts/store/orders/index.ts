@@ -3,7 +3,13 @@ import useBaseStore from "@scripts/store/base";
 import {ordersApi} from "@scripts/api/orders";
 import {AxiosError} from "axios";
 import {ErrorResponse, Pagination} from "@scripts/api/types";
-import {CreateOrderPayload, Order, ReadOrdersParams, Status} from "@scripts/api/orders/types";
+import {
+	CreateManagerOrderPayload,
+	CreateOrderPayload,
+	Order,
+	ReadOrdersParams,
+	Status, UpdateManagerOrderPayload, UpdateOrderStatusPayload
+} from "@scripts/api/orders/types";
 import {OrdersState} from "@scripts/store/orders/types";
 
 const useOrdersStore = defineStore('orders', {
@@ -24,6 +30,59 @@ const useOrdersStore = defineStore('orders', {
 			Object.assign(this.pagination, pagination);
 		},
 
+		hydrateOrderData(orderData: Partial<Order>) {
+			if (this.currentOrder) {
+				Object.assign(this.currentOrder, orderData);
+			}
+
+			const orderIndex = this.orders.findIndex((order) => order.id === orderData.id);
+			if (orderIndex !== -1) {
+				Object.assign(this.orders[orderIndex], orderData);
+			}
+		},
+
+		requestOrder(orderId: number): Promise<Order> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestOrder');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.readOrder(orderId)
+					.then((response) => {
+						this.currentOrder = response.data;
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						this.currentOrder = null;
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestOrder');
+					});
+			})
+		},
+
+		requestManagerOrder(orderId: number): Promise<Order> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestManagerOrder');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.readOrder(orderId)
+					.then((response) => {
+						this.currentOrder = response.data;
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						this.currentOrder = null;
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestManagerOrder');
+					});
+			})
+		},
+
 		requestOrders(params: ReadOrdersParams): Promise<Order[]> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestOrders');
@@ -35,6 +94,7 @@ const useOrdersStore = defineStore('orders', {
 						this.orders = response.data.orders;
 						this.setOrdersPagination({
 							total: response.data.total,
+							...params
 						})
 						resolve(response.data.orders);
 					})
@@ -47,9 +107,32 @@ const useOrdersStore = defineStore('orders', {
 			})
 		},
 
+		requestManagerOrders(params: ReadOrdersParams): Promise<Order[]> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestManagerOrders');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.readManagerOrders(params)
+					.then((response) => {
+						this.orders = response.data.orders;
+						this.setOrdersPagination({
+							total: response.data.total,
+						})
+						resolve(response.data.orders);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestManagerOrders');
+					});
+			})
+		},
+
 		requestCreateOrder(data: CreateOrderPayload): Promise<true> {
 			const useMainStore = useBaseStore();
-			useMainStore.startLoading('createOrder');
+			useMainStore.startLoading('requestCreateOrder');
 
 			return new Promise((resolve, reject) => {
 				ordersApi
@@ -61,7 +144,85 @@ const useOrdersStore = defineStore('orders', {
 						reject(useMainStore.getError(error));
 					})
 					.finally(() => {
-						useMainStore.stopLoading('createOrder');
+						useMainStore.stopLoading('requestCreateOrder');
+					});
+			})
+		},
+
+		requestCreateManagerOrder(data: CreateManagerOrderPayload): Promise<true> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestCreateManagerOrder');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.createManagerOrder(data)
+					.then(() => {
+						resolve(true);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestCreateManagerOrder');
+					});
+			})
+		},
+
+		requestUpdateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<true> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestUpdateManagerOrder');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.updateManagerOrder(data, orderId)
+					.then(() => {
+						resolve(true);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestUpdateManagerOrder');
+					});
+			})
+		},
+
+		requestUpdateManagerOrderStatus(data: UpdateOrderStatusPayload, orderId: number): Promise<Partial<Order>> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestUpdateManagerOrderStatus');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.updateManagerOrderStatus(data, orderId)
+					.then((response) => {
+						this.hydrateOrderData(response.data);
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestUpdateManagerOrderStatus');
+					});
+			})
+		},
+
+		requestUpdateManagerOrderPaymentStatus(data: UpdateOrderStatusPayload, orderId: number): Promise<Partial<Order>> {
+			const useMainStore = useBaseStore();
+			useMainStore.startLoading('requestUpdateManagerOrderPaymentStatus');
+
+			return new Promise((resolve, reject) => {
+				ordersApi
+					.updateManagerOrderPaymentStatus(data, orderId)
+					.then((response) => {
+						this.hydrateOrderData(response.data);
+						resolve(response.data);
+					})
+					.catch((error: AxiosError<ErrorResponse>) => {
+						reject(useMainStore.getError(error));
+					})
+					.finally(() => {
+						useMainStore.stopLoading('requestUpdateManagerOrderPaymentStatus');
 					});
 			})
 		},

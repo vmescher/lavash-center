@@ -18,6 +18,10 @@ export default defineComponent({
 			required: true,
 			default: () => ({}),
 		},
+		editable: {
+			type: Boolean,
+			default: true,
+		},
 		theme: {
 			type: String as PropType<'big' | 'default'>,
 			default: 'default',
@@ -26,11 +30,6 @@ export default defineComponent({
 	data() {
 		return {
 			changeQuantityHandler: debounce(this.changeQuantity, 500),
-		}
-	},
-	computed: {
-		productQuantity() {
-			return this.getBasketProductById(this.productData.id)?.quantity || 0;
 		}
 	},
 	methods: {
@@ -55,7 +54,7 @@ export default defineComponent({
 			<img v-if="!imageLoadError && productData.picture" class="cart-item__image" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
 		</div>
 		<div class="cart-item__body">
-			<div class="cart-item__clear">
+			<div v-if="editable" class="cart-item__clear">
 				<button class="link link--color-secondary" @click="deleteFromBasket">
 					<IconSVG name="close" class="link__icon"/>
 				</button>
@@ -66,8 +65,8 @@ export default defineComponent({
 				<span class="cart-item__text">{{ productData.unit }}</span>
 			</div>
 			<div class="cart-item__total">
-				<span class="cart-item__price">{{ getFormattedPrice(productData.price) }}</span>
-				<InputCounter :model-value="productQuantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
+				<span class="cart-item__price">{{ getFormattedPrice(productData.price) }} <span v-if="!editable" class="cart-item__quantity">{{ productData.quantity }} шт</span></span>
+				<InputCounter v-if="editable" :model-value="productData.quantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</div>
 	</article>
@@ -78,7 +77,6 @@ export default defineComponent({
 	position: relative
 
 	display: flex
-	align-items: flex-start
 	gap: rem(20)
 
 	& + .cart-item
@@ -152,12 +150,17 @@ export default defineComponent({
 		color: var(--color-neutral-secondary)
 
 	&__total
+		margin-top: auto
 		display: flex
 		align-items: center
 		justify-content: flex-end
 		gap: rem(20)
 
 	&__price
+		display: inline-flex
+		align-items: center
+		gap: rem(8)
+
 		font-family: var(--font-secondary)
 		font-size: var(--fontSizeH4)
 		font-weight: 700
@@ -165,10 +168,21 @@ export default defineComponent({
 		text-transform: uppercase
 		text-align: center
 
+	&__quantity
+		font-family: var(--font-primary)
+		font-size: var(--fontSizeP2)
+		font-weight: 500
+		line-height: var(--lineHeightP1)
+		text-transform: lowercase
+
+		&::before
+			content: 'x'
+
+			margin-right: rem(6)
+
 	&--theme
 		&-big
 			gap: rem(24)
-			padding-right: rem(16)
 
 			& .cart-item
 				&__picture
@@ -183,6 +197,29 @@ export default defineComponent({
 				&__info
 					max-width: rem(360)
 					gap: rem(12)
+
+				&__text
+					font-size: var(--fontSizeP2)
+
+				&__clear
+					opacity: 1
+
+		&-medium
+			gap: rem(24)
+
+			& .cart-item
+				&__picture
+					size: rem(128)
+					padding: rem(16)
+
+					background-color: var(--color-neutral-fourth)
+
+				&__name
+					font-size: var(--fontSizeP1)
+
+				&__info
+					max-width: rem(360)
+					gap: rem(10)
 
 				&__text
 					font-size: var(--fontSizeP2)

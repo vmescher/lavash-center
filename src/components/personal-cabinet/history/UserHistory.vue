@@ -2,7 +2,7 @@
 import {defineComponent} from 'vue'
 import BaseTable from "@components/utils/templates/table/BaseTable.vue";
 import {userHistoryTableHead} from "@scripts/consts/tables";
-import UserHistoryItem from "@components/history/UserHistoryItem.vue";
+import UserHistoryItem from "@components/personal-cabinet/history/UserHistoryItem.vue";
 import BasePagination from "@components/utils/ui/BasePagination.vue";
 import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 

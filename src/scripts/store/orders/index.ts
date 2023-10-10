@@ -5,7 +5,7 @@ import {AxiosError} from "axios";
 import {ErrorResponse, Pagination} from "@scripts/api/types";
 import {
 	CreateManagerOrderPayload,
-	CreateOrderPayload,
+	CreateOrderPayload, Delivery,
 	Order,
 	ReadOrdersParams,
 	Status, UpdateManagerOrderPayload, UpdateOrderStatusPayload
@@ -68,7 +68,7 @@ const useOrdersStore = defineStore('orders', {
 
 			return new Promise((resolve, reject) => {
 				ordersApi
-					.readOrder(orderId)
+					.readManagerOrder(orderId)
 					.then((response) => {
 						this.currentOrder = response.data;
 						resolve(response.data);
@@ -118,6 +118,7 @@ const useOrdersStore = defineStore('orders', {
 						this.orders = response.data.orders;
 						this.setOrdersPagination({
 							total: response.data.total,
+							...params
 						})
 						resolve(response.data.orders);
 					})
@@ -249,6 +250,18 @@ const useOrdersStore = defineStore('orders', {
 
 		requestDeliveryTypes(): Promise<Status[]> {
 			const useMainStore = useBaseStore();
+
+			if (useMainStore.isActionPending('requestDeliveryTypes')) {
+				return new Promise((resolve) => {
+					const interval = setInterval(() => {
+						if (!useMainStore.isActionPending('requestDeliveryTypes')) {
+							clearInterval(interval);
+							resolve(this.deliveryTypes);
+						}
+					}, 200);
+				})
+			}
+
 			useMainStore.startLoading('requestDeliveryTypes');
 
 			return new Promise((resolve, reject) => {
@@ -287,6 +300,11 @@ const useOrdersStore = defineStore('orders', {
 			})
 		}
 	},
+	getters: {
+		getDeliveryType(): (id: number) => Delivery {
+			return (id: number) => this.deliveryTypes.find((deliveryType) => deliveryType.id === id) || null;
+		}
+	}
 });
 
 export default useOrdersStore;

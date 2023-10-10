@@ -35,7 +35,14 @@ export default defineComponent({
 				src: item.picture,
 				alt: item.name
 			}))
-		}
+		},
+		isPickupSelected() {
+			const deliveryData = this.getDeliveryType(this.orderData.deliveryTypeId);
+			return deliveryData && deliveryData.xmlId === 'pickup';
+		},
+		deliveryData() {
+			return this.getDeliveryType(this.orderData.deliveryTypeId);
+		},
 	}
 })
 </script>
@@ -49,8 +56,8 @@ export default defineComponent({
 
 			<BaseTableColumnImages :images="getOrderItemsImages"/>
 
-			<template v-if="orderData.deliveryTypeId === 1">
-				<BaseTableColumnText>Самовывоз</BaseTableColumnText>
+			<template v-if="isPickupSelected">
+				<BaseTableColumnText>{{ deliveryData?.name || '-' }}</BaseTableColumnText>
 
 				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
 			</template>

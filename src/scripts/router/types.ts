@@ -4,6 +4,7 @@ export enum RouteNames {
 	REGISTER_CONFIRM_PAGE = 'RegisterConfirmView',
 	CONTACTS_PAGE = 'ContactsView',
 	ORDER_PAGE = 'OrderView',
+	QUICK_ORDER_PAGE = 'QuickOrderView',
 	PERSONAL_CABINET_PAGE = 'CabinetView',
 	PROFILE_PAGE = 'ProfileView',
 	HISTORY_PAGE = 'HistoryView',

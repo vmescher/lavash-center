@@ -17,5 +17,9 @@ export default defineComponent({
 </template>
 
 <style scoped lang="sass">
+.table-actions
+	display: flex
+	align-items: center
+	gap: rem(8)
 
 </style>

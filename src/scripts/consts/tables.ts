@@ -2,4 +2,6 @@ const userHistoryTableHead = ['Номер заказа', 'Дата заказа'
 
 const managerHistoryTableHead = ['Номер заказа', 'Дата заказа', 'Товары в заказе', 'Контакты', 'Адрес доставки', 'Дата получения', 'Стоимость', 'Статус заказа', 'Статус оплаты']
 
-export { userHistoryTableHead, managerHistoryTableHead};
+const cartConstructorTableHead = ['Наименование товара', 'Цена, шт', 'Количество', 'Стоимость']
+
+export { userHistoryTableHead, managerHistoryTableHead, cartConstructorTableHead};

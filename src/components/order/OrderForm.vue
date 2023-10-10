@@ -13,11 +13,12 @@ import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 import NotionModal from "@components/modals/NotionModal.vue";
 import {RouteNames} from "@scripts/router/types";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
+import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
 
 export default defineComponent({
 	name: "OrderForm",
 	components: {AddressSelect, NotionModal, TimeSelect, BaseNotion, InputDate},
-	mixins: [useBasketStore, useModalsStore, useOrdersStore, useBaseStore],
+	mixins: [useBasketStore, useModalsStore, useOrdersStore, useBaseStore, getFormattedPrice],
 	props: {
 		deliveryTypeId: {
 			type: Number,
@@ -54,10 +55,10 @@ export default defineComponent({
 					required: this.withMessage(this.errorMessages.required, required),
 				},
 				time: {
-					requiredIf: this.withMessage(this.errorMessages.required, requiredIf(() => this.deliveryTypeId === 1)),
+					requiredIf: this.withMessage(this.errorMessages.required, requiredIf(() => this.isPickupSelected)),
 				},
 				address: {
-					requiredIf: this.withMessage(this.errorMessages.required, requiredIf(() => this.deliveryTypeId === 2)),
+					requiredIf: this.withMessage(this.errorMessages.required, requiredIf(() => this.isCourierSelected)),
 					minLength: this.withMessage(this.errorMessages.minLength(2), minLength(2)),
 					maxLength: this.withMessage(this.errorMessages.maxLength(250), maxLength(250)),
 				},
@@ -65,14 +66,14 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		getOrderTotalPriceFormatted(): string {
-			return this.getBasketTotalPrice.toLocaleString('ru-RU', {
-				style: 'currency',
-				currency: 'RUB',
-				minimumFractionDigits: 0,
-				maximumFractionDigits: 2,
-			})
-		}
+		isCourierSelected() {
+			const deliveryData = this.getDeliveryType(this.deliveryTypeId);
+			return deliveryData && deliveryData.xmlId === 'courier';
+		},
+		isPickupSelected() {
+			const deliveryData = this.getDeliveryType(this.deliveryTypeId);
+			return deliveryData && deliveryData.xmlId === 'pickup';
+		},
 	},
 	watch: {
 		'formData.date': {
@@ -88,10 +89,10 @@ export default defineComponent({
 
 				this.requestCreateOrder({
 					date: this.formData.date as Date,
-					...(this.deliveryTypeId === 1 && {
+					...(this.isPickupSelected && {
 						time: this.formData.time as string,
 					}),
-					...(this.deliveryTypeId === 2 && {
+					...(this.isCourierSelected && {
 						address: this.formData.address as string,
 					}),
 					deliveryTypeId: this.deliveryTypeId,
@@ -114,13 +115,13 @@ export default defineComponent({
 
 		<div class="order__form form">
 			<div class="form__inputs form__inputs--4">
-				<div v-if="deliveryTypeId === 2" class="form__input form__input--2" >
+				<div v-if="isCourierSelected" class="form__input form__input--2" >
 					<AddressSelect id="order-address" v-model="formData.address" :errors="v$.formData.address.$errors" placeholder="Введите адрес" label="Адрес доставки"/>
 				</div>
 				<div class="form__input">
 					<InputDate id="order-date" v-model="formData.date" :errors="v$.formData.date.$errors" label="Дата" placeholder="ДД.ММ.ГГГГ" :min-date="new Date()"/>
 				</div>
-				<div v-if="deliveryTypeId === 1" class="form__input">
+				<div v-if="isPickupSelected" class="form__input">
 					<TimeSelect id="order-time" v-model="formData.time" :errors="v$.formData.time.$errors" :disabled="!formData.date" :is-today="formData.date?.toLocaleDateString() === new Date().toLocaleDateString()"/>
 				</div>
 			</div>
@@ -138,7 +139,7 @@ export default defineComponent({
 		<div class="order__bottom">
 			<div class="order__total">
 				<span class="order__total-title">Итого</span>
-				<span class="order__total-value">{{ getOrderTotalPriceFormatted }}</span>
+				<span class="order__total-value">{{ getFormattedPrice(getBasketTotalPrice) }}</span>
 			</div>
 
 			<button class="order__button btn btn--color-secondary" type="submit" :disabled="(v$.$error && v$.$dirty) || isAppLoading">

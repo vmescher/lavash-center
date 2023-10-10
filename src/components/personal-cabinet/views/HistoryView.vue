@@ -1,8 +1,8 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
-import HistorySection from "@components/history/HistorySection.vue";
+import HistorySection from "@components/personal-cabinet/history/HistorySection.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
-import UserHistory from "@components/history/UserHistory.vue";
+import UserHistory from "@components/personal-cabinet/history/UserHistory.vue";
 import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 import SlideInTransition from "@components/utils/transitions/SlideInTransition.vue";
 
@@ -10,6 +10,9 @@ export default defineComponent({
 	name: "HistoryView",
 	components: {SlideInTransition, UserHistory, IconSVG, HistorySection},
 	mixins: [useOrdersStore],
+	created() {
+		if (!this.getDeliveryTypes.length) this.requestDeliveryTypes();
+	},
 	methods: {
 		reloadOrders() {
 			this.requestOrders({ offset: this.getOrdersPagination.offset, limit: this.getOrdersPagination.limit });

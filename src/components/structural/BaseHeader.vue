@@ -35,10 +35,9 @@ export default defineComponent({
 
 			<div class="header__right">
 				<div class="header__actions">
-					<button class="btn header__action" @click.prevent="openModal('contact-us-modal')">
-						<span class="btn__text">Связаться с нами</span>
-						<IconSVG name="phone" class="btn__icon"/>
-					</button>
+					<router-link class="btn header__action" :to="{name: RouteNames.QUICK_ORDER_PAGE}">
+						<span class="btn__text">Быстрый заказ</span>
+					</router-link>
 
 					<CoverDropdown id="cart-dropdown">
 						<button class="btn btn--color-secondary header__action">

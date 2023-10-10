@@ -33,7 +33,6 @@ const useAddressesStore = defineStore('addresses', {
 
 		requestFindAddress(params: FindAddressesPayload): Promise<string[]> {
 			const useMainStore = useBaseStore();
-			useMainStore.startLoading('requestFindAddress');
 
 			return new Promise((resolve, reject) => {
 				addressesApi
@@ -44,9 +43,6 @@ const useAddressesStore = defineStore('addresses', {
 					.catch((error: AxiosError<ErrorResponse>) => {
 						reject(useMainStore.getError(error));
 					})
-					.finally(() => {
-						useMainStore.stopLoading('requestFindAddress');
-					});
 			})
 		},
 

@@ -25,7 +25,11 @@ export default defineComponent({
 		size: {
 			type: String as PropType<'small' | 'default'>,
 			default: 'default',
-		}
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['update:modelValue', 'increment', 'decrement', 'change'],
 	data() {
@@ -89,13 +93,13 @@ export default defineComponent({
 <template>
 <article class="counter" :class="[`counter--theme-${theme}`, `counter--size-${size}`]">
 	<div class="counter__wrapper">
-		<button class="counter__button" @click.prevent="decrement">
+		<button class="counter__button" :disabled="disabled" @click.prevent="decrement">
 			<IconSVG name="minus" class="counter__button-icon"/>
 		</button>
 
-		<input v-model="value" class="counter__input" type="number" :min="min" :max="max" @input="inputHandler"/>
+		<input v-model="value" class="counter__input" type="number" :disabled="disabled" :min="min" :max="max" @input="inputHandler"/>
 
-		<button class="counter__button" @click.prevent="increment">
+		<button class="counter__button" :disabled="disabled" @click.prevent="increment">
 			<IconSVG name="plus" class="counter__button-icon"/>
 		</button>
 	</div>

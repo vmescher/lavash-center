@@ -3,10 +3,17 @@ import {defineComponent} from 'vue'
 import OrderCart from "@components/order/OrderCart.vue";
 import OrderForm from "@components/order/OrderForm.vue";
 import OrderDelivery from "@components/order/OrderDelivery.vue";
+import CartConstructor from "@components/cart/CartConstructor.vue";
 
 export default defineComponent({
 	name: "OrderCheckout",
-	components: {OrderDelivery, OrderForm, OrderCart},
+	components: {CartConstructor, OrderDelivery, OrderForm, OrderCart},
+	props: {
+		editableBasket: {
+			type: Boolean,
+			default: false
+		}
+	},
 	emits: ['submit'],
 	data() {
 		return {
@@ -19,7 +26,8 @@ export default defineComponent({
 <template>
 	<section class="order">
 		<div class="order__wrapper wrapper">
-			<OrderCart/>
+			<OrderCart v-if="!editableBasket"/>
+			<CartConstructor v-else class="order__block order__block--wide"/>
 			<OrderDelivery v-model="deliveryTypeId"/>
 			<OrderForm :delivery-type-id="deliveryTypeId" @submit="$emit('submit')"/>
 		</div>
@@ -35,6 +43,9 @@ export default defineComponent({
 
 	&__block
 		grid-column: span 8
+
+		&--wide
+			grid-column: 1 / -1
 
 	&__title
 		font-family: var(--font-secondary)

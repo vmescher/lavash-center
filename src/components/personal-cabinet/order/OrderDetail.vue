@@ -85,7 +85,7 @@ export default defineComponent({
 	</section>
 </template>
 
-<style scoped lang="sass">
+<style lang="sass">
 .order-detail
 	&__back
 		display: flex
@@ -120,11 +120,71 @@ export default defineComponent({
 		align-items: center
 		gap: rem(8)
 
-		&:not(:last-child)
+		&:not(:first-child)
 			margin-left: auto
 
 	&__body
 		display: grid
 		grid-template-columns: repeat(12, minmax(0, 1fr))
 		grid-gap: rem(80) rem(24)
+
+	&__block
+		grid-column: span 8
+
+		&--wide
+			grid-column: 1 / -1
+
+	&__form
+		&:not(:last-child)
+			margin-bottom: rem(80)
+
+	&__cart
+		&:not(:last-child)
+			margin-bottom: rem(32)
+
+	&__bottom
+		position: relative
+
+		padding-top: rem(18)
+
+		&:not(:first-child)
+			margin-top: rem(32)
+
+		&::before
+			content: ''
+			position: absolute
+			top: 0
+			left: 0
+
+			display: block
+			width: 100%
+			height: 2px
+
+			border-radius: var(--radius-divider)
+			background-color: var(--color-primary)
+
+	&__total
+		width: 100%
+		display: flex
+		justify-content: space-between
+		align-items: center
+		gap: rem(24)
+
+		&:not(:last-child)
+			margin-bottom: rem(40)
+
+		&-title,
+		&-value
+			font-family: var(--font-secondary)
+			font-size: var(--fontSizeH4)
+			font-weight: 700
+			line-height: var(--lineHeightH3)
+			text-transform: uppercase
+
+	&__submit
+		display: flex
+		align-items: center
+		justify-content: flex-end
+		gap: rem(8)
+
 </style>

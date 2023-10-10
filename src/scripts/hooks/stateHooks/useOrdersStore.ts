@@ -11,6 +11,7 @@ export const useOrdersStore = {
 			getOrderStatuses: 'orderStatuses',
 			getDeliveryTypes: 'deliveryTypes',
 			getPaymentStatuses: 'paymentStatuses',
+			getDeliveryType: 'getDeliveryType',
 		}),
 		...mapState(basketStore, {
 			isDeliveryFree: 'isDeliveryFree',

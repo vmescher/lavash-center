@@ -134,6 +134,7 @@ export default defineComponent({
 
 .input-date
 	position: relative
+	width: 100%
 
 	&__input
 		flex: 1 1 auto

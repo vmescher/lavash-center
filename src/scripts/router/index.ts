@@ -50,6 +50,16 @@ const routes: RouteRecordRaw[] = [
 		}
 	},
 	{
+		path: '/quick-order/',
+		name: RouteNames.QUICK_ORDER_PAGE,
+		component: () => import('@components/views/QuickOrderView.vue'),
+		meta: {
+			name: 'Быстрое оформление заказа | Лаваш-Центр',
+			middleware: [isLoggedIn],
+			layout: 'SimpleLayout'
+		}
+	},
+	{
 		path: '/personal-cabinet/',
 		name: RouteNames.PERSONAL_CABINET_PAGE,
 		component: () => import('@components/views/CabinetView.vue'),

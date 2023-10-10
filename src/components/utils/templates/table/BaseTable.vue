@@ -12,6 +12,10 @@ export default defineComponent({
 			type: Array as PropType<string[]>,
 			default: () => []
 		},
+		withActions: {
+			type: Boolean,
+			default: false
+		}
 	},
 })
 </script>
@@ -23,6 +27,7 @@ export default defineComponent({
 				<thead v-if="tableHead.length" class="table__head">
 					<tr>
 						<BaseTableHeadColumn v-for="item in tableHead" :key="item" >{{ item }}</BaseTableHeadColumn>
+						<BaseTableHeadColumn v-if="withActions"></BaseTableHeadColumn>
 					</tr>
 				</thead>
 

@@ -9,9 +9,9 @@ import debounce from "@scripts/utils/debounce";
 import BaseTableColumnText from "@components/utils/templates/table/table-columns/BaseTableColumnText.vue";
 import BaseTableColumnActions from "@components/utils/templates/table/table-columns/BaseTableColumnActions.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
-import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import ProductSelect from "@components/utils/selects/ProductSelect.vue";
 import {imageLoadHandler} from "@scripts/mixins/imageLoadHandler";
+import {ErrorObject} from "@vuelidate/core";
 
 export default defineComponent({
 	name: "CartConstructorItem",
@@ -19,10 +19,10 @@ export default defineComponent({
 		ProductSelect,
 		IconSVG,
 		BaseTableColumnActions, BaseTableColumnText, InputCounter, BaseTableColumn, BaseTableRow},
-	mixins: [getFormattedPrice, useBasketStore, imageLoadHandler],
+	mixins: [getFormattedPrice, imageLoadHandler],
 	props: {
 		productData: {
-			type: Object as PropType<ProductInBasket>,
+			type: Object as PropType<Partial<ProductInBasket>>,
 			required: true,
 			default: () => ({})
 		},
@@ -30,8 +30,20 @@ export default defineComponent({
 			type: Boolean,
 			default: true,
 		},
+		canRemove: {
+			type: Boolean,
+			default: true,
+		},
+		excludedProducts: {
+			type: Array as PropType<number[]>,
+			default: () => [],
+		},
+		errors: {
+			type: Array as PropType<string[] | ErrorObject[]>,
+			default: () => [],
+		},
 	},
-	emits: ['add', 'remove'],
+	emits: ['add', 'remove', 'changeQuantity'],
 	data() {
 		return {
 			changeQuantityHandler: debounce(this.changeQuantity, 500),
@@ -41,35 +53,15 @@ export default defineComponent({
 	watch: {
 		newProductId(value: number | null) {
 			if (!value) return;
-
-			this.requestAddToBasket({
-				productId: value,
-				quantity: 1,
-			}).then(() => {
-				this.$emit('add');
-			})
+			this.$emit('add', value);
 		}
 	},
 	methods: {
 		deleteFromBasket(): void {
-			if (!this.productData.id) {
-				if (this.getBasket.length){
-					this.$emit('remove');
-				}
-				return;
-			}
-
-			this.requestDeleteFromBasket({
-				productId: this.productData.id,
-			})
+			this.$emit('remove', this.productData.id);
 		},
 		changeQuantity(value: number): void {
-			if (!this.productData.id) return;
-
-			this.requestChangeQuantity({
-				productId: this.productData.id,
-				quantity: value,
-			})
+			this.$emit('changeQuantity', {productId: this.productData.id, quantity: value});
 		},
 	}
 })
@@ -79,33 +71,35 @@ export default defineComponent({
 	<BaseTableRow theme="secondary">
 		<BaseTableColumn width="60%">
 			<div class="cart-constructor__product">
-				<ProductSelect v-if="!productData.id" v-model="newProductId" label="Наименование товара" placeholder="Не выбрано"/>
+				<ProductSelect v-if="!productData.id" v-model="newProductId" :excluded-products="excludedProducts" :errors="errors" label="Наименование товара" placeholder="Не выбрано"/>
 				<div v-else class="cart-constructor-item">
 					<div class="cart-constructor-item__picture">
-						<img v-if="!imageLoadError && productData.picture" class="cart-constructor-item__image" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
+						<img v-if="!imageLoadError && productData.picture" class="cart-constructor-item__image" :src="productData.picture" :alt="`Фото ${productData.name || 'товара'}`" @error="imageErrorHandler">
 					</div>
 					<div class="cart-constructor-item__body">
 						<div class="cart-constructor-item__info">
-							<p class="cart-constructor-item__name">{{ productData.name }}</p>
-							<span class="cart-constructor-item__text">{{ productData.unit }}</span>
+							<p class="cart-constructor-item__name">{{ productData.name || '-' }}</p>
+							<span class="cart-constructor-item__text">{{ productData.unit || '-/шт' }}</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</BaseTableColumn>
 
-		<BaseTableColumn>{{ getFormattedPrice(productData.price) }}</BaseTableColumn>
+		<BaseTableColumnText no-wrap>{{ getFormattedPrice(productData.price || 0) }}</BaseTableColumnText>
 
-		<BaseTableColumn>
+		<BaseTableColumn v-if="editable">
 			<div class="cart-constructor__quantity">
-				<InputCounter v-if="editable" :model-value="productData.quantity" :disabled="!productData.id" theme="bright" size="small" @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
+				<InputCounter :model-value="productData.quantity || 1" :disabled="!productData.id" theme="bright" size="small" @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</BaseTableColumn>
+		<BaseTableColumnText v-else no-wrap>{{ productData.quantity }} шт</BaseTableColumnText>
 
-		<BaseTableColumnText type="bold" no-wrap>{{ getFormattedPrice(productData.price * productData.quantity) }}</BaseTableColumnText>
 
-		<BaseTableColumnActions>
-			<button class="link" :disabled="!getBasket.length && !productData.id" @click="deleteFromBasket">
+		<BaseTableColumnText type="bold" size="large" no-wrap>{{ getFormattedPrice(productData.price || 0 * productData.quantity || 1) }}</BaseTableColumnText>
+
+		<BaseTableColumnActions v-if="editable">
+			<button class="link" :disabled="!canRemove" type="button" @click.prevent="deleteFromBasket">
 				Удалить
 				<IconSVG name="trash" class="link__icon"/>
 			</button>

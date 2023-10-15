@@ -2,24 +2,56 @@
 import {defineComponent} from 'vue'
 import InputSearch from "@components/utils/form/InputSearch.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
+import debounce from "@scripts/utils/debounce";
+import HistoryFilterModal from "@components/personal-cabinet/modals/HistoryFilterModal.vue";
+import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 
 export default defineComponent({
 	name: "HistoryFilter",
-	components: {IconSVG, InputSearch}
+	components: {HistoryFilterModal, IconSVG, InputSearch},
+	mixins: [useOrdersStore, useModalsStore],
+	data() {
+		return {
+			changeFilterHandler: debounce(this.loadFilteredOrders, 500),
+		}
+	},
+	computed: {
+		queryFilter: {
+			get() {
+				return this.getOrdersFilterKey('query');
+			},
+			set(value: string) {
+				this.setOrdersFilter('query', value || null);
+				this.changeFilterHandler();
+			}
+		},
+		getActiveFiltersAmount() {
+			return Object.entries(this.getOrdersFilter).filter(([key, value]) => key !== 'query' && value !== null).length;
+		}
+	},
+	methods: {
+		loadFilteredOrders() {
+			this.requestManagerOrders({ offset: 0, limit: this.getOrdersPagination.limit, filter: { ...this.getOrdersFilter } });
+			this.$router.push({query: {page: 1}});
+		}
+	}
 })
 </script>
 
 <template>
-<div class="filter">
-	<div class="filter__item">
-		<InputSearch label="Поиск" placeholder="Начните ввод"/>
-	</div>
+	<div class="filter">
+		<div class="filter__item">
+			<InputSearch v-model="queryFilter" label="Поиск" placeholder="Начните ввод"/>
+		</div>
 
-	<button class="btn filter__more">
-		<span class="btn__text">Фильтры <span class="filter__count">2</span></span>
-		<IconSVG name="filter" class="btn__icon"/>
-	</button>
-</div>
+		<button class="btn filter__more" @click.prevent="openModal('history-filter-modal')">
+			<span class="btn__text">Фильтры <span v-if="getActiveFiltersAmount" class="filter__count">{{ getActiveFiltersAmount }}</span></span>
+			<IconSVG name="filter" class="btn__icon"/>
+		</button>
+
+		<HistoryFilterModal @apply="loadFilteredOrders" @clear="loadFilteredOrders"/>
+	</div>
 </template>
 
 <style scoped lang="sass">

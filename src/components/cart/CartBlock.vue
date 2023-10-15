@@ -46,7 +46,7 @@ export default defineComponent({
 		<div v-if="getBasket.length" class="cart__bottom">
 			<router-link :to="{name: RouteNames.ORDER_PAGE}" class="cart__confirm btn btn--color-secondary">
 				<span class="btn__text">оформить заказ на</span>
-				<span class="btn__text cart__price">{{ getFormattedPrice(this.getBasketTotalPrice) }}</span>
+				<span class="btn__text cart__price">{{ getFormattedPrice(getBasketTotalPrice) }}</span>
 			</router-link>
 		</div>
 	</article>

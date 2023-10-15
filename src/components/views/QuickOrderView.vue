@@ -5,15 +5,12 @@ import {RouteNames} from "@scripts/router/types";
 import SectionTitle from "@components/utils/templates/structural/SectionTitle.vue";
 import OrderCheckout from "@components/order/OrderCheckout.vue";
 import ConfirmModal from "@components/modals/ConfirmModal.vue";
-import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 
 export default defineComponent({
 	name: "QuickOrderView",
 	components: {ConfirmModal, OrderCheckout, SectionTitle, BackHeader},
-	mixins: [useBasketStore],
 	beforeRouteLeave() {
 		if (this.isFormSubmitted) {
-			this.requestBasket();
 			return true;
 		}
 
@@ -39,7 +36,7 @@ export default defineComponent({
 	<main class="page">
 		<BackHeader :back-target="RouteNames.MAIN_PAGE">Вернуться в каталог</BackHeader>
 		<SectionTitle>Быстрое Оформление заказа</SectionTitle>
-		<OrderCheckout @submit="isFormSubmitted = true" editable-basket/>
+		<OrderCheckout editable-basket @submit="isFormSubmitted = true"/>
 
 		<ConfirmModal id="order-leave-confirm" ref="confirmLeave" title="Вы уверены, что хотите прервать оформление заказа?" text="Все заполненные вами данные будут безвозвратно утеряны." confirm-button="Да, прервать" cancel-button="Вернуться к оформлению"/>
 	</main>

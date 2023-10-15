@@ -16,10 +16,14 @@ export default defineComponent({
 			type: String as PropType<'viewing' | 'editing'>,
 			default: 'viewing'
 		},
+		newOrder: {
+			type: Boolean,
+			default: false
+		}
 	},
-	emits: ['switchView'],
-	setup() {
-		const orderData = inject('orderData') as Order;
+	emits: ['update:viewMode'],
+	setup(props) {
+		const orderData = props.newOrder ? null : inject<Order>('orderData');
 		return {
 			RouteNames,
 			orderData
@@ -59,8 +63,8 @@ export default defineComponent({
 			</div>
 
 			<div class="order-detail__top">
-				<h3 class="order-detail__title">№{{ orderData.id }}</h3>
-				<div class="order-detail__statuses">
+				<h3 class="order-detail__title">{{ newOrder ? 'Новый заказ' : `№${orderData?.id || '-'}` }}</h3>
+				<div v-if="!newOrder" class="order-detail__statuses">
 					<template v-if="isAdmin">
 						<StatusToggler :model-value="orderData.orderStatusId" is-editable :statuses="getOrderStatuses" @update:model-value="updateOrderStatus"/>
 						<StatusToggler :model-value="orderData.paymentStatusId" is-editable :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus"/>
@@ -69,9 +73,9 @@ export default defineComponent({
 						<StatusToggler :model-value="orderData.orderStatusId" :statuses="getOrderStatuses"/>
 					</template>
 				</div>
-				
-				<div v-if="viewMode !== 'editing' && isAdmin" class="order-detail__actions">
-					<button class="btn btn--color-secondary" type="button" @click.prevent="$emit('switchView', 'editing')">
+
+				<div v-if="viewMode !== 'editing' && isAdmin && !newOrder" class="order-detail__actions">
+					<button class="btn btn--color-secondary" type="button" @click.prevent="$emit('update:viewMode', 'editing')">
 						<span class="btn__text">Редактировать заказ</span>
 						<IconSVG name="edit" class="btn__icon"/>
 					</button>

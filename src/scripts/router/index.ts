@@ -115,6 +115,15 @@ const routes: RouteRecordRaw[] = [
 							name: 'Заказ | Лаваш-Центр',
 							middleware: [isLoggedIn, managerOnly, withOrderDataOnly],
 						}
+					},
+					{
+						path: 'order/create/',
+						name: RouteNames.ORDER_CREATE_PAGE,
+						component: () => import('@components/personal-cabinet/views/OrderCreateView.vue'),
+						meta: {
+							name: 'Создание заказа | Лаваш-Центр',
+							middleware: [isLoggedIn, managerOnly],
+						}
 					}
 				]
 			}

@@ -8,9 +8,9 @@ const withOrderDataOnly: Middleware = ({next, to, abort}) => {
 	const usersStore = useUsersStore();
 
 	if (usersStore.isAdmin) {
-		ordersStore.requestManagerOrder(to.params.id).then(() => next()).catch(() => abort({name: RouteNames.PROFILE_PAGE}));
+		ordersStore.requestManagerOrder(Number(to.params.id)).then(() => next()).catch(() => abort({name: RouteNames.PROFILE_PAGE}));
 	} else {
-		ordersStore.requestOrder(to.params.id).then(() => next()).catch(() => abort({name: RouteNames.PROFILE_PAGE}));
+		ordersStore.requestOrder(Number(to.params.id)).then(() => next()).catch(() => abort({name: RouteNames.PROFILE_PAGE}));
 	}
 };
 

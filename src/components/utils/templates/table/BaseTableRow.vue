@@ -22,10 +22,11 @@ export default defineComponent({
 .table-row
 	position: relative
 
-	cursor: pointer
-
 	&--theme
 		&-default
+
+			cursor: pointer
+
 			&:deep(td)
 				&:first-child
 					&::before

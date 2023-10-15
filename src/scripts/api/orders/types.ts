@@ -41,6 +41,21 @@ export type ReadOrdersParams = {
 	offset?: number;
 }
 
+export type OrdersFilter = {
+	query: string | null;
+	period: {
+		from: string;
+		to: string;
+	} | null;
+	deliveryType: number | null;
+	orderStatus: number | null;
+	paymentStatus: number | null;
+}
+
+export type ReadManagerOrdersParams = ReadOrdersParams & {
+	filter?: OrdersFilter;
+}
+
 export type CreateOrderPayload = {
 	deliveryTypeId: number;
 	date: string | Date;

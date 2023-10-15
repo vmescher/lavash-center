@@ -14,6 +14,10 @@ export default defineComponent({
 			type: String as PropType<'' | 'grey' | 'bold'>,
 			default: ''
 		},
+		size: {
+			type: String as PropType<'small' | 'medium' | 'large'>,
+			default: 'medium'
+		},
 		noWrap: {
 			type: Boolean,
 			default: false
@@ -24,7 +28,7 @@ export default defineComponent({
 
 <template>
 	<BaseTableColumn :is-wide="isWide">
-		<p class="table-text" :class="[(type ? `table-text--${type}` : ''), { 'table-text--no-wrap' : noWrap}]">
+		<p class="table-text" :class="[(type ? `table-text--${type}` : ''), { 'table-text--no-wrap' : noWrap}, (size ? `table-text--${size}` : '')]">
 			<slot></slot>
 		</p>
 	</BaseTableColumn>
@@ -48,6 +52,10 @@ export default defineComponent({
 		font-weight: 600
 		line-height: var(--lineHeightP1)
 		text-transform: uppercase
+
+	&--large
+		font-size: var(--fontSizeH5)
+		line-height: var(--lineHeightH3)
 
 	&--no-wrap
 		white-space: nowrap

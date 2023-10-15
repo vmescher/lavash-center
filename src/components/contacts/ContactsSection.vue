@@ -16,13 +16,17 @@ export default defineComponent({
 				<IconSVG name="pin" class="link__icon"/>
 				г. Копейск, ул. Кемеровская, д. 3а
 			</a>
-			<a href="tel:+7 (999) 999-99-99" class="contacts__contact link link--secondary link--size-big">
+			<a href="tel:+79953354747" class="contacts__contact link link--secondary link--size-big">
 				<IconSVG name="phone" class="link__icon"/>
-				+7 (999) 999-99-99
+				+7 (995) 335-47-47
+			</a>
+			<a href="tel:+79953353737" class="contacts__contact link link--secondary link--size-big">
+				<IconSVG name="phone" class="link__icon"/>
+				+7 (995) 335-37-37
 			</a>
 			<a href="mailto:sako@gmail.com" class="contacts__contact link link--secondary link--size-big">
 				<IconSVG name="mail" class="link__icon"/>
-				sako@gmai.com
+				template@gmail.com
 			</a>
 		</address>
 		<div class="contacts__map-wrapper">

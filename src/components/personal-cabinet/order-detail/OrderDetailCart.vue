@@ -6,7 +6,7 @@ import BaseNotion from "@components/utils/ui/BaseNotion.vue";
 import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
 
 export default defineComponent({
-	name: "OrderCart",
+	name: "OrderDetailCart",
 	components: {BaseNotion, CartItem},
 	mixins: [getFormattedPrice],
 	setup() {

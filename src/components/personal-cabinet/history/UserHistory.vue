@@ -20,7 +20,7 @@ export default defineComponent({
 			get() {
 				return this.$route.query.page ? Number(this.$route.query.page) : 1;
 			},
-			set(value) {
+			set(value: number) {
 				this.$router.push({query: {page: value}});
 				this.requestOrders({ offset: (value - 1) * this.getOrdersPagination.limit, limit: this.getOrdersPagination.limit })
 			}

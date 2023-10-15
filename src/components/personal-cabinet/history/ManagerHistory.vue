@@ -20,11 +20,14 @@ export default defineComponent({
 			get() {
 				return this.$route.query.page ? Number(this.$route.query.page) : 1;
 			},
-			set(value) {
+			set(value: number) {
 				this.$router.push({query: {page: value}});
-				this.requestManagerOrders({ offset: (value - 1) * this.getOrdersPagination.limit, limit: this.getOrdersPagination.limit })
+				this.requestManagerOrders({ offset: (value - 1) * this.getOrdersPagination.limit, limit: this.getOrdersPagination.limit, filter: { ...this.getOrdersFilter }})
 			}
-		}
+		},
+		isFiltered() {
+			return Object.values(this.getOrdersFilter).some(value => value);
+		},
 	},
 	created() {
 		this.loadOrders();
@@ -37,7 +40,7 @@ export default defineComponent({
 	},
 	methods: {
 		loadOrders() {
-			this.requestManagerOrders({ offset: (this.currentPage - 1) * this.getOrdersPagination.limit, limit: this.getOrdersPagination.limit });
+			this.requestManagerOrders({ offset: (this.currentPage - 1) * this.getOrdersPagination.limit, limit: this.getOrdersPagination.limit, filter: { ...this.getOrdersFilter } });
 		}
 	}
 })
@@ -51,7 +54,7 @@ export default defineComponent({
 		</template>
 
 		<template #emptyText>
-			<p>Заказов еще не поступало</p>
+			<p>{{isFiltered ? 'Нет заказов по заданным фильтрам' : 'Заказов еще не поступало'}}</p>
 		</template>
 
 		<template v-if="getOrdersPagination.total > getOrdersPagination.limit" #pagination>

@@ -89,7 +89,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<InputSelect :id="id" :label="label" :errors="errors">
+	<InputSelect :id="id" :label="label" :errors="errors" :title="value">
 		<Multiselect
 				ref="multiselect"
 				v-model="value"

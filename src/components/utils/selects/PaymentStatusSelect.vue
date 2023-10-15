@@ -3,13 +3,12 @@ import {defineComponent, PropType} from 'vue'
 import InputSelect from "@components/utils/form/InputSelect.vue";
 import Multiselect from "@vueform/multiselect";
 import {ErrorObject} from "@vuelidate/core";
-import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
-import {useProductsStore} from "@scripts/hooks/stateHooks/useProductsStore";
+import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 
 export default defineComponent({
-	name: "ProductSelect",
+	name: "PaymentStatusSelect",
 	components: {InputSelect, Multiselect},
-	mixins: [useProductsStore],
+	mixins: [useOrdersStore],
 	props: {
 		modelValue: {
 			type: Number as PropType<number | null>,
@@ -21,11 +20,11 @@ export default defineComponent({
 		},
 		label: {
 			type: String,
-			default: 'Наименование товара',
+			default: 'Статус оплаты',
 		},
 		placeholder: {
 			type: String,
-			default: 'Не выбрано',
+			default: 'Выберите статус оплаты',
 		},
 		readOnly: {
 			type: Boolean,
@@ -35,34 +34,36 @@ export default defineComponent({
 			type: Boolean,
 			default: () => false,
 		},
+		canClear: {
+			type: Boolean,
+			default: () => false,
+		},
+		canDeselect: {
+			type: Boolean,
+			default: () => false,
+		},
 		errors: {
 			type: Array as PropType<string[] | ErrorObject[]>,
-			default: () => [],
-		},
-		excludedProducts: {
-			type: Array as PropType<number[]>,
 			default: () => [],
 		},
 	},
 	emits: ['update:modelValue'],
 	computed: {
 		value: {
-			get(): number | null {
+			get(): string | null {
 				return this.modelValue;
 			},
-			set(value: number | null) {
+			set(value: string | null) {
 				this.$emit('update:modelValue', value);
 			}
 		},
 		optionsList() {
-			const options = this.getProducts;
-
-			return options.filter((option) => !this.excludedProducts.includes(option.id));
+			return this.getPaymentStatuses;
 		}
 	},
 	created() {
-		if (!this.getProducts.length) {
-			this.requestProducts();
+		if (!this.getPaymentStatuses.length) {
+			this.requestPaymentStatuses();
 		}
 	},
 })
@@ -70,7 +71,7 @@ export default defineComponent({
 
 <template>
 	<InputSelect :id="id" :label="label" :errors="errors">
-		<Multiselect v-model="value" class="input-select" value-prop="id" label="name" searchable no-results-text="Товар не найден" no-options-text="Список товаров пуст" :placeholder="placeholder" :can-clear="false" :disabled="disabled || readOnly" :options="optionsList" :class="[{ 'is-error': errors.length }, { 'is-readonly': readOnly }]" :can-deselect="false" />
+		<Multiselect v-model="value" class="input-select" value-prop="id" label="name" no-results-text="Статус оплаты не найден" no-options-text="Нет доступных статусов" :placeholder="placeholder" :can-clear="canClear" :disabled="disabled || readOnly" :options="optionsList" :class="[{ 'is-error': errors.length }, { 'is-readonly': readOnly }]" :can-deselect="canDeselect" />
 	</InputSelect>
 </template>
 

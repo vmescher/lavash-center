@@ -23,7 +23,7 @@ export default defineComponent({
 	position: fixed
 	top: 0
 	left: 0
-	z-index: 999
+	z-index: calc(var(--z-index-modal) + 1)
 
 	display: flex
 	align-items: center
@@ -41,7 +41,7 @@ export default defineComponent({
 		width: 100%
 		height: 100%
 
-		background: var(--color-transparent-50)
+		background: rgba(var(--color-neutral-primary-rgb), .5)
 
 	&::after
 		content: ''

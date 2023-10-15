@@ -117,7 +117,7 @@ export default defineComponent({
 				<form class="contact-us__form form" @submit.prevent="submitForm">
 					<div class="form__top">
 						<p class="form__text">Вы можете оставить свои контактные данные и мы вам перезвоним. Также вы всегда можете позвонить нам сами по номеру
-							<a href="tel:+79000000000">8 900 000 00 00.</a>
+							<a href="tel:+79953353737">8 995 335 37 37</a>.
 						</p>
 					</div>
 					<div class="form__inputs form__inputs--2">

@@ -6,9 +6,15 @@ import HistoryFilter from "@components/personal-cabinet/history/HistoryFilter.vu
 import ManagerHistory from "@components/personal-cabinet/history/ManagerHistory.vue";
 import SlideInTransition from "@components/utils/transitions/SlideInTransition.vue";
 import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
+import {RouteNames} from "@scripts/router/types";
 
 export default defineComponent({
 	name: "OrdersView",
+	setup() {
+		return {
+			RouteNames
+		}
+	},
 	components: {SlideInTransition, ManagerHistory, HistoryFilter, IconSVG, HistorySection},
 	mixins: [useOrdersStore],
 	created() {
@@ -16,7 +22,7 @@ export default defineComponent({
 	},
 	methods: {
 		reloadOrders() {
-			this.requestManagerOrders({ offset: this.getOrdersPagination.offset, limit: this.getOrdersPagination.limit });
+			this.requestManagerOrders({ offset: this.getOrdersPagination.offset, limit: this.getOrdersPagination.limit, filter: {...this.getOrdersFilter} });
 		}
 	}
 })
@@ -34,9 +40,9 @@ export default defineComponent({
 						<IconSVG name="reload" class="btn__icon"/>
 						<span class="btn__text">Обновить статусы заказов</span>
 					</button>
-					<button class="btn btn--color-secondary">
+					<router-link class="btn btn--color-secondary" :to="{name: RouteNames.ORDER_CREATE_PAGE}">
 						<span class="btn__text">Создать заказ</span>
-					</button>
+					</router-link>
 				</template>
 
 				<template #filter>

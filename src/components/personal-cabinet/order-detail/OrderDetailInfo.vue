@@ -6,7 +6,7 @@ import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 
 export default defineComponent({
-	name: "OrderInfo",
+	name: "OrderDetailInfo",
 	mixins: [getFormattedDate, useOrdersStore, useUsersStore],
 	setup() {
 		const orderData = inject('orderData') as Order;

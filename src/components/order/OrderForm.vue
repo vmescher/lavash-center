@@ -148,7 +148,7 @@ export default defineComponent({
 
 		</div>
 
-		<NotionModal id="order-success-notion" title="Ваш заказ успешно оформлен!" text="Ваш заказ был успешно оформлен. Вы всегда можете найти его в личном кабинете. Если у вас остались вопросы свяжитесь с нами по телефону <a href='tel:8 900 000 00 00'>8 900 000 00 00</a>." @close="$router.push({name: RouteNames.MAIN_PAGE})"/>
+		<NotionModal id="order-success-notion" title="Ваш заказ успешно оформлен!" text="Ваш заказ был успешно оформлен. Вы всегда можете найти его в личном кабинете. Если у вас остались вопросы свяжитесь с нами по телефону <a href='tel:+79953353737'>8 995 335 37 37</a>." @close="$router.push({name: RouteNames.MAIN_PAGE})"/>
 		<NotionModal id="order-error-notion" title="Что-то пошло не так" :text="externalError"/>
 	</form>
 </template>

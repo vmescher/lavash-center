@@ -7,6 +7,8 @@ export const useOrdersStore = {
 		...mapState(ordersStore, {
 			getOrders: 'orders',
 			getOrdersPagination: 'pagination',
+			getOrdersFilter: 'filter',
+			getOrdersFilterKey: 'getFilterByKey',
 			getCurrentOrder: 'currentOrder',
 			getOrderStatuses: 'orderStatuses',
 			getDeliveryTypes: 'deliveryTypes',
@@ -19,6 +21,7 @@ export const useOrdersStore = {
 	},
 	methods: {
 		...mapActions(ordersStore, {
+			setOrdersFilter: 'setOrdersFilterKey',
 			requestOrder: 'requestOrder',
 			requestManagerOrder: 'requestManagerOrder',
 			requestOrders: 'requestOrders',

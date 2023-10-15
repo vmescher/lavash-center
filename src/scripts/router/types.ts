@@ -10,6 +10,7 @@ export enum RouteNames {
 	HISTORY_PAGE = 'HistoryView',
 	ORDERS_PAGE = 'OrdersView',
 	ORDER_EDIT_PAGE = 'OrderEditView',
+	ORDER_CREATE_PAGE = 'OrderCreateView',
 	ORDER_DETAIL_PAGE = 'OrderDetailView',
 }
 

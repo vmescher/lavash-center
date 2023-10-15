@@ -45,7 +45,8 @@ export default defineComponent({
 @import '@vueform/multiselect/themes/default.scss'
 
 .input-select
-	z-index: 3
+	position: relative
+
 	flex: 1 1 auto
 	width: 100%
 

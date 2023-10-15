@@ -34,6 +34,14 @@ export default defineComponent({
 			type: Boolean,
 			default: () => false,
 		},
+		canClear: {
+			type: Boolean,
+			default: () => false,
+		},
+		canDeselect: {
+			type: Boolean,
+			default: () => false,
+		},
 		errors: {
 			type: Array as PropType<string[] | ErrorObject[]>,
 			default: () => [],
@@ -63,7 +71,7 @@ export default defineComponent({
 
 <template>
 	<InputSelect :id="id" :label="label" :errors="errors">
-		<Multiselect v-model="value" class="input-select" value-prop="id" label="name" no-results-text="Способ получения не найден" no-options-text="Нет доступных способов получения" :placeholder="placeholder" :can-clear="false" :disabled="disabled || readOnly" :options="optionsList" :class="[{ 'is-error': errors.length }, { 'is-readonly': readOnly }]" :can-deselect="false" />
+		<Multiselect v-model="value" class="input-select" value-prop="id" label="name" no-results-text="Способ получения не найден" no-options-text="Нет доступных способов получения" :placeholder="placeholder" :can-clear="canClear" :disabled="disabled || readOnly" :options="optionsList" :class="[{ 'is-error': errors.length }, { 'is-readonly': readOnly }]" :can-deselect="canDeselect" />
 	</InputSelect>
 </template>
 

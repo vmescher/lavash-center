@@ -32,13 +32,17 @@ export default defineComponent({
 							<IconSVG name="pin" class="link__icon"/>
 							г. Копейск, ул. Кемеровская, д. 3а
 						</a>
-						<a href="tel:+7 (999) 999-99-99" class="footer__contact link link--secondary">
+						<a href="tel:79953353737" class="footer__contact link link--secondary">
 							<IconSVG name="phone" class="link__icon"/>
-							+7 (999) 999-99-99
+							+7 (995) 335-37-37
+						</a>
+						<a href="tel:+79953354747" class="footer__contact link link--secondary">
+							<IconSVG name="phone" class="link__icon"/>
+							+7 (995) 335-47-47
 						</a>
 						<a href="mailto:sako@gmail.com" class="footer__contact link link--secondary">
 							<IconSVG name="mail" class="link__icon"/>
-							sako@gmai.com
+							template@gmail.com
 						</a>
 					</address>
 
@@ -54,7 +58,7 @@ export default defineComponent({
 				<div class="footer__bottom">
 					<a href="#" target="_blank" class="footer__policy link link--secondary link--size-small">Политика конфиденциальности</a>
 
-					<span class="footer__copy">ИП Сако</span>
+					<span class="footer__copy">ИП Оганисян Т.А.</span>
 				</div>
 
 			</div>

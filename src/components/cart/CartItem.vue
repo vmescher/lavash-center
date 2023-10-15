@@ -29,7 +29,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			changeQuantityHandler: debounce(this.changeQuantity, 500),
+			changeQuantityHandler: debounce<() => void>(this.changeQuantity, 500),
 		}
 	},
 	methods: {

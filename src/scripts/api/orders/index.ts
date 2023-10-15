@@ -7,6 +7,7 @@ import {
 	Delivery, Order,
 	ReadOrdersParams,
 	ReadOrdersResponse,
+	ReadManagerOrdersParams,
 	Status, UpdateManagerOrderPayload, UpdateOrderStatusPayload
 } from "@scripts/api/orders/types";
 import {objectToFormData} from "@scripts/utils/objectToFormData";
@@ -55,7 +56,7 @@ class OrdersApi extends BaseAPI {
 		})
 	}
 
-	readManagerOrders(params: ReadOrdersParams): Promise<BaseResponse<ReadOrdersResponse>> {
+	readManagerOrders(params: ReadManagerOrdersParams): Promise<BaseResponse<ReadOrdersResponse>> {
 		return new Promise((resolve, reject) => {
 			this.http
 				.get<BaseResponse<ReadOrdersResponse>>(`${this.endpoint}/manager/list/`, {
@@ -85,13 +86,13 @@ class OrdersApi extends BaseAPI {
 		})
 	}
 
-	createManagerOrder(data: CreateManagerOrderPayload): Promise<BaseResponse<true>> {
+	createManagerOrder(data: CreateManagerOrderPayload): Promise<BaseResponse<Order>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<true>>(`${this.endpoint}/manager/create/`, body)
-				.then((response: AxiosResponse<BaseResponse<true>>) => {
+				.post<BaseResponse<Order>>(`${this.endpoint}/manager/create/`, body)
+				.then((response: AxiosResponse<BaseResponse<Order>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {
@@ -100,13 +101,13 @@ class OrdersApi extends BaseAPI {
 		})
 	}
 
-	updateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<BaseResponse<true>> {
+	updateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<BaseResponse<Order>> {
 		const body = objectToFormData(data);
 
 		return new Promise((resolve, reject) => {
 			this.http
-				.post<BaseResponse<true>>(`${this.endpoint}/manager/${orderId}/update/`, body)
-				.then((response: AxiosResponse<BaseResponse<true>>) => {
+				.post<BaseResponse<Order>>(`${this.endpoint}/manager/${orderId}/update/`, body)
+				.then((response: AxiosResponse<BaseResponse<Order>>) => {
 					resolve(response.data);
 				})
 				.catch((error) => {

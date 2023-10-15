@@ -16,6 +16,10 @@ const useBasketStore = defineStore('basket', {
 		basket: [],
 	}),
 	actions: {
+		clearBasket() {
+			this.basket = [];
+		},
+
 		requestBasket(): Promise<ProductInBasket[]> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestBasket');
@@ -104,7 +108,7 @@ const useBasketStore = defineStore('basket', {
 				basketApi
 					.clearBasket()
 					.then((response) => {
-						this.basket = [];
+						this.clearBasket();
 						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {

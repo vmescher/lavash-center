@@ -1,29 +1,34 @@
 <script lang="ts">
 import {defineComponent, provide} from 'vue'
-import OrderDetail from "@components/personal-cabinet/order/OrderDetail.vue";
+import OrderDetail from "@components/personal-cabinet/order-detail/OrderDetail.vue";
 import useOrdersStore from "@scripts/store/orders";
-import OrderInfo from "@components/personal-cabinet/order/OrderInfo.vue";
+import OrderDetailInfo from "@components/personal-cabinet/order-detail/OrderDetailInfo.vue";
 import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
-import OrderCart from "@components/personal-cabinet/order/OrderCart.vue";
-import OrderForm from "@components/personal-cabinet/order/OrderForm.vue";
+import OrderDetailCart from "@components/personal-cabinet/order-detail/OrderDetailCart.vue";
+import OrderDetailForm from "@components/personal-cabinet/order-detail/OrderDetailForm.vue";
 
 export default defineComponent({
 	name: "OrderDetailView",
-	components: {OrderForm, OrderCart, OrderInfo, OrderDetail},
+	components: {OrderDetailForm, OrderDetailCart, OrderDetailInfo, OrderDetail},
 	mixins: [useUsersStore],
 	setup() {
 		const ordersStore = useOrdersStore();
 		provide('orderData', ordersStore.currentOrder);
+	},
+	data() {
+		return {
+			viewMode: 'viewing' as 'viewing' | 'editing'
+		}
 	}
 })
 </script>
 
 <template>
-	<OrderDetail>
-		<OrderInfo class="order-detail__block"/>
+	<OrderDetail v-model:view-mode="viewMode">
+		<OrderDetailInfo class="order-detail__block"/>
 
-		<OrderCart v-if="!isAdmin" class="order-detail__block"/>
-		<OrderForm v-else/>
+		<OrderDetailCart v-if="!isAdmin" class="order-detail__block"/>
+		<OrderDetailForm v-else :view-mode="viewMode" @submit="viewMode = 'viewing'" @cancel="viewMode = 'viewing'"/>
 	</OrderDetail>
 </template>
 

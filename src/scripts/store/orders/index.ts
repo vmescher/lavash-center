@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import useBaseStore from "@scripts/store/base";
+import useBasketStore from "@scripts/store/basket";
 import {ordersApi} from "@scripts/api/orders";
 import {AxiosError} from "axios";
 import {ErrorResponse, Pagination} from "@scripts/api/types";
 import {
 	CreateManagerOrderPayload,
 	CreateOrderPayload, Delivery,
-	Order,
+	Order, OrdersFilter, ReadManagerOrdersParams,
 	ReadOrdersParams,
 	Status, UpdateManagerOrderPayload, UpdateOrderStatusPayload
 } from "@scripts/api/orders/types";
@@ -21,6 +22,13 @@ const useOrdersStore = defineStore('orders', {
 			offset: 0,
 			limit: 10
 		},
+		filter: {
+			query: null,
+			period: null,
+			deliveryType: null,
+			orderStatus: null,
+			paymentStatus: null
+		},
 		orderStatuses: [],
 		deliveryTypes: [],
 		paymentStatuses: [],
@@ -28,6 +36,10 @@ const useOrdersStore = defineStore('orders', {
 	actions: {
 		setOrdersPagination(pagination: Partial<Pagination>) {
 			Object.assign(this.pagination, pagination);
+		},
+
+		setOrdersFilterKey(filterKey: keyof OrdersFilter, filterValue: OrdersFilter[keyof OrdersFilter] | null) {
+			this.filter[filterKey] = filterValue;
 		},
 
 		hydrateOrderData(orderData: Partial<Order>) {
@@ -107,7 +119,7 @@ const useOrdersStore = defineStore('orders', {
 			})
 		},
 
-		requestManagerOrders(params: ReadOrdersParams): Promise<Order[]> {
+		requestManagerOrders(params: ReadManagerOrdersParams): Promise<Order[]> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestManagerOrders');
 
@@ -139,6 +151,8 @@ const useOrdersStore = defineStore('orders', {
 				ordersApi
 					.createOrder(data)
 					.then(() => {
+						const basketStore = useBasketStore();
+						basketStore.clearBasket();
 						resolve(true);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {
@@ -150,15 +164,15 @@ const useOrdersStore = defineStore('orders', {
 			})
 		},
 
-		requestCreateManagerOrder(data: CreateManagerOrderPayload): Promise<true> {
+		requestCreateManagerOrder(data: CreateManagerOrderPayload): Promise<Order> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestCreateManagerOrder');
 
 			return new Promise((resolve, reject) => {
 				ordersApi
 					.createManagerOrder(data)
-					.then(() => {
-						resolve(true);
+					.then((response) => {
+						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {
 						reject(useMainStore.getError(error));
@@ -169,15 +183,16 @@ const useOrdersStore = defineStore('orders', {
 			})
 		},
 
-		requestUpdateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<true> {
+		requestUpdateManagerOrder(data: UpdateManagerOrderPayload, orderId: number): Promise<Order> {
 			const useMainStore = useBaseStore();
 			useMainStore.startLoading('requestUpdateManagerOrder');
 
 			return new Promise((resolve, reject) => {
 				ordersApi
 					.updateManagerOrder(data, orderId)
-					.then(() => {
-						resolve(true);
+					.then((response) => {
+						this.hydrateOrderData(response.data);
+						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {
 						reject(useMainStore.getError(error));
@@ -301,8 +316,11 @@ const useOrdersStore = defineStore('orders', {
 		}
 	},
 	getters: {
-		getDeliveryType(): (id: number) => Delivery {
-			return (id: number) => this.deliveryTypes.find((deliveryType) => deliveryType.id === id) || null;
+		getDeliveryType(): (id: number) => Delivery | null {
+			return (id) => this.deliveryTypes.find((deliveryType) => deliveryType.id === id) || null;
+		},
+		getFilterByKey(): (key: keyof OrdersFilter) => OrdersFilter[keyof OrdersFilter] {
+			return (key) => this.filter[key];
 		}
 	}
 });

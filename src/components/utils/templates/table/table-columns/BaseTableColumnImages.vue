@@ -3,7 +3,7 @@ import {defineComponent, PropType} from 'vue'
 import BaseTableColumn from "@components/utils/templates/table/BaseTableColumn.vue";
 
 export type TableImage = {
-	src: string;
+	src: string | null;
 	alt?: string;
 }
 
@@ -48,7 +48,7 @@ export default defineComponent({
 		<div class="table-images">
 			<template v-for="(image, index) in images" :key="index">
 				<div v-if="!shouldBeHidden(index)" class="table-images__item" :class="{'table-images__item--empty' : !image.src}">
-					<img :src="image.src" :alt="image.alt" class="table-images__image" @error="hideImage">
+					<img :src="image.src || ''" :alt="image.alt" class="table-images__image" @error="hideImage">
 				</div>
 			</template>
 			<div v-if="images.length > 4" class="table-images__item table-images__item--all" >

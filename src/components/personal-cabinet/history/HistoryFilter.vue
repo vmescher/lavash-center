@@ -13,13 +13,13 @@ export default defineComponent({
 	mixins: [useOrdersStore, useModalsStore],
 	data() {
 		return {
-			changeFilterHandler: debounce(this.loadFilteredOrders, 500),
+			changeFilterHandler: debounce<() => void>(this.loadFilteredOrders as () => void, 500),
 		}
 	},
 	computed: {
 		queryFilter: {
-			get() {
-				return this.getOrdersFilterKey('query');
+			get(): string | null {
+				return this.getOrdersFilterKey('query') as string | null;
 			},
 			set(value: string) {
 				this.setOrdersFilter('query', value || null);

@@ -74,7 +74,7 @@ export default defineComponent({
 		addItem() {
 			if (this.newItem) return;
 			this.newItem = {
-				id: null,
+				id: undefined,
 				name: '',
 				price: 0,
 				quantity: 1
@@ -103,7 +103,7 @@ export default defineComponent({
 		<div class="cart-constructor__top">
 			<h4 class="cart-constructor__title">Товары в заказе</h4>
 			<div v-if="viewMode === 'editing'" class="cart-constructor__actions">
-				<button class="btn btn--color-secondary" :disabled="newItem || isAllProductsSelected" :title="newItem ? 'У вас есть невыбранный товар' : isAllProductsSelected ? 'Все товары выбраны' : ''" @click.prevent="addItem">
+				<button class="btn btn--color-secondary" :disabled="!!newItem || isAllProductsSelected" :title="!!newItem ? 'У вас есть невыбранный товар' : isAllProductsSelected ? 'Все товары выбраны' : ''" @click.prevent="addItem">
 					<span class="btn__text">Добавить товар</span>
 					<IconSVG name="plus" class="btn__icon"/>
 				</button>

@@ -9,52 +9,12 @@ import PaymentStatusSelect from "@components/utils/selects/PaymentStatusSelect.v
 import OrderStatusSelect from "@components/utils/selects/OrderStatusSelect.vue";
 import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
+import {OrderFilterPeriod} from "@scripts/api/orders/types";
 
 export default defineComponent({
 	name: "HistoryFilterModal",
 	components: {OrderStatusSelect, PaymentStatusSelect, InputPeriod, DeliveryTypeSelect, IconSVG, BaseModal},
 	mixins: [useBaseStore, useModalsStore, useOrdersStore],
-	computed: {
-		deliveryType: {
-			get(): number | null {
-				return this.getOrdersFilterKey('deliveryType');
-			},
-			set(value: number | null) {
-				this.setOrdersFilter('deliveryType', value);
-			}
-		},
-		paymentStatus: {
-			get(): number | null {
-				return this.getOrdersFilterKey('paymentStatus');
-			},
-			set(value: number | null) {
-				this.setOrdersFilter('paymentStatus', value);
-			}
-		},
-		orderStatus: {
-			get(): number | null {
-				return this.getOrdersFilterKey('orderStatus');
-			},
-			set(value: number | null) {
-				this.setOrdersFilter('orderStatus', value);
-			}
-		},
-		period: {
-			get(): {from: string, to: string} | null {
-				return this.getOrdersFilterKey('period');
-			},
-			set(value: PeriodValueType) {
-				if (!value) {
-					this.setOrdersFilter('period', null);
-					return;
-				}
-				this.setOrdersFilter('period', {
-					from: value.start,
-					to: value.end,
-				});
-			}
-		},
-	},
 	emits: ['apply', 'clear'],
 	data() {
 		return {
@@ -65,6 +25,44 @@ export default defineComponent({
 				period: null as PeriodValueType,
 			},
 		}
+	},
+	computed: {
+		deliveryType: {
+			get(): number | null {
+				return this.getOrdersFilterKey('deliveryType') as number | null;
+			},
+			set(value: number | null) {
+				this.setOrdersFilter('deliveryType', value);
+			}
+		},
+		paymentStatus: {
+			get(): number | null {
+				return this.getOrdersFilterKey('paymentStatus') as number | null;
+			},
+			set(value: number | null) {
+				this.setOrdersFilter('paymentStatus', value);
+			}
+		},
+		orderStatus: {
+			get(): number | null {
+				return this.getOrdersFilterKey('orderStatus') as number | null;
+			},
+			set(value: number | null) {
+				this.setOrdersFilter('orderStatus', value);
+			}
+		},
+		period: {
+			get(): OrderFilterPeriod {
+				return this.getOrdersFilterKey('period') as OrderFilterPeriod;
+			},
+			set(value: OrderFilterPeriod) {
+				if (!value) {
+					this.setOrdersFilter('period', null);
+					return;
+				}
+				this.setOrdersFilter('period', value);
+			}
+		},
 	},
 	methods: {
 		hydrateFilters() {
@@ -85,7 +83,10 @@ export default defineComponent({
 			this.deliveryType = deliveryType;
 			this.paymentStatus = paymentStatus;
 			this.orderStatus = orderStatus;
-			this.period = period;
+			this.period = period ? {
+				from: period.start,
+				to: period.end
+			} : null;
 			this.$emit('apply');
 			this.closeModal('history-filter-modal');
 		},

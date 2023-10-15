@@ -50,10 +50,10 @@ export default defineComponent({
 	emits: ['update:modelValue'],
 	computed: {
 		value: {
-			get(): string | null {
+			get(): number | null {
 				return this.modelValue;
 			},
-			set(value: string | null) {
+			set(value: number | null) {
 				this.$emit('update:modelValue', value);
 			}
 		},

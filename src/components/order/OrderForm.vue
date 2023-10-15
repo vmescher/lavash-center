@@ -68,11 +68,11 @@ export default defineComponent({
 	computed: {
 		isCourierSelected() {
 			const deliveryData = this.getDeliveryType(this.deliveryTypeId);
-			return deliveryData && deliveryData.xmlId === 'courier';
+			return !!deliveryData && deliveryData.xmlId === 'courier';
 		},
 		isPickupSelected() {
 			const deliveryData = this.getDeliveryType(this.deliveryTypeId);
-			return deliveryData && deliveryData.xmlId === 'pickup';
+			return !!deliveryData && deliveryData.xmlId === 'pickup';
 		},
 	},
 	watch: {

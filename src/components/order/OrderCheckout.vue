@@ -22,7 +22,7 @@ export default defineComponent({
 	data() {
 		return {
 			deliveryTypeId: 1,
-			changeQuantityHandler: debounce<(data: ChangeProductQuantityPayload) => void>(this.changeQuantity, 500),
+			changeQuantityHandler: debounce((data: ChangeProductQuantityPayload) => this.changeQuantity(data), 500),
 		}
 	},
 	created() {

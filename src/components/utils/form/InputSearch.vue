@@ -8,8 +8,8 @@ export default defineComponent({
 	components: {InputTemplate},
 	props: {
 		modelValue: {
-			type: String,
-			default: () => '',
+			type: String as PropType<string | null>,
+			default: () => null,
 		},
 		id: {
 			type: String,
@@ -52,7 +52,7 @@ export default defineComponent({
 	},
 	computed: {
 		value: {
-			get(): string {
+			get(): string | null {
 				return this.modelValue;
 			},
 			set(value: string) {

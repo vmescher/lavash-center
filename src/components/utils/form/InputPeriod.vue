@@ -74,9 +74,9 @@ export default defineComponent({
 	data() {
 		return {
 			range: {
-				start: null as PeriodValueType['start'],
-				end: null as PeriodValueType['end'],
-			},
+				start: null,
+				end: null,
+			} as PeriodValueType,
 		};
 	},
 	computed: {
@@ -95,7 +95,7 @@ export default defineComponent({
 				return this.modelValue ?? this.range;
 			},
 			set(value: PeriodValueType) {
-				Object.assign(this.range, value);
+				this.range = value;
 				this.$emit('update:modelValue', value);
 			},
 		},

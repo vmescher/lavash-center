@@ -24,7 +24,7 @@ export default defineComponent({
 <template>
 	<router-view v-slot="{Component}">
 		<SlideInTransition mode="out-in">
-			<component v-if="Component" :is="Component"/>
+			<component :is="Component" v-if="Component"/>
 			<HistorySection v-else>
 				<template #title>Мои заказы</template>
 

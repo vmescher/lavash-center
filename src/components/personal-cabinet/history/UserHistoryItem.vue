@@ -48,7 +48,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<router-link :to="{name: RouteNames.ORDER_DETAIL_PAGE, params: {id: orderData.id}}" custom v-slot="{navigate}">
+	<router-link v-slot="{navigate}" :to="{name: RouteNames.ORDER_DETAIL_PAGE, params: {id: orderData.id}}" custom>
 		<BaseTableRow @click="navigate">
 			<BaseTableColumnText>{{orderData.id}}</BaseTableColumnText>
 

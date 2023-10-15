@@ -10,13 +10,13 @@ import {RouteNames} from "@scripts/router/types";
 
 export default defineComponent({
 	name: "OrdersView",
+	components: {SlideInTransition, ManagerHistory, HistoryFilter, IconSVG, HistorySection},
+	mixins: [useOrdersStore],
 	setup() {
 		return {
 			RouteNames
 		}
 	},
-	components: {SlideInTransition, ManagerHistory, HistoryFilter, IconSVG, HistorySection},
-	mixins: [useOrdersStore],
 	created() {
 		if (!this.getDeliveryTypes.length) this.requestDeliveryTypes();
 	},
@@ -31,7 +31,7 @@ export default defineComponent({
 <template>
 	<router-view v-slot="{Component}">
 		<SlideInTransition mode="out-in">
-			<component v-if="Component" :is="Component"/>
+			<component :is="Component" v-if="Component" />
 			<HistorySection v-else>
 				<template #title>Все заказы</template>
 

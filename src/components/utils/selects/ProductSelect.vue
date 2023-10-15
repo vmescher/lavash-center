@@ -3,7 +3,6 @@ import {defineComponent, PropType} from 'vue'
 import InputSelect from "@components/utils/form/InputSelect.vue";
 import Multiselect from "@vueform/multiselect";
 import {ErrorObject} from "@vuelidate/core";
-import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import {useProductsStore} from "@scripts/hooks/stateHooks/useProductsStore";
 
 export default defineComponent({

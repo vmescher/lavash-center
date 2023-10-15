@@ -41,12 +41,12 @@ export default defineComponent({
 		updateOrderStatus(statusId: number) {
 			this.requestUpdateManagerOrderStatus({
 				statusId
-			}, this.$route.params.id);
+			}, Number(this.$route.params.id));
 		},
 		updatePaymentStatus(statusId: number) {
 			this.requestUpdateManagerOrderPaymentStatus({
 				statusId
-			}, this.$route.params.id);
+			}, Number(this.$route.params.id));
 		}
 	}
 })
@@ -66,11 +66,11 @@ export default defineComponent({
 				<h3 class="order-detail__title">{{ newOrder ? 'Новый заказ' : `№${orderData?.id || '-'}` }}</h3>
 				<div v-if="!newOrder" class="order-detail__statuses">
 					<template v-if="isAdmin">
-						<StatusToggler :model-value="orderData.orderStatusId" is-editable :statuses="getOrderStatuses" @update:model-value="updateOrderStatus"/>
-						<StatusToggler :model-value="orderData.paymentStatusId" is-editable :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus"/>
+						<StatusToggler :model-value="orderData?.orderStatusId" is-editable :statuses="getOrderStatuses" @update:model-value="updateOrderStatus"/>
+						<StatusToggler :model-value="orderData?.paymentStatusId" is-editable :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus"/>
 					</template>
 					<template v-else>
-						<StatusToggler :model-value="orderData.orderStatusId" :statuses="getOrderStatuses"/>
+						<StatusToggler :model-value="orderData?.orderStatusId" :statuses="getOrderStatuses"/>
 					</template>
 				</div>
 

@@ -15,7 +15,7 @@ import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
 import InputText from "@components/utils/form/InputText.vue";
 import DeliveryTypeSelect from "@components/utils/selects/DeliveryTypeSelect.vue";
 import CartConstructor from "@components/cart/CartConstructor.vue";
-import {Order, OrderProduct} from "@scripts/api/orders/types";
+import {CreateManagerOrderPayload, Order, OrderProduct, UpdateManagerOrderPayload} from "@scripts/api/orders/types";
 import {useProductsStore} from "@scripts/hooks/stateHooks/useProductsStore";
 import {ChangeProductQuantityPayload, ProductInBasket} from "@scripts/api/basket/types";
 
@@ -58,7 +58,7 @@ export default defineComponent({
 				time: null as string | null,
 				address: null as string | null,
 				products: [] as ProductInBasket[],
-			}
+			},
 		}
 	},
 	validations() {
@@ -99,11 +99,11 @@ export default defineComponent({
 		},
 		isCourierSelected() {
 			const deliveryData = this.getDeliveryType(this.formData.deliveryTypeId);
-			return deliveryData && deliveryData.xmlId === 'courier';
+			return !!deliveryData && deliveryData.xmlId === 'courier';
 		},
 		isPickupSelected() {
 			const deliveryData = this.getDeliveryType(this.formData.deliveryTypeId);
-			return deliveryData && deliveryData.xmlId === 'pickup';
+			return !!deliveryData && deliveryData.xmlId === 'pickup';
 		},
 		getTotalPrice() {
 			return this.formData.products.reduce((acc, product) => acc + product.price * product.quantity, 0);
@@ -143,8 +143,8 @@ export default defineComponent({
 						products: this.formData.products.map(product => ({
 							id: product.id,
 							quantity: product.quantity,
-						})),
-					}, this.orderData.id).then(() => {
+						})) as OrderProduct[],
+					} as UpdateManagerOrderPayload, this.orderData.id).then(() => {
 						this.$emit('submit');
 					}).catch((error) => {
 						this.externalError = error;
@@ -157,7 +157,7 @@ export default defineComponent({
 							id: product.id,
 							quantity: product.quantity,
 						})) as OrderProduct[],
-					}).then((response) => {
+					} as CreateManagerOrderPayload).then((response) => {
 						this.$emit('submit', response.id);
 					}).catch((error) => {
 						this.externalError = error;

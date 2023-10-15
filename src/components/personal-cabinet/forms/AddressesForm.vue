@@ -85,7 +85,7 @@ export default defineComponent({
 				if (!result) return;
 
 				this.requestSaveAddresses({
-					addresses: this.formData.addresses.map((address) => address.address)
+					addresses: this.formData.addresses.filter((address) => !!address.address).map((address) => address.address as string)
 				}).then(() => {
 					this.toggleFormEditable();
 				}).catch(() => {

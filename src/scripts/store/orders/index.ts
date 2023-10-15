@@ -39,7 +39,9 @@ const useOrdersStore = defineStore('orders', {
 		},
 
 		setOrdersFilterKey(filterKey: keyof OrdersFilter, filterValue: OrdersFilter[keyof OrdersFilter] | null) {
-			this.filter[filterKey] = filterValue;
+			Object.assign(this.filter, {
+				[filterKey]: filterValue
+			})
 		},
 
 		hydrateOrderData(orderData: Partial<Order>) {

@@ -6,7 +6,6 @@ import OrderDelivery from "@components/order/OrderDelivery.vue";
 import CartConstructor from "@components/cart/CartConstructor.vue";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import {ChangeProductQuantityPayload} from "@scripts/api/basket/types";
-import debounce from "@scripts/utils/debounce";
 
 export default defineComponent({
 	name: "OrderCheckout",
@@ -22,7 +21,6 @@ export default defineComponent({
 	data() {
 		return {
 			deliveryTypeId: 1,
-			changeQuantityHandler: debounce((data: ChangeProductQuantityPayload) => this.changeQuantity(data), 500),
 		}
 	},
 	created() {
@@ -55,7 +53,7 @@ export default defineComponent({
 	<section class="order">
 		<div class="order__wrapper wrapper">
 			<OrderCart v-if="!editableBasket"/>
-			<CartConstructor v-else :products="getBasket" class="order__block order__block--wide" @add="addItem" @remove="removeItem" @change-quantity="changeQuantityHandler"/>
+			<CartConstructor v-else :products="getBasket" :view-mode="'editing'" class="order__block order__block--wide" @add="addItem" @remove="removeItem" @change-quantity="changeQuantity"/>
 			<OrderDelivery v-model="deliveryTypeId"/>
 			<OrderForm :delivery-type-id="deliveryTypeId" @submit="$emit('submit')"/>
 		</div>

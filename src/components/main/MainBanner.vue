@@ -124,15 +124,14 @@ export default defineComponent({
 
 		animation: anchor-arrow 1s ease-in-out infinite alternate
 
-
 		+hover
 			animation-play-state: paused
 
 
 @keyframes anchor-arrow
 	0%
-		transform: translateY(rem(-4))
+		transform: translate(-50%, rem(-4))
 	100%
-		transform: translateY(rem(4))
+		transform: translate(-50%, rem(4))
 
 </style>

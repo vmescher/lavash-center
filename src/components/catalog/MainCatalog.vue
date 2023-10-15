@@ -97,7 +97,7 @@ export default defineComponent({
 
 		grid-column: 8 / -1
 		max-height: calc(var(--window-height) - rem(32) * 2)
-		min-height: calc(var(--window-height) - rem(32) * 2)
+		min-height: rem(400)
 		max-width: rem(605)
 		width: 100%
 		justify-self: flex-end

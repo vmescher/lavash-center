@@ -27,6 +27,7 @@ export default defineComponent({
 			default: 'default',
 		},
 	},
+	emits: ['delete'],
 	data() {
 		return {
 			changeQuantityHandler: debounce<() => void>(this.changeQuantity, 500),

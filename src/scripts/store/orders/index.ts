@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import useBaseStore from "@scripts/store/base";
-import useBasketStore from "@scripts/store/basket";
 import {ordersApi} from "@scripts/api/orders";
 import {AxiosError} from "axios";
 import {ErrorResponse, Pagination} from "@scripts/api/types";
@@ -153,8 +152,6 @@ const useOrdersStore = defineStore('orders', {
 				ordersApi
 					.createOrder(data)
 					.then(() => {
-						const basketStore = useBasketStore();
-						basketStore.clearBasket();
 						resolve(true);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {

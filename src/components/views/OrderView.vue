@@ -12,8 +12,8 @@ export default defineComponent({
 	components: {ConfirmModal, OrderCheckout, SectionTitle, BackHeader},
 	mixins: [useBasketStore],
 	beforeRouteLeave() {
-		if (this.isFormSubmitted) {
-			this.requestBasket();
+		if (this.isFormSubmitted || !this.getBasket.length) {
+			this.clearBasket();
 			return true;
 		}
 
@@ -31,7 +31,14 @@ export default defineComponent({
 		return {
 			isFormSubmitted: false,
 		}
-	}
+	},
+	watch: {
+		getBasket(newValue) {
+			if (newValue.length === 0 && !this.isFormSubmitted) {
+				this.$router.push({name: RouteNames.MAIN_PAGE});
+			}
+		}
+	},
 })
 </script>
 

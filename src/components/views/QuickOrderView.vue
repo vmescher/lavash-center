@@ -5,12 +5,15 @@ import {RouteNames} from "@scripts/router/types";
 import SectionTitle from "@components/utils/templates/structural/SectionTitle.vue";
 import OrderCheckout from "@components/order/OrderCheckout.vue";
 import ConfirmModal from "@components/modals/ConfirmModal.vue";
+import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 
 export default defineComponent({
 	name: "QuickOrderView",
 	components: {ConfirmModal, OrderCheckout, SectionTitle, BackHeader},
+	mixins: [useBasketStore],
 	beforeRouteLeave() {
 		if (this.isFormSubmitted) {
+			this.clearBasket();
 			return true;
 		}
 

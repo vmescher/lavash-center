@@ -13,6 +13,7 @@ export const useBasketStore = {
 	},
 	methods: {
 		...mapActions(basketStore, {
+			clearBasket: 'clearBasket',
 			requestBasket: 'requestBasket',
 			requestAddToBasket: 'requestAddToBasket',
 			requestDeleteFromBasket: 'requestDeleteFromBasket',

@@ -13,13 +13,6 @@ export default defineComponent({
 			RouteNames
 		}
 	},
-	watch: {
-		getBasket(newValue) {
-			if (newValue.length === 0) {
-				this.$router.push({name: RouteNames.MAIN_PAGE});
-			}
-		}
-	}
 })
 </script>
 

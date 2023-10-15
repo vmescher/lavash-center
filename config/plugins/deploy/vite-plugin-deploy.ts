@@ -1,9 +1,8 @@
-import FtpDeploy from 'ftp-deploy';
+import SftpClient from "ssh2-sftp-client";
 import type {Plugin} from 'vite';
 
 type DeployOptions = {
 	outDir: string;
-	sftp?: boolean;
 	connectionOptions: {
 		host: string;
 		username: string;
@@ -24,24 +23,46 @@ export const vitePluginDeploy = (options: DeployOptions): Plugin => {
 			const input = distDir;
 			const output = options.outDir;
 
-			const FTPDeploy = new FtpDeploy();
-			const config = {
-				user: options.connectionOptions.username,
-				password: options.connectionOptions.password,
-				host: options.connectionOptions.host,
-				localRoot: input,
-				remoteRoot: output,
-				include: ['*', '**/*'],
-				sftp: options.sftp,
-			};
+			function config() {
+				const config = {
+					connect: {
+						host: options.connectionOptions.host,
+						username: options.connectionOptions.username,
+						password: options.connectionOptions.password,
+					},
+					outputPath: output,
+				}
 
-			FTPDeploy.on('uploading', function (data) {
-				console.log(data.filename);
-			});
+				return config
+			}
+			const start = new Date();
 
-			return FTPDeploy.deploy(config)
-				.then(() => console.log('\x1b[32m Deploy:  Finished'))
-				.catch((err) => console.error('\x1b[31m Deploy: Error', err));
+			async function deploy() {
+				const client = new SftpClient();
+
+				try {
+					await client.connect(config().connect)
+					client.on("upload", (info) => {
+						console.log(`Uploaded ${info.source}`)
+					})
+					let rslt = await client.uploadDir(input, output, { useFastput: true })
+					return rslt
+				} catch (err) {
+					console.error(err)
+				} finally {
+					client.end()
+				}
+			}
+
+			return deploy()
+				.then(() => {
+					const end = new Date();
+					const time = end.getTime() - start.getTime();
+					console.log(`\x1b[32m Deploy: Finished in ${time / 1000}s`);
+				})
+				.catch((err) => {
+					console.log(`\x1b[31m Deploy: Error ${err.message}`)
+				})
 		},
 	};
 };

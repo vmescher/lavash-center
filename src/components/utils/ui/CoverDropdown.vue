@@ -64,7 +64,7 @@ export default defineComponent({
 
 		<transition name="cover-dropdown" :duration="450" appear>
 			<div v-if="isOpened" ref="dropdown" class="cover-dropdown__body">
-				<div class="cover-dropdown__content">
+				<div class="cover-dropdown__content" @click.self="toggleDropdown">
 					<slot name="dropdown"></slot>
 				</div>
 			</div>
@@ -86,6 +86,11 @@ export default defineComponent({
 		max-height: calc(var(--window-height) - var(--header-height) - rem(64))
 		max-width: rem(605)
 		width: 100vw
+
+		+while-mob-xl
+			top: calc(100% + rem(16))
+
+			max-width: calc(100vw - #{$containerPaddingMobile}px)
 
 	&__content
 		height: 100%

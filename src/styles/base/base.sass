@@ -87,3 +87,6 @@ body
 
 	@if ($containerPadding > 0)
 		padding: 0 rem(math.div($containerPadding, 2))
+
+		+until-laptop
+			padding: 0 rem(math.div($containerPaddingMobile, 2))

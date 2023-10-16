@@ -1,10 +1,11 @@
 <script lang="ts">
-import {defineAsyncComponent, defineComponent} from 'vue';
+import {defineAsyncComponent, defineComponent, provide} from 'vue';
 import BaseLoader from "@components/utils/ui/BaseLoader.vue";
 import {BaseLayouts} from "@scripts/router/types";
 import FadeTransition from "@components/utils/transitions/FadeTransition.vue";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
 import {useContentsStore} from "@scripts/hooks/stateHooks/useContentsStore";
+import {useViewportHandler} from "@scripts/hooks/useViewportHandler";
 
 export default defineComponent({
 	name: 'RootComponent',
@@ -21,6 +22,17 @@ export default defineComponent({
 		}),
 	},
 	mixins: [useBaseStore, useContentsStore],
+	setup() {
+		const { isViewport, viewportUntil } = useViewportHandler();
+
+		provide('isViewport', isViewport);
+		provide('viewportUntil', viewportUntil);
+
+		return {
+			isViewport,
+			viewportUntil,
+		};
+	},
 	computed: {
 		layout(): BaseLayouts {
 			if (this.$route.meta.layout) {

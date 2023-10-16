@@ -12,7 +12,7 @@
 	--modal-px: #{rem(48)}
 	--modal-width: #{rem(544)}
 
-	--modal-border-radius: #{rem(60)}
+	--modal-border-radius: #{fluid(32, 60)}
 
 	position: relative
 
@@ -30,6 +30,13 @@
 		top: rem(-24)
 		right: rem(-24)
 		z-index: var(--z-index-above)
+
+		+while-mob-xl
+			--link-color: var(--color-primary)
+			--link-icon-size: #{rem(16)}
+
+			top: rem(16)
+			right: rem(16)
 
 	&__title
 		display: flex
@@ -73,6 +80,9 @@
 		&:not(:first-child)
 			margin-top: rem(40)
 
+	&__body
+		height: 100%
+
 	&__bottom
 		&:not(:first-child)
 			margin-top: rem(40)
@@ -92,9 +102,22 @@
 	&--wide
 		--modal-width: #{rem(828)}
 
-		--modal-border-radius: #{rem(80)}
+		--modal-border-radius: #{fluid(32, 80)}
 
 		& .modal
 			&__close
 				top: rem(-16)
 				right: rem(-16)
+
+	&--cart
+		--modal-py: #{rem(0)}
+		--modal-px: #{rem(0)}
+		--modal-width: #{rem(544)}
+
+		--modal-border-radius: #{rem(0)}
+
+		height: 100%
+		max-height: rem(768)
+
+		background-color: transparent
+

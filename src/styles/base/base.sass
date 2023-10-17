@@ -19,7 +19,7 @@ html
 	+media('max', 'mobile-xl')
 		font-size: calc(16 / 375) * 100vw
 
-	+media-until(320)
+	+media('max', 'mobile')
 		font-size: calc(16 / 320) * 100vw
 
 
@@ -79,6 +79,9 @@ body
 	flex-direction: column
 	padding-bottom: rem(24)
 	min-height: 100%
+
+	+until-laptop
+		padding-bottom: rem(16)
 
 .wrapper
 	@if ($containerWidth > 0)

@@ -79,17 +79,50 @@ export default defineComponent({
 		border-radius: var(--radius-block)
 
 	&__top
-		padding: rem(56) rem(56) rem(48)
+		position: relative
+		isolation: isolate
+
+		padding: rem(56) rem(56) calc(rem(48) + 10%)
 		flex-grow: 1
 		display: grid
 		grid-template-columns: repeat(12, minmax(0, 1fr))
 		gap: rem(24)
 		align-items: flex-start
 
-		background-image: url("@img/base-pattern.svg")
-		background-repeat: repeat-x
-		background-position: 0 calc(100% - rem(48))
-		background-size: 100% auto
+		+until-laptop
+			padding: rem(48) rem(32) calc(rem(32) + 8%)
+
+		+until-tablet
+			padding: rem(48) rem(32) calc(rem(32) + 10%)
+			gap: rem(32) rem(16)
+
+		+while-mob-xl
+			padding: rem(48) rem(16) calc(rem(24) + 16%)
+
+		&::before
+			content: ''
+			position: absolute
+			left: 0
+			bottom: 9%
+			z-index: var(--z-index-below)
+
+			display: block
+			width: 100%
+			height: 20.5%
+
+			background-color: var(--color-neutral-tertiary)
+
+			mask-image: url("@img/base-pattern.svg")
+			mask-position: center
+			mask-repeat: no-repeat
+			mask-size: cover
+
+			+until-laptop
+				bottom: 7%
+
+			+while-mob-xl
+				height: 12%
+				bottom: 4%
 
 	&__logo,
 	&__contacts,
@@ -97,13 +130,23 @@ export default defineComponent({
 		grid-column: span 4
 
 	&__logo
-		max-height: rem(56)
+		height: rem(56)
 		max-width: 75%
+
+		+until-laptop
+			height: rem(42)
+
+		+until-tablet
+			grid-column: span 6
+
+		+while-mob-xl
+			margin: 0 auto
+			grid-column: 1 / -1
 
 		&-image
 			display: block
-			height: auto
-			width: 100%
+			height: 100%
+			width: auto
 
 			object-fit: contain
 
@@ -112,14 +155,40 @@ export default defineComponent({
 		flex-direction: column
 		gap: rem(32)
 
+		+until-laptop
+			gap: rem(24)
+
+		+until-tablet
+			display: grid
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+			grid-column: 1 / -1
+
+		+while-mob-xl
+			grid-template-columns: minmax(0, 1fr)
+			gap: rem(16)
+
 	&__contact
 		width: max-content
+
+		+while-mob-xl
+			width: auto
+			margin: 0 auto
 
 	&__actions
 		display: flex
 		align-items: center
+		flex-wrap: wrap
 		justify-content: flex-end
 		gap: rem(8)
+
+		+until-tablet
+			grid-column: 7 / -1
+			grid-row: 1
+
+		+while-mob-xl
+			grid-row: auto
+			justify-content: center
+			grid-column: 1 / -1
 
 	&__bottom
 		position: relative
@@ -129,7 +198,15 @@ export default defineComponent({
 		display: flex
 		align-items: center
 		justify-content: space-between
-		gap: rem(32)
+		flex-wrap: wrap
+		gap: rem(16)
+
+		+until-laptop
+			padding: rem(16) rem(32) rem(48)
+
+		+while-mob-xl
+			padding: rem(16) rem(16) rem(32)
+			justify-content: center
 
 		&::before
 			content: ''
@@ -143,12 +220,20 @@ export default defineComponent({
 			background-color: var(--color-primary)
 			border-radius: var(--radius-divider)
 
+			+until-laptop
+				left: rem(32)
+				right: rem(32)
+
+			+while-mob-xl
+				left: rem(16)
+				right: rem(16)
+
 	&__copy
 		display: inline-flex
 		align-items: center
 		gap: rem(8)
 
-		font-size: rem(14)
+		font-size: var(--fontSizeP3)
 		font-weight: 500
 		line-height: 1
 

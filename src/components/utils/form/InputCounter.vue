@@ -108,9 +108,9 @@ export default defineComponent({
 
 <style scoped lang="sass">
 .counter
-	--counter-px: #{rem(22)}
-	--counter-py: #{rem(14)}
-	--counter-gap: #{rem(8)}
+	--counter-px: #{fluid(16, 22)}
+	--counter-py: #{fluid(8, 14)}
+	--counter-gap: #{fluid(4, 8)}
 	--counter-width: #{rem(128)}
 
 	--counter-font-family: var(--font-secondary)
@@ -128,7 +128,7 @@ export default defineComponent({
 
 	--counter-radius: var(--radius-btn)
 
-	--counter-icon-size: #{rem(20)}
+	--counter-icon-size: #{fluid(16, 20)}
 
 	padding: var(--counter-py) var(--counter-px)
 	min-height: calc(var(--counter-font-size) * var(--counter-line-height) + var(--counter-py) * 2 + var(--counter-border-size) * 2)
@@ -195,6 +195,10 @@ export default defineComponent({
 
 	&--size
 		&-small
-			--counter-py: #{rem(10)}
+			--counter-py: #{fluid(6, 10)}
+
+			+while-mob-xl
+				--counter-px: #{fluid(12, 16)}
+				--counter-width: max-content
 
 </style>

@@ -1,3 +1,12 @@
 .page
 	flex-grow: 1
 	padding-bottom: rem(120)
+
+	+until-laptop
+		padding-bottom: rem(80)
+
+	+until-tablet
+		padding-bottom: rem(64)
+
+	+while-mob-xl
+		padding-bottom: rem(48)

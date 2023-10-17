@@ -29,7 +29,7 @@ export default defineComponent({
 						Мы готовим самые лучшие <br/>лаваши во вселенной!
 					</h2>
 
-					<p class="main-banner__text">На протяжении 12 лет предоставляем лаваши <br>более чем 200 заведениям города.</p>
+					<p class="main-banner__text">На протяжении 12&nbsp;лет предоставляем лаваши <br>более чем 200&nbsp;заведениям города.</p>
 
 					<div class="main-banner__actions">
 						<a href="#products" class="main-banner__action btn btn--color-secondary" @click.prevent="scrollToCatalog">Смотреть товары</a>
@@ -50,11 +50,21 @@ export default defineComponent({
 	&:not(:last-child)
 		margin-bottom: rem(120)
 
+		+until-laptop
+			margin-bottom: rem(80)
+
+		+until-tablet
+			margin-bottom: rem(64)
+
+		+while-mob-xl
+			margin-bottom: rem(48)
+
 	&__body
 		position: relative
 		z-index: 0
 
 		width: 100%
+		min-height: rem(580)
 		max-height: calc(var(--window-height) - var(--header-height) - rem(24))
 		padding: rem(80) rem(56)
 		display: flex
@@ -63,21 +73,58 @@ export default defineComponent({
 		aspect-ratio: 336 / 167
 
 		background-color: var(--color-tertiary)
-		background-image: url("@img/base-pattern.svg")
-		background-repeat: repeat-x
-		background-position: 0 calc(100% - rem(120))
-		background-size: 100% auto
 		border-radius: var(--radius-block)
 
 		overflow: hidden
 		transform: translate3d(0, 0, 1px)
+
+		+until-laptop
+			padding: rem(48) rem(24)
+
+			aspect-ratio: 16 / 9
+
+		+until-tablet
+			padding: rem(48) rem(16)
+
+		+while-mob-xl
+			min-height: unset
+			max-height: unset
+			//height: clamp(rem(480), calc(var(--window-height) - var(--header-height) - rem(16)), rem(580))
+			aspect-ratio: 5 / 7
+
+		+while-mob
+			padding: rem(32) rem(16)
+
+		&::before
+			content: ''
+			position: absolute
+			left: 0
+			bottom: 14%
+			z-index: var(--z-index-below)
+
+			display: block
+			width: 100%
+			height: 12.5%
+
+			background-color: var(--color-neutral-tertiary)
+
+			mask-image: url("@img/base-pattern.svg")
+			mask-position: center
+			mask-repeat: no-repeat
+			mask-size: cover
+
+			+while-mob-xl
+				bottom: 10%
 
 	&__content
 		flex-grow: 1
 		display: flex
 		flex-direction: column
 		align-items: center
-		gap: rem(40)
+		gap: fluid(32, 40)
+
+		+until-laptop
+			gap: fluid(16, 24)
 
 	&__title
 		font-family: var(--font-secondary)
@@ -87,17 +134,44 @@ export default defineComponent({
 		text-transform: uppercase
 		text-align: center
 
+		+until-laptop
+			font-size: var(--fontSizeH2)
+			line-height: var(--lineHeightH2)
+
+		+while-mob-xl
+			font-size: var(--fontSizeH3)
+			line-height: var(--lineHeightH2)
+
+		+while-mob
+			font-size: var(--fontSizeH4)
+			line-height: var(--lineHeightH2)
+
+		& br
+			+while-mob-xl
+				display: none
+
 	&__text
 		font-size: var(--fontSizeP1)
 		font-weight: 500
 		line-height: var(--lineHeightP1)
 		text-align: center
 
+		+while-mob-xl
+			font-size: var(--fontSizeP2)
+			line-height: var(--lineHeightP2)
+
+		& br
+			+while-mob-xl
+				display: none
+
 	&__actions
 		padding-top: rem(16)
 		display: flex
 		align-items: center
 		gap: rem(8)
+
+		+while-mob-xl
+			padding-top: rem(8)
 
 	&__bg
 		position: absolute
@@ -113,7 +187,11 @@ export default defineComponent({
 		width: 100%
 		height: 100%
 
-		object-fit: cover
+		object-fit: contain
+		object-position: bottom center
+
+		+while-mob-xl
+			display: none
 
 	&__anchor
 		position: absolute
@@ -126,6 +204,9 @@ export default defineComponent({
 
 		+hover
 			animation-play-state: paused
+
+		+while-mob-xl
+			bottom: rem(24)
 
 
 @keyframes anchor-arrow

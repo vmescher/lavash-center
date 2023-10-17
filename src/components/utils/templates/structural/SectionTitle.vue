@@ -29,6 +29,9 @@ export default defineComponent({
 	&:not(:last-child)
 		margin-bottom: rem(56)
 
+		+until-laptop
+			margin-bottom: rem(32)
+
 	&__body
 		position: relative
 
@@ -36,6 +39,12 @@ export default defineComponent({
 		grid-template-columns: 100%
 		grid-gap: rem(16)
 		padding-bottom: rem(24)
+
+		+until-laptop
+			padding-bottom: rem(16)
+
+		+while-mob-xl
+			padding-bottom: rem(8)
 
 		&::before
 			content: ''
@@ -57,4 +66,13 @@ export default defineComponent({
 		font-weight: 500
 		line-height: var(--lineHeightH1)
 		text-transform: uppercase
+
+		+until-laptop
+			font-size: var(--fontSizeH2)
+			line-height: var(--lineHeightH2)
+
+		+while-mob-xl
+			font-size: var(--fontSizeH3)
+			line-height: var(--lineHeightH2)
+
 </style>

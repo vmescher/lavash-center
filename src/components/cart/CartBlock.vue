@@ -1,17 +1,21 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, inject} from 'vue'
 import CartItem from "@components/cart/CartItem.vue";
 import {RouteNames} from "@scripts/router/types";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "CartBlock",
 	components: {CartItem},
 	mixins: [useBasketStore, getFormattedPrice],
 	setup() {
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
+
 		return {
-			RouteNames
+			RouteNames,
+			viewportUntil
 		}
 	},
 	created() {
@@ -26,7 +30,7 @@ export default defineComponent({
 	<article class="cart">
 		<div class="cart__top">
 			<h4 class="cart__title">Корзина</h4>
-			<button v-if="getBasket.length" class="cart__clear link" @click="requestClearBasket">
+			<button v-if="getBasket.length" class="cart__clear link" :class="{'link--size-small': viewportUntil('mobile-xl')}" @click="requestClearBasket">
 				очистить корзину
 			</button>
 		</div>
@@ -74,6 +78,12 @@ export default defineComponent({
 
 		box-shadow: var(--shadow-primary-down)
 
+		+until-laptop
+			padding: rem(24) rem(24) rem(16)
+
+		+while-mob-xl
+			padding: rem(16) rem(16) rem(12)
+
 	&__title
 		font-family: var(--font-secondary)
 		font-size: var(--fontSizeH4)
@@ -81,20 +91,38 @@ export default defineComponent({
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase
 
+		+while-mob-xl
+			font-size: var(--fontSizeH5)
+
 	&__items
 		padding: rem(24) rem(32)
 		display: flex
 		flex-direction: column
 		gap: rem(24)
+		min-height: rem(250)
 
 		overflow-y: auto
 		+Vscroll
+
+		+until-laptop
+			padding: rem(24) rem(24)
+			gap: rem(16)
+
+		+while-mob-xl
+			padding: rem(24) rem(16)
 
 	&__empty
 		padding: rem(32) rem(48)
 		display: flex
 		justify-content: center
 		align-items: center
+		min-height: rem(250)
+
+		+until-laptop
+			padding: rem(24) rem(32)
+
+		+while-mob-xl
+			padding: rem(16) rem(24)
 
 	&__bottom
 		padding: rem(24) rem(32)
@@ -104,6 +132,12 @@ export default defineComponent({
 
 		box-shadow: var(--shadow-primary-up)
 
+		+until-laptop
+			padding: rem(16) rem(24)
+
+		+while-mob-xl
+			padding: rem(16) rem(16)
+
 	&__confirm
 		flex: 1 1 auto
 		justify-content: space-between
@@ -111,6 +145,9 @@ export default defineComponent({
 	&__price
 		font-size: var(--fontSizeH4)
 		font-weight: 700
+
+		+until-laptop
+			font-size: var(--fontSizeH5)
 
 .cart-empty
 	position: relative
@@ -122,6 +159,9 @@ export default defineComponent({
 	gap: rem(16)
 	width: 100%
 	height: 100%
+
+	+while-mob-xl
+		gap: rem(8)
 
 	&::before
 		content: ""
@@ -147,6 +187,14 @@ export default defineComponent({
 		width: rem(164)
 		height: rem(164)
 
+		+until-tablet
+			width: rem(128)
+			height: rem(128)
+
+		+while-mob-xl
+			width: rem(96)
+			height: rem(96)
+
 	&__image
 		display: block
 		width: 100%
@@ -157,5 +205,15 @@ export default defineComponent({
 		font-size: var(--fontSizePBig)
 		font-weight: 600
 		line-height: var(--lineHeightP1)
+
+		+until-laptop
+			max-width: rem(180)
+
+			font-size: var(--fontSizeP1)
+			text-align: center
+
+		+while-mob-xl
+			max-width: rem(160)
+			font-size: var(--fontSizeP2)
 
 </style>

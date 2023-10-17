@@ -80,6 +80,9 @@ export default defineComponent({
 		grid-gap: rem(48) rem(24)
 		align-items: flex-start
 
+		+until-laptop
+			grid-gap: rem(32) rem(16)
+
 	&__filter
 		grid-column: 1 / -1
 
@@ -89,19 +92,38 @@ export default defineComponent({
 		grid-template-columns: repeat(3, minmax(0, 1fr))
 		grid-auto-rows: minmax(0, 1fr)
 		grid-gap: rem(40) rem(24)
-		align-items: flex-start
+
+		+until-laptop
+			grid-column: 1 / span 6
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+			grid-gap: rem(32) rem(16)
+
+		+until-tablet
+			grid-column: 1 / -1
+			grid-template-columns: repeat(3, minmax(0, 1fr))
+
+		+while-mob-xl
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+			grid-gap: rem(24) rem(16)
 
 	&__cart
 		position: sticky
 		top: rem(32)
 
 		grid-column: 8 / -1
-		max-height: calc(var(--window-height) - rem(32) * 2)
-		min-height: rem(400)
-		max-width: rem(605)
+		height: clamp(rem(600), calc(var(--window-height) - rem(32) * 2), rem(980))
 		width: 100%
 		justify-self: flex-end
 
 		will-change: scroll-position
 
+		+until-laptop
+			grid-column: 7 / -1
+			height: clamp(rem(600), calc(var(--window-height) - rem(32) * 2), rem(980))
+			max-width: rem(440)
+
+		+until-tablet
+			grid-column: 1 / -1
+			height: auto
+			max-width: unset
 </style>

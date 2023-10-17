@@ -1,12 +1,13 @@
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import {defineComponent, inject, PropType} from 'vue'
 import InputCounter from "@components/utils/form/InputCounter.vue";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {ProductInBasket} from "@scripts/api/basket/types";
 import debounce from "@scripts/utils/debounce";
 import {useBasketStore} from "@scripts/hooks/stateHooks/useBasketStore";
 import {imageLoadHandler} from "@scripts/mixins/imageLoadHandler";
-import {getFormattedPrice} from "../../scripts/mixins/getFormattedPrice";
+import {getFormattedPrice} from "@scripts/mixins/getFormattedPrice";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "CartItem",
@@ -28,6 +29,12 @@ export default defineComponent({
 		},
 	},
 	emits: ['delete'],
+	setup() {
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
+		return {
+			viewportUntil
+		}
+	},
 	data() {
 		return {
 			changeQuantityHandler: debounce<() => void>(this.changeQuantity, 500),
@@ -56,7 +63,7 @@ export default defineComponent({
 		</div>
 		<div class="cart-item__body">
 			<div v-if="editable" class="cart-item__clear">
-				<button class="link link--color-secondary" @click="deleteFromBasket">
+				<button class="link link--color-secondary" :class="{'link--size-small': viewportUntil('mobile-xl')}" @click="deleteFromBasket">
 					<IconSVG name="close" class="link__icon"/>
 				</button>
 			</div>
@@ -80,8 +87,14 @@ export default defineComponent({
 	display: flex
 	gap: rem(20)
 
+	+while-mob-xl
+		gap: rem(16)
+
 	& + .cart-item
 		padding-top: rem(26)
+
+		+until-laptop
+			padding-top: rem(18)
 
 		&::before
 			content: ''
@@ -109,6 +122,13 @@ export default defineComponent({
 		background-color: var(--color-neutral-primary)
 		border-radius: var(--radius-picture)
 
+		+until-laptop
+			size: rem(100)
+
+		+while-mob-xl
+			size: rem(80)
+			padding: rem(6)
+
 	&__image
 		width: 100%
 		height: 100%
@@ -130,12 +150,19 @@ export default defineComponent({
 		opacity: 0
 		transition: opacity .3s ease
 
+		@media (hover: none)
+			opacity: 1
+
 	&__info
 		max-width: rem(235)
 		display: flex
 		align-items: flex-start
 		flex-direction: column
 		gap: rem(8)
+
+		+while-mob-xl
+			max-width: rem(180)
+			gap: rem(4)
 
 	&__name
 		font-size: var(--fontSizeP2)
@@ -157,6 +184,9 @@ export default defineComponent({
 		justify-content: flex-end
 		gap: rem(20)
 
+		+while-mob-xl
+			gap: rem(12)
+
 	&__price
 		display: inline-flex
 		align-items: center
@@ -168,6 +198,9 @@ export default defineComponent({
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase
 		text-align: center
+
+		+until-laptop
+			font-size: var(--fontSizeH5)
 
 	&__quantity
 		font-family: var(--font-primary)

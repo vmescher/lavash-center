@@ -14,7 +14,7 @@ export default defineComponent({
 	<main class="page">
 		<MainBanner/>
 		<SectionTitle id="products">Наша продукция</SectionTitle>
-		<MainCatalog/>
+		<MainCatalog />
 	</main>
 </template>
 

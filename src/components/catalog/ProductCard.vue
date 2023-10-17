@@ -83,6 +83,9 @@ export default defineComponent({
 	grid-template-rows: minmax(0, 1fr) auto
 	grid-gap: rem(16)
 
+	+while-mob-xl
+		grid-gap: rem(12)
+
 	+hover
 		.product-card
 			&__body
@@ -100,6 +103,9 @@ export default defineComponent({
 		cursor: pointer
 		transition: background-color .3s ease
 
+		+while-mob-xl
+			padding: rem(24) 0
+
 	&__picture
 		position: relative
 		z-index: 0
@@ -110,6 +116,9 @@ export default defineComponent({
 		color: var(--color-neutral-primary)
 
 		transition: color .3s ease
+
+		+while-mob-xl
+			padding: rem(16) rem(24)
 
 		&::before
 			content: ''
@@ -148,17 +157,30 @@ export default defineComponent({
 		align-items: center
 		gap: rem(24)
 
+		+while-mob-xl
+			padding: rem(4) rem(16) rem(0)
+			gap: rem(12)
+
+		+while-mob
+			padding: rem(4) rem(8) rem(0)
+
 	&__info
 		display: flex
 		flex-direction: column
 		align-items: center
 		gap: rem(8)
 
+		+while-mob-xl
+			gap: rem(4)
+
 	&__name
 		font-size: var(--fontSizeP1)
 		font-weight: 600
 		line-height: var(--lineHeightP1)
 		text-align: center
+
+		+while-mob-xl
+			font-size: var(--fontSizeP2)
 
 	&__text
 		font-size: var(--fontSizeP3)
@@ -175,6 +197,9 @@ export default defineComponent({
 		text-transform: uppercase
 		text-align: center
 
+		+while-mob-xl
+			font-size: var(--fontSizeH5)
+
 	&__actions
 		display: flex
 		align-items: center
@@ -184,5 +209,8 @@ export default defineComponent({
 	&__action
 		width: 100%
 		max-width: rem(162)
+
+		+while-mob-xl
+			max-width: max-content
 
 </style>

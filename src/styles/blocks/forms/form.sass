@@ -7,6 +7,9 @@
 		&:not(:last-child)
 			margin-bottom: rem(48)
 
+			+until-tablet
+				margin-bottom: rem(32)
+
 	&__title
 		font-family: var(--font-secondary)
 		font-size: var(--fontSizeH3)
@@ -19,16 +22,28 @@
 		font-weight: 600
 		line-height: var(--lineHeightP1)
 
+		+until-tablet
+			font-size: var(--fontSizeP2)
+
 	&__inputs
 		display: grid
 		grid-gap: rem(32) rem(24)
 		margin: 0
+
+		+until-tablet
+			grid-gap: rem(24) rem(16)
+
+		+while-mob-xl
+			grid-gap: rem(16)
 
 		& + .form__inputs
 			margin-top: rem(32)
 
 		&--2
 			grid-template-columns: repeat(2, minmax(0,1fr))
+
+			+while-mob-xl
+				grid-template-columns: 100%
 
 		&--3
 			grid-template-columns: repeat(3, minmax(0,1fr))
@@ -46,6 +61,9 @@
 		&--2
 			grid-column: span 2
 
+			+while-mob-xl
+				grid-column: auto
+
 		&--3
 			grid-column: span 3
 
@@ -62,6 +80,13 @@
 		justify-content: space-between
 		flex-wrap: wrap
 		gap: rem(24) rem(48)
+
+		+until-tablet
+			margin-top: rem(32)
+
+		+while-mob-xl
+			margin-top: rem(24)
+			gap: rem(16) rem(24)
 
 	&__policy
 		flex: 0 1 rem(390)

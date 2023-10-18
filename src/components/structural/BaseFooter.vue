@@ -1,16 +1,20 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, inject} from 'vue'
 import {RouteNames} from "@scripts/router/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "BaseFooter",
 	components: {IconSVG},
 	mixins: [useModalsStore],
 	setup() {
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
+
 		return {
-			RouteNames
+			RouteNames,
+			viewportUntil
 		}
 	}
 })
@@ -28,19 +32,19 @@ export default defineComponent({
 
 					<address class="footer__contacts">
 
-						<a href="https://go.2gis.com/mwn7a" target="_blank" class="footer__contact link link--secondary">
+						<a href="https://go.2gis.com/mwn7a" target="_blank" class="footer__contact link link--secondary" :class="{'link--size-medium': viewportUntil('mobile-xl')}">
 							<IconSVG name="pin" class="link__icon"/>
 							г. Копейск, ул. Кемеровская, д. 3а
 						</a>
-						<a href="tel:79953353737" class="footer__contact link link--secondary">
+						<a href="tel:79953353737" class="footer__contact link link--secondary" :class="{'link--size-medium': viewportUntil('mobile-xl')}">
 							<IconSVG name="phone" class="link__icon"/>
 							+7 (995) 335-37-37
 						</a>
-						<a href="tel:+79953354747" class="footer__contact link link--secondary">
+						<a href="tel:+79953354747" class="footer__contact link link--secondary" :class="{'link--size-medium': viewportUntil('mobile-xl')}">
 							<IconSVG name="phone" class="link__icon"/>
 							+7 (995) 335-47-47
 						</a>
-						<a href="mailto:sako@gmail.com" class="footer__contact link link--secondary">
+						<a href="mailto:sako@gmail.com" class="footer__contact link link--secondary" :class="{'link--size-medium': viewportUntil('mobile-xl')}">
 							<IconSVG name="mail" class="link__icon"/>
 							template@gmail.com
 						</a>
@@ -97,7 +101,11 @@ export default defineComponent({
 			gap: rem(32) rem(16)
 
 		+while-mob-xl
-			padding: rem(48) rem(16) calc(rem(24) + 16%)
+			padding: rem(32) rem(16) calc(rem(24) + 16%)
+			display: flex
+			flex-direction: column
+			align-items: center
+			gap: rem(16)
 
 		&::before
 			content: ''
@@ -165,7 +173,7 @@ export default defineComponent({
 
 		+while-mob-xl
 			grid-template-columns: minmax(0, 1fr)
-			gap: rem(16)
+			gap: rem(8)
 
 	&__contact
 		width: max-content
@@ -186,6 +194,7 @@ export default defineComponent({
 			grid-row: 1
 
 		+while-mob-xl
+			padding-top: rem(8)
 			grid-row: auto
 			justify-content: center
 			grid-column: 1 / -1
@@ -205,7 +214,7 @@ export default defineComponent({
 			padding: rem(16) rem(32) rem(48)
 
 		+while-mob-xl
-			padding: rem(16) rem(16) rem(32)
+			padding: rem(16) rem(16) rem(28)
 			justify-content: center
 
 		&::before
@@ -237,10 +246,13 @@ export default defineComponent({
 		font-weight: 500
 		line-height: 1
 
+		+while-mob-xl
+			font-size: var(--fontSizeP4)
+
 		&::before
 			content: ''
 
-			size: rem(16)
+			size: fluid(12, 16)
 
 			mask-image: url("@img/icons/copy.svg")
 			mask-size: 100%

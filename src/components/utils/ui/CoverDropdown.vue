@@ -63,8 +63,8 @@ export default defineComponent({
 		</div>
 
 		<transition name="cover-dropdown" :duration="450" appear>
-			<div v-if="isOpened" ref="dropdown" class="cover-dropdown__body">
-				<div class="cover-dropdown__content" @click.self="toggleDropdown">
+			<div v-if="isOpened" ref="dropdown" class="cover-dropdown__body" @click.self="toggleDropdown">
+				<div class="cover-dropdown__content">
 					<slot name="dropdown"></slot>
 				</div>
 			</div>
@@ -82,21 +82,40 @@ export default defineComponent({
 		right: 0
 		z-index: var(--z-index-modal)
 
+		display: flex
+		flex-direction: column
 		height: var(--window-height)
 		max-height: calc(var(--window-height) - var(--header-height) - rem(64))
 		max-width: rem(605)
 		width: 100vw
 
 		+while-mob-xl
-			top: calc(100% + rem(16))
+			position: fixed
+			bottom: 0
+			top: unset
 
-			max-width: calc(100vw - #{$containerPaddingMobile}px)
+			width: 100%
+			max-height: calc(var(--window-height) - var(--header-height) - rem(32))
+
+	//&::before
+	//	content: ''
+	//	display: block
+	//	flex: 1 1 auto
 
 	&__content
 		height: 100%
+		max-height: rem(780)
 		width: 100%
 		display: flex
 		flex-direction: column
+
+		+while-mob-xl
+			height: auto
+			max-height: 100%
+			margin-top: auto
+
+			background-color: var(--color-neutral-tertiary)
+			border-radius:  var(--radius-block-secondary)  var(--radius-block-secondary) 0 0
 
 		& > *:only-child
 			height: 100%

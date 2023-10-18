@@ -115,6 +115,37 @@
 
 		color: currentColor
 
+	&[data-count]
+		position: relative
+
+		&::after
+			content: attr(data-count)
+			position: absolute
+			right: calc(var(--btn-px) - rem(7))
+			bottom: calc(var(--btn-py) - rem(4))
+
+			display: flex
+			align-items: center
+			justify-content: center
+			size: rem(14)
+			padding: rem(2)
+
+			font-size: var(--fontSizeP4)
+			line-height: 1
+			color: var(--color-primary)
+			font-weight: 500
+
+			background-color: var(--color-tertiary)
+			border-radius: 50%
+
+			+while-mob-xl
+				right: calc(var(--btn-px) - rem(3))
+				bottom: calc(var(--btn-py) - rem(3))
+
+				size: rem(10)
+
+				font-size: rem(8)
+
 	&--color
 		&-secondary
 			--btn-color: var(--color-neutral-tertiary)

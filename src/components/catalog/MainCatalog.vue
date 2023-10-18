@@ -83,6 +83,9 @@ export default defineComponent({
 		+until-laptop
 			grid-gap: rem(32) rem(16)
 
+		+until-tablet
+			grid-gap: rem(24) rem(16)
+
 	&__filter
 		grid-column: 1 / -1
 
@@ -123,7 +126,7 @@ export default defineComponent({
 			max-width: rem(440)
 
 		+until-tablet
-			grid-column: 1 / -1
-			height: auto
-			max-width: unset
+			display: none
+
+
 </style>

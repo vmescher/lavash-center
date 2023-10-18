@@ -84,6 +84,7 @@ export default defineComponent({
 			aspect-ratio: 16 / 9
 
 		+until-tablet
+			min-height: unset
 			padding: rem(48) rem(16)
 
 		+while-mob-xl
@@ -114,7 +115,7 @@ export default defineComponent({
 			mask-size: cover
 
 			+while-mob-xl
-				bottom: 10%
+				bottom: 15%
 
 	&__content
 		flex-grow: 1
@@ -157,6 +158,8 @@ export default defineComponent({
 		text-align: center
 
 		+while-mob-xl
+			max-width: rem(250)
+
 			font-size: var(--fontSizeP2)
 			line-height: var(--lineHeightP2)
 

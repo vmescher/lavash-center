@@ -172,6 +172,15 @@ export default defineComponent({
 		border-radius: var(--radius-block)
 		transform: translate3d(0, 0, 1px)
 
+		+until-laptop
+			padding: rem(48) rem(32)
+
+		+until-tablet
+			gap: rem(16)
+
+		+while-mob-xl
+			padding: rem(32) rem(16)
+
 	&__bg
 		position: absolute
 		left: 0
@@ -179,6 +188,9 @@ export default defineComponent({
 
 		width: 49%
 		height: 71%
+
+		+until-laptop
+			display: none
 
 		&-image
 			display: block
@@ -192,6 +204,9 @@ export default defineComponent({
 	&__form
 		grid-column: span 6
 
+		+until-laptop
+			grid-column: 1 / -1
+
 	&__left
 		display: flex
 		flex-direction: column
@@ -204,5 +219,8 @@ export default defineComponent({
 		font-weight: 500
 		line-height: var(--lineHeightH2)
 		text-transform: uppercase
+
+		+until-tablet
+			font-size: var(--fontSizeH3)
 
 </style>

@@ -99,7 +99,6 @@ export default defineComponent({
 		display: flex
 		flex-direction: column
 		gap: rem(24)
-		min-height: rem(250)
 
 		overflow-y: auto
 		+Vscroll

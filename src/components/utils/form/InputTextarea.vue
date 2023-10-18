@@ -109,6 +109,9 @@ export default defineComponent({
 	resize: vertical
 	transition: border-color .3s ease, background-color .3s ease, color .3s ease
 
+	+while-mob-xl
+		min-height: rem(180)
+
 	+placeholder
 		color: var(--di-placeholder-color)
 

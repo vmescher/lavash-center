@@ -4,11 +4,10 @@ import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {RouteNames} from "@scripts/router/types";
 import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
-import CartModal from "@components/cart/CartModal.vue";
 
 export default defineComponent({
 	name: "NavigationBlock",
-	components: {CartModal, IconSVG},
+	components: {IconSVG},
 	mixins: [useUsersStore, useModalsStore],
 	setup() {
 		return {
@@ -27,13 +26,7 @@ export default defineComponent({
 	<article class="navigation">
 
 		<nav class="navigation__items">
-			<router-link class="btn btn--color-secondary" :to="{name: RouteNames.QUICK_ORDER_PAGE}" @click="hideDropdown">
-				<span class="btn__text">Быстрый заказ</span>
-			</router-link>
-			<button class="link" @click="openModal('cart-modal')">
-				<span class="link__text">Корзина</span>
-				<IconSVG name="bag" class="link__icon"/>
-			</button>
+
 			<router-link v-if="isLoggedIn" :to="{name: RouteNames.PROFILE_PAGE}" class="link" @click="hideDropdown">
 				личный кабинет
 				<IconSVG name="user" class="link__icon"/>
@@ -45,9 +38,10 @@ export default defineComponent({
 			<router-link :to="{name: RouteNames.CONTACTS_PAGE}" class="link" @click="hideDropdown">
 				Контакты
 			</router-link>
+			<router-link class="btn btn--color-secondary" :to="{name: RouteNames.QUICK_ORDER_PAGE}" @click="hideDropdown">
+				<span class="btn__text">Быстрый заказ</span>
+			</router-link>
 		</nav>
-
-		<CartModal/>
 
 	</article>
 </template>
@@ -65,7 +59,7 @@ export default defineComponent({
 	transform: translate3d(0, 0, 1px)
 
 	&__items
-		padding: rem(24) rem(16)
+		padding: rem(32) rem(16) rem(24)
 		display: flex
 		flex-direction: column
 		gap: rem(24)

@@ -60,7 +60,13 @@ export default defineComponent({
 	display: flex
 	align-items: flex-end
 	justify-content: space-between
+	flex-wrap: wrap
 	gap: rem(24)
+
+	+while-mob-xl
+		gap: rem(16)
+		flex-direction: column-reverse
+		align-items: flex-start
 
 	&__more
 		+hover

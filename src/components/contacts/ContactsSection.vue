@@ -93,7 +93,7 @@ export default defineComponent({
 		transform: translate3d(0, 0, 1px)
 
 		+while-mob-xl
-			aspect-ratio: 5 / 7
+			aspect-ratio: 5 / 6
 
 	&__map
 		display: block

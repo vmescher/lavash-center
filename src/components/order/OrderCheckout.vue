@@ -67,8 +67,20 @@ export default defineComponent({
 		grid-template-columns: repeat(12, minmax(0, 1fr))
 		grid-gap: rem(80) rem(24)
 
+		+until-laptop
+			grid-gap: rem(40) rem(24)
+
+		+while-mob-xl
+			grid-gap: rem(32) rem(8)
+
 	&__block
 		grid-column: span 8
+
+		+until-pc
+			grid-column: span 10
+
+		+until-laptop
+			grid-column: 1 / -1
 
 		&--wide
 			grid-column: 1 / -1
@@ -80,8 +92,17 @@ export default defineComponent({
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase
 
+		+while-mob-xl
+			font-weight: 500
+
 		&:not(:last-child)
 			margin-bottom: rem(48)
+
+			+until-laptop
+				margin-bottom: rem(32)
+
+			+while-mob-xl
+				margin-bottom: rem(16)
 
 	&__products
 		position: relative
@@ -90,6 +111,10 @@ export default defineComponent({
 		flex-direction: column
 		gap: rem(28)
 		padding-bottom: rem(30)
+
+		+until-laptop
+			padding-bottom: rem(18)
+			gap: rem(16)
 
 		&::before
 			content: ''
@@ -113,8 +138,17 @@ export default defineComponent({
 		align-items: center
 		gap: rem(24)
 
+		+while-mob-xl
+			flex-direction: column
+			align-items: stretch
+			gap: rem(24)
+			padding-top: rem(12)
+
 		&:not(:first-child)
 			margin-top: rem(40)
+
+			+while-mob-xl
+				margin-top: rem(24)
 
 		&::before
 			content: ''
@@ -133,9 +167,18 @@ export default defineComponent({
 		&:not(:last-child)
 			margin-bottom: rem(80)
 
+			+until-laptop
+				margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(32)
+
 	&__notion
 		&:not(:last-child)
 			margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(24)
 
 	&__total
 		flex: 1 1 auto

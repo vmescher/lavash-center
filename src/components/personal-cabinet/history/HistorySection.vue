@@ -33,10 +33,14 @@ export default defineComponent({
 		display: flex
 		justify-content: space-between
 		align-items: center
+		flex-wrap: wrap
 		gap: rem(24)
 
 		&:not(:last-child)
 			margin-bottom: rem(48)
+
+			+until-tablet
+				margin-bottom: rem(32)
 
 	&__title
 		font-family: var(--font-secondary)
@@ -48,6 +52,7 @@ export default defineComponent({
 	&__actions
 		display: flex
 		align-items: center
+		flex-wrap: wrap
 		gap: rem(8)
 
 	&__filter
@@ -58,5 +63,8 @@ export default defineComponent({
 
 		&:not(:last-child)
 			margin-bottom: rem(40)
+
+			+until-tablet
+				margin-bottom: rem(32)
 
 </style>

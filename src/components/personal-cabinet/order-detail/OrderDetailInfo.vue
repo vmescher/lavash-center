@@ -63,10 +63,21 @@ export default defineComponent({
 		flex-wrap: wrap
 		gap: rem(64)
 
+		+until-laptop
+			gap: rem(48)
+
+		+while-mob-xl
+			display: grid
+			grid-template-columns: repeat(2, minmax(0, 1fr))
+			gap: rem(24) rem(16)
+
 	&__item
 		display: flex
 		flex-direction: column
 		gap: rem(12)
+
+		+while-mob-xl
+			gap: rem(8)
 
 	&__label
 		font-size: var(--fontSizeP3)
@@ -77,5 +88,8 @@ export default defineComponent({
 		font-size: var(--fontSizeP1)
 		font-weight: 500
 		line-height: var(--lineHeightP1)
+
+		+while-mob-xl
+			font-size: var(--fontSizeP2)
 
 </style>

@@ -18,6 +18,7 @@ import CartConstructor from "@components/cart/CartConstructor.vue";
 import {CreateManagerOrderPayload, Order, OrderProduct, UpdateManagerOrderPayload} from "@scripts/api/orders/types";
 import {useProductsStore} from "@scripts/hooks/stateHooks/useProductsStore";
 import {ChangeProductQuantityPayload, ProductInBasket} from "@scripts/api/basket/types";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "OrderDetailForm",
@@ -38,8 +39,10 @@ export default defineComponent({
 		const externalError = ref('');
 		const { withMessage } = helpers;
 		const orderData = props.newOrder ? null : inject<Order>('orderData');
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
 
 		return {
+			viewportUntil,
 			RouteNames,
 			errorMessages,
 			withMessage,
@@ -194,26 +197,26 @@ export default defineComponent({
 <template>
 	<form class="order-detail__block order-detail__block--wide" @submit.prevent="submitForm">
 		<div class="order-detail__form form">
-			<div class="form__inputs form__inputs--custom">
-				<div class="form__input form__input--4">
+			<div class="form__inputs" :class="[viewportUntil('laptop') ? 'form__inputs--4' : 'form__inputs--custom']">
+				<div class="form__input" :class="[viewportUntil('laptop') ? '' : 'form__input--4']">
 					<InputText id="order-name" v-model="formData.name" :errors="v$.formData.name.$errors" :read-only="!isEditing" label="Клиент" placeholder="Введите имя клиента"/>
 				</div>
-				<div class="form__input form__input--3">
+				<div class="form__input" :class="[viewportUntil('laptop') ? '' : 'form__input--3']">
 					<InputText id="order-phone" v-model="formData.phone" :errors="v$.formData.phone.$errors" :read-only="!isEditing" label="Телефон" type="tel" mask-type="phoneMask" placeholder="Введите номер телефона"/>
 				</div>
-				<div class="form__input form__input--3">
+				<div class="form__input" :class="[viewportUntil('laptop') ? '' : 'form__input--3']">
 					<DeliveryTypeSelect id="order-deliveryType" v-model="formData.deliveryTypeId" :errors="v$.formData.deliveryTypeId.$errors" :read-only="!isEditing" label="Способ получения" placeholder="Выберите способ получения"/>
 				</div>
 			</div>
 
-			<div class="form__inputs form__inputs--custom">
+			<div class="form__inputs" :class="[viewportUntil('laptop') ? 'form__inputs--4' : 'form__inputs--custom']">
 				<div v-if="isCourierSelected" class="form__input form__input--4" >
 					<AddressSelect id="order-address" v-model="formData.address" :errors="v$.formData.address.$errors" :read-only="!isEditing" placeholder="Введите адрес" label="Адрес доставки"/>
 				</div>
-				<div class="form__input form__input--3">
+				<div class="form__input" :class="[viewportUntil('laptop') ? '' : 'form__input--3']">
 					<InputDate id="order-date" v-model="formData.date" :errors="v$.formData.date.$errors" :read-only="!isEditing" label="Дата" placeholder="ДД.ММ.ГГГГ" :min-date="new Date()"/>
 				</div>
-				<div v-if="isPickupSelected" class="form__input form__input--3">
+				<div v-if="isPickupSelected" class="form__input" :class="[viewportUntil('laptop') ? '' : 'form__input--3']">
 					<TimeSelect id="order-time" v-model="formData.time" :errors="v$.formData.time.$errors" :read-only="!isEditing" :disabled="!formData.date" :is-today="formData.date?.toLocaleDateString() === new Date().toLocaleDateString()"/>
 				</div>
 			</div>

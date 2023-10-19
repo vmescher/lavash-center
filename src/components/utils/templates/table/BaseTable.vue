@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import {defineComponent, PropType, provide} from 'vue'
 import BaseTableRow from "@components/utils/templates/table/BaseTableRow.vue";
 import BaseTableHeadColumn from "@components/utils/templates/table/BaseTableHeadColumn.vue";
 import BaseTableColumnText from "@components/utils/templates/table/table-columns/BaseTableColumnText.vue";
@@ -15,13 +15,24 @@ export default defineComponent({
 		withActions: {
 			type: Boolean,
 			default: false
+		},
+		overflowed: {
+			type: Boolean,
+			default: false
+		},
+		adaptive: {
+			type: Boolean,
+			default: true
 		}
 	},
+	setup(props) {
+		provide('adaptive', props.adaptive)
+	}
 })
 </script>
 
 <template>
-	<div class="table">
+	<div class="table" :class="[{'table--overflowed' : overflowed}, {'table--adaptive' : adaptive}]">
 		<div class="table__wrapper">
 			<table class="table__table">
 				<thead v-if="tableHead.length" class="table__head">
@@ -60,6 +71,33 @@ export default defineComponent({
 	display: grid
 	grid-template-columns: 100%
 	grid-gap: rem(48)
+
+	+until-tablet
+		grid-gap: rem(24)
+
+	&--overflowed
+
+		& .table
+			&__wrapper
+				overflow-x: auto
+				overflow-y: hidden
+
+				+hide-scroll
+
+	&--adaptive
+		& .table
+			&__table
+				+until-tablet
+					display: block
+					margin: 0
+
+			&__head
+				+until-tablet
+					display: none
+
+			&__body
+				+until-tablet
+					display: block
 
 	&__wrapper
 		width: 100%

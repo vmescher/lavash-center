@@ -4,10 +4,11 @@ import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {RouteNames} from "@scripts/router/types";
 import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
+import ConfirmModal from "@components/modals/ConfirmModal.vue";
 
 export default defineComponent({
 	name: "NavigationBlock",
-	components: {IconSVG},
+	components: {ConfirmModal, IconSVG},
 	mixins: [useUsersStore, useModalsStore],
 	setup() {
 		return {
@@ -18,6 +19,16 @@ export default defineComponent({
 		hideDropdown() {
 			this.closeModal('nav-dropdown');
 		},
+		logout() {
+			const logoutConfirmModal = this.$refs.logoutConfirm as typeof ConfirmModal
+			if (logoutConfirmModal) {
+				logoutConfirmModal.show().then(() => {
+					this.requestLogOut().then(() => {
+						this.$router.push({name: RouteNames.MAIN_PAGE})
+					})
+				})
+			}
+		}
 	}
 })
 </script>
@@ -26,7 +37,9 @@ export default defineComponent({
 	<article class="navigation">
 
 		<nav class="navigation__items">
-
+			<router-link class="btn btn--color-secondary" :to="{name: RouteNames.QUICK_ORDER_PAGE}" @click="hideDropdown">
+				<span class="btn__text">Быстрый заказ</span>
+			</router-link>
 			<router-link v-if="isLoggedIn" :to="{name: RouteNames.PROFILE_PAGE}" class="link" @click="hideDropdown">
 				личный кабинет
 				<IconSVG name="user" class="link__icon"/>
@@ -38,11 +51,13 @@ export default defineComponent({
 			<router-link :to="{name: RouteNames.CONTACTS_PAGE}" class="link" @click="hideDropdown">
 				Контакты
 			</router-link>
-			<router-link class="btn btn--color-secondary" :to="{name: RouteNames.QUICK_ORDER_PAGE}" @click="hideDropdown">
-				<span class="btn__text">Быстрый заказ</span>
-			</router-link>
+			<button v-if="isLoggedIn" class="link" @click="logout">
+				Выйти из профиля
+				<IconSVG class="link__icon" name="exit"/>
+			</button>
 		</nav>
 
+		<ConfirmModal id="logout-confirm" ref="logoutConfirm" title="Вы уверены, что хотите выйти?" confirm-button="Да, выйти" cancel-button="Остаться"/>
 	</article>
 </template>
 

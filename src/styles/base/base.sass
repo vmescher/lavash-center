@@ -58,7 +58,8 @@ body
 	&.modal-lock
 		overflow: hidden
 
-		padding-right: var(--scrollbar-compensate, 0px)
+		@media (pointer: fine)
+			padding-right: var(--scrollbar-compensate, 0px)
 
 *::selection
 	color: var(--color-neutral-tertiary)

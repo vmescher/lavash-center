@@ -74,7 +74,7 @@ export default defineComponent({
 			</div>
 			<div class="cart-item__total">
 				<span class="cart-item__price">{{ getFormattedPrice(productData.price) }} <span v-if="!editable" class="cart-item__quantity">{{ productData.quantity }} шт</span></span>
-				<InputCounter v-if="editable" :model-value="productData.quantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
+				<InputCounter v-if="editable" :model-value="productData.quantity" class="cart-item__counter" :theme="theme === 'default' ? 'light' : 'bright'" :size="theme === 'default' ? 'small' : viewportUntil('mobile-xl') ? 'small' : 'default'"  @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</div>
 	</article>
@@ -218,6 +218,9 @@ export default defineComponent({
 		&-big
 			gap: rem(24)
 
+			+while-mob-xl
+				gap: rem(16)
+
 			& .cart-item
 				&__picture
 					size: rem(148)
@@ -225,21 +228,42 @@ export default defineComponent({
 
 					background-color: var(--color-neutral-fourth)
 
+					+until-laptop
+						size: rem(128)
+						padding: rem(16)
+
+					+while-mob-xl
+						size: rem(80)
+						padding: rem(6)
+
 				&__name
 					font-size: var(--fontSizePBig)
+
+					+while-mob-xl
+						font-size: var(--fontSizeP2)
 
 				&__info
 					max-width: rem(360)
 					gap: rem(12)
 
+					+while-mob-xl
+						max-width: rem(180)
+						gap: rem(4)
+
 				&__text
 					font-size: var(--fontSizeP2)
+
+					+while-mob-xl
+						font-size: var(--fontSizeP3)
 
 				&__clear
 					opacity: 1
 
 		&-medium
 			gap: rem(24)
+
+			+while-mob-xl
+				gap: rem(16)
 
 			& .cart-item
 				&__picture
@@ -248,15 +272,29 @@ export default defineComponent({
 
 					background-color: var(--color-neutral-fourth)
 
+					+until-laptop
+						size: rem(100)
+						padding: rem(8)
+
 				&__name
 					font-size: var(--fontSizeP1)
+
+					+while-mob-xl
+						font-size: var(--fontSizeP2)
 
 				&__info
 					max-width: rem(360)
 					gap: rem(10)
 
+					+while-mob-xl
+						max-width: rem(180)
+						gap: rem(4)
+
 				&__text
 					font-size: var(--fontSizeP2)
+
+					+while-mob-xl
+						font-size: var(--fontSizeP3)
 
 				&__clear
 					opacity: 1

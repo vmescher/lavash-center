@@ -74,7 +74,12 @@ export default defineComponent({
 .cabinet-navigation
 	display: flex
 	align-items: center
+	flex-wrap: wrap
 	justify-content: space-between
 	gap: rem(32)
+
+	&__actions
+		+while-mob-xl
+			display: none
 
 </style>

@@ -98,14 +98,31 @@ export default defineComponent({
 		&:not(:last-child)
 			margin-bottom: rem(64)
 
+			+until-laptop
+				margin-bottom: rem(48)
+
+			+while-mob-xl
+				margin-bottom: rem(32)
+
 	&__top
 		display: flex
 		justify-content: flex-start
 		align-items: center
 		flex-wrap: wrap
 		gap: rem(16)
+
+		+while-mob-xl
+			gap: rem(24)
+			justify-content: space-between
+
 		&:not(:last-child)
 			margin-bottom: rem(48)
+
+			+until-laptop
+				margin-bottom: rem(32)
+
+			+while-mob-xl
+				margin-bottom: rem(24)
 
 	&__title
 		font-family: var(--font-secondary)
@@ -113,6 +130,10 @@ export default defineComponent({
 		font-weight: 500
 		line-height: var(--lineHeightH2)
 		text-transform: uppercase
+
+		+until-laptop
+			font-size: var(--fontSizeH4)
+			line-height: var(--lineHeightH3)
 
 	&__statuses
 		display: flex
@@ -127,13 +148,28 @@ export default defineComponent({
 		&:not(:first-child)
 			margin-left: auto
 
+			+while-mob-xl
+				margin-left: 0
+
 	&__body
 		display: grid
 		grid-template-columns: repeat(12, minmax(0, 1fr))
 		grid-gap: rem(80) rem(24)
 
+		+until-laptop
+			grid-gap: rem(40) rem(24)
+
+		+while-mob-xl
+			grid-gap: rem(32) rem(8)
+
 	&__block
 		grid-column: span 8
+
+		+until-pc
+			grid-column: span 10
+
+		+until-laptop
+			grid-column: 1 / -1
 
 		&--wide
 			grid-column: 1 / -1
@@ -142,17 +178,35 @@ export default defineComponent({
 		&:not(:last-child)
 			margin-bottom: rem(80)
 
+			+until-laptop
+				margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(32)
+
 	&__cart
 		&:not(:last-child)
 			margin-bottom: rem(32)
+
+			+while-mob-xl
+				margin-bottom: rem(24)
 
 	&__bottom
 		position: relative
 
 		padding-top: rem(18)
 
+		+while-mob-xl
+			flex-direction: column
+			align-items: stretch
+			gap: rem(24)
+			padding-top: rem(12)
+
 		&:not(:first-child)
 			margin-top: rem(32)
+
+			+while-mob-xl
+				margin-top: rem(24)
 
 		&::before
 			content: ''

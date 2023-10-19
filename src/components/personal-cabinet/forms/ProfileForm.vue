@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, inject, ref} from 'vue'
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import InputText from "@components/utils/form/InputText.vue";
 import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
@@ -10,6 +10,7 @@ import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
 import NotionModal from "@components/modals/NotionModal.vue";
 import ChangePasswordModal from "@components/personal-cabinet/modals/ChangePasswordModal.vue";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "ProfileForm",
@@ -18,8 +19,10 @@ export default defineComponent({
 	setup() {
 		const externalError = ref('');
 		const { withMessage } = helpers;
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
 
 		return {
+			viewportUntil,
 			errorMessages,
 			withMessage,
 			externalError,
@@ -136,7 +139,7 @@ export default defineComponent({
 			</div>
 		</div>
 		<div class="form__bottom">
-			<div class="form__submit">
+			<div class="form__submit" :class="{'form__submit--full': viewportUntil('mobile-xl')}">
 				<template v-if="!formEditable">
 					<button class="btn btn--color-secondary" type="button" @click="toggleFormEditable">
 						<span class="btn__text">Редактировать личные данные</span>

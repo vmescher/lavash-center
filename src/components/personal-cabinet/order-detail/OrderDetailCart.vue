@@ -53,8 +53,14 @@ export default defineComponent({
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase
 
+		+while-mob-xl
+			font-weight: 500
+
 		&:not(:last-child)
 			margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(24)
 
 	&__products
 		position: relative
@@ -64,8 +70,18 @@ export default defineComponent({
 		gap: rem(24)
 		padding-bottom: rem(26)
 
+		+until-laptop
+			padding-bottom: rem(18)
+			gap: rem(16)
+
 		&:not(:last-child)
 			margin-bottom: rem(80)
+
+			+until-laptop
+				margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(32)
 
 		&::before
 			content: ''
@@ -83,6 +99,9 @@ export default defineComponent({
 	&__notion
 		margin-bottom: rem(40)
 
+		+while-mob-xl
+			margin-bottom: rem(24)
+
 	&__bottom
 		position: relative
 
@@ -92,8 +111,17 @@ export default defineComponent({
 		align-items: center
 		gap: rem(24)
 
+		+while-mob-xl
+			flex-direction: column
+			align-items: stretch
+			gap: rem(24)
+			padding-top: rem(12)
+
 		&:not(:first-child)
 			margin-top: rem(40)
+
+			+while-mob-xl
+				margin-top: rem(24)
 
 		&::before
 			content: ''

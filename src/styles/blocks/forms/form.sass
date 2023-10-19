@@ -17,6 +17,9 @@
 		line-height: var(--lineHeightH2)
 		text-transform: uppercase
 
+		+while-mob-xl
+			font-size: var(--fontSizeH4)
+
 	&__text
 		font-size: var(--fontSizeP1)
 		font-weight: 600
@@ -50,6 +53,15 @@
 
 		&--4
 			grid-template-columns: repeat(4, minmax(0,1fr))
+
+			+until-laptop
+				grid-template-columns: repeat(3, minmax(0,1fr))
+
+			+until-tablet
+				grid-template-columns: repeat(2, minmax(0,1fr))
+
+			+while-mob-xl
+				grid-template-columns: 100%
 
 		&--5
 			grid-template-columns: repeat(5, minmax(0,1fr))

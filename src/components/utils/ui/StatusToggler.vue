@@ -25,6 +25,10 @@ export default defineComponent({
 		isEditable: {
 			type: Boolean,
 			default: false
+		},
+		isFixed: {
+			type: Boolean,
+			default: false
 		}
 	},
 	emits: ['update:modelValue'],
@@ -50,7 +54,7 @@ export default defineComponent({
 
 <template>
 	<div class="status-toggler">
-		<BaseDropdown v-if="isEditable">
+		<BaseDropdown v-if="isEditable" :is-fixed="isFixed">
 			<button class="status-toggler__button" :class="`status-toggler__button--color-${activeStatus.xmlId}`">
 				{{ activeStatus.name }}
 				<IconSVG name="chevron-down" class="status-toggler__button-icon dropdown__icon"/>
@@ -178,6 +182,7 @@ export default defineComponent({
 		flex-direction: column
 		align-items: flex-start
 		gap: rem(12)
+		padding: rem(4) 0
 
 
 </style>

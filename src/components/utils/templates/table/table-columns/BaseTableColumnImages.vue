@@ -83,6 +83,11 @@ export default defineComponent({
 
 			background-color: var(--color-neutral-fifth)
 
+		&--empty
+			& .table-images
+				&__image
+					display: none
+
 	&__image
 		size: 100%
 

@@ -61,6 +61,8 @@
 		text-transform: uppercase
 
 		+while-mob-xl
+			max-width: 95%
+
 			font-size: var(--fontSizeH4)
 
 		&:not(:last-child)
@@ -112,8 +114,12 @@
 		&:not(:first-child)
 			margin-top: rem(40)
 
+			+while-mob-xl
+				margin-top: rem(24)
+
 	&__buttons
 		display: flex
+		flex-wrap: wrap
 		align-items: center
 		gap: rem(8)
 

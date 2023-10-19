@@ -160,6 +160,8 @@ export default defineComponent({
 		display: flex
 		min-width: rem(400)
 
+		+until-tablet
+			min-width: rem(200)
 
 	&__input
 		flex: 1 1 auto

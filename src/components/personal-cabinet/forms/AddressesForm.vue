@@ -1,5 +1,5 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, inject} from 'vue'
 import {useAddressesStore} from "@scripts/hooks/stateHooks/useAddressesStore";
 import {helpers, maxLength, minLength, required} from "@vuelidate/validators";
 import {errorMessages} from "@scripts/consts/validation";
@@ -8,6 +8,7 @@ import {Address} from "@scripts/api/addresses/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {useBaseStore} from "@scripts/hooks/stateHooks/useBaseStore";
 import AddressSelect from "@components/utils/selects/AddressSelect.vue";
+import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
 
 export default defineComponent({
 	name: "AddressesForm",
@@ -15,8 +16,10 @@ export default defineComponent({
 	mixins: [useAddressesStore, useBaseStore],
 	setup() {
 		const { withMessage } = helpers;
+		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
 
 		return {
+			viewportUntil,
 			errorMessages,
 			withMessage,
 			v$: useVuelidate(),
@@ -102,7 +105,7 @@ export default defineComponent({
 		<div class="form__top">
 			<h3 class="form__title">Адрес доставки</h3>
 		</div>
-		<div class="form__inputs form__inputs--2">
+		<div class="form__inputs" :class="{'form__inputs--2' : !viewportUntil('tablet')}">
 			<div v-for="(address, index) in formData.addresses" :key="address.id" class="form__input form__input--new-row">
 				<AddressSelect  v-model="address.address" :errors="v$.formData.addresses.$errors.length ? v$.formData.addresses.$each.$response.$errors[index].address : []" :read-only="!formEditable" :label="`Адрес доставки #${index + 1}`" placeholder="Введите адрес" :with-user-addresses="false">
 					<template v-if="index === 0 && !getAddresses.length" #underInput>
@@ -117,7 +120,7 @@ export default defineComponent({
 			</div>
 		</div>
 		<div class="form__bottom">
-			<div class="form__submit">
+			<div class="form__submit" :class="{'form__submit--full': viewportUntil('mobile-xl')}">
 				<button v-if="!formEditable" class="btn btn--color-secondary" type="button" @click="toggleFormEditable">
 					<span class="btn__text">Редактировать адреса</span>
 					<IconSVG name="edit" class="btn__icon"/>
@@ -126,7 +129,7 @@ export default defineComponent({
 					<span class="btn__text">сохранить изменения</span>
 				</button>
 				<button v-if="formData.addresses.length < 15 && getAddresses.length" class="btn" type="button" @click="addAddress">
-					<span class="btn__text">добавить еще один адрес доставки</span>
+					<span class="btn__text">добавить адрес доставки</span>
 					<IconSVG name="plus" class="btn__icon"/>
 				</button>
 			</div>

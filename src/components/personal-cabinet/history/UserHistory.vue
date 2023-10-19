@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<BaseTable :table-head="userHistoryTableHead">
+	<BaseTable :table-head="userHistoryTableHead" overflowed :adaptive="false">
 
 		<template v-if="getOrders.length" #default>
 			<UserHistoryItem v-for="order in getOrders" :key="order.id" :order-data="order"/>

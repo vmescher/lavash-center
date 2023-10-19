@@ -26,6 +26,12 @@ export default defineComponent({
 	background-color: var(--color-neutral-fourth)
 	border-radius: var(--radius-block-secondary)
 
+	+until-tablet
+		padding: rem(24)
+
+	+while-mob-xl
+		padding: rem(24) rem(16)
+
 	&::before
 		content: ''
 		position: absolute
@@ -41,13 +47,36 @@ export default defineComponent({
 		mask-size: contain
 		mask-repeat: no-repeat
 
+		+while-mob-xl
+			right: rem(24)
+			bottom: rem(24)
+
+			width: rem(48)
+			height: rem(48)
+
+		+while-mob
+			right: rem(16)
+			bottom: rem(16)
+
 	&__title
 		font-size: var(--fontSizePBig)
 		line-height: var(--lineHeightP1)
 		font-weight: 600
 
+		+while-mob-xl
+			font-size: var(--fontSizeP1)
+
+		+while-mob
+			font-size: var(--fontSizeP2)
+
 		&:not(:last-child)
 			margin-bottom: rem(20)
+
+			+while-mob-xl
+				margin-bottom: rem(16)
+
+			+while-mob
+				margin-bottom: rem(12)
 
 	&__text
 		max-width: 52.5%
@@ -55,4 +84,12 @@ export default defineComponent({
 		font-size: var(--fontSizeP1)
 		line-height: var(--lineHeightP1)
 		font-weight: 500
+
+		+while-mob-xl
+			max-width: 80%
+
+			font-size: var(--fontSizeP2)
+
+		+while-mob
+			font-size: var(--fontSizeP3)
 </style>

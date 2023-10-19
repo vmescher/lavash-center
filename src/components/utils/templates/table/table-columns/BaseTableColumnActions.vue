@@ -5,11 +5,17 @@ import BaseTableColumn from "@components/utils/templates/table/BaseTableColumn.v
 export default defineComponent({
 	name: "BaseTableColumnActions",
 	components: {BaseTableColumn},
+	props: {
+		label: {
+			type: String,
+			default: ''
+		}
+	}
 })
 </script>
 
 <template>
-	<BaseTableColumn>
+	<BaseTableColumn :label="label" class="table-column--actions">
 		<div class="table-actions">
 			<slot></slot>
 		</div>
@@ -21,5 +27,10 @@ export default defineComponent({
 	display: flex
 	align-items: center
 	gap: rem(8)
+
+.table-column
+	&--actions
+		+until-tablet
+			width: 100%
 
 </style>

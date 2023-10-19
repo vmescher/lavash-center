@@ -79,11 +79,11 @@ export default defineComponent({
 			<BaseTableColumnText type="bold" no-wrap>{{ getFormattedPrice(orderData.sum) }}</BaseTableColumnText>
 
 			<BaseTableColumnActions>
-				<StatusToggler :model-value="orderData.orderStatusId" is-editable :statuses="getOrderStatuses" @update:model-value="updateOrderStatus" @click.stop/>
+				<StatusToggler :model-value="orderData.orderStatusId" is-editable is-fixed :statuses="getOrderStatuses" @update:model-value="updateOrderStatus" @click.stop/>
 			</BaseTableColumnActions>
 
 			<BaseTableColumnActions>
-				<StatusToggler :model-value="orderData.paymentStatusId" is-editable :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus" @click.stop/>
+				<StatusToggler :model-value="orderData.paymentStatusId" is-editable is-fixed :statuses="getPaymentStatuses" @update:model-value="updatePaymentStatus" @click.stop/>
 			</BaseTableColumnActions>
 		</BaseTableRow>
 	</router-link>

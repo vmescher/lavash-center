@@ -166,6 +166,9 @@ export default defineComponent({
 			&-wrapper
 				min-height: calc(var(--ms-font-size) * var(--ms-line-height) + 2 * var(--ms-py))
 
+			&-search
+				padding-right: calc(var(--ms-px) * 2.5 + var(--di-icon-size) * 2)
+
 			&-caret
 				size: var(--di-icon-size)
 
@@ -173,7 +176,7 @@ export default defineComponent({
 
 			&-clear
 				size: var(--di-icon-size)
-				padding: 0
+				padding: rem(1)
 				margin: 0 calc(var(--ms-px) / 2) 0 0
 
 				&-icon

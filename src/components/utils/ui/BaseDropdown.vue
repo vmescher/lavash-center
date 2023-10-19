@@ -16,12 +16,17 @@ export default defineComponent({
 			type: String as PropType<'default' | 'bordered'>,
 			default: () => 'default',
 		},
+		isFixed: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	data() {
 		return {
 			dropdownWillHide: false,
 			dropdownHideTimeout: null as number | null,
 			dropdownShown: false,
+			position: {}
 		};
 	},
 	computed: {
@@ -38,6 +43,17 @@ export default defineComponent({
 			}
 			return 'mouseleave';
 		},
+	},
+	mounted() {
+		if (this.isFixed) {
+			this.getPosition();
+			window.addEventListener('scroll', this.getPosition);
+		}
+	},
+	beforeUnmount() {
+		if (this.isFixed) {
+			window.removeEventListener('scroll', this.getPosition);
+		}
 	},
 	methods: {
 		showDropdown() {
@@ -61,6 +77,24 @@ export default defineComponent({
 				}
 			}, 500);
 		},
+		getPosition() {
+			if (!this.isFixed || !this.dropdownShown) {
+				this.position = {};
+			}
+
+			const bodyRect = this.$refs.element as HTMLElement;
+
+			if (!bodyRect) {
+				this.position = {};
+			}
+
+			const bodyRectCoords = bodyRect.getBoundingClientRect();
+			this.position = {
+				top: `${bodyRectCoords.top + bodyRectCoords.height + 8}px`,
+				left: `${bodyRectCoords.left}px`,
+				position: `fixed`,
+			}
+		},
 		hideDropdown() {
 			this.dropdownWillHide = false;
 			this.dropdownShown = false;
@@ -71,6 +105,7 @@ export default defineComponent({
 
 <template>
 	<div
+		ref="element"
 		v-click-outside="hideDropdown"
 		class="dropdown"
 		:class="[{ active: dropdownShown }, `dropdown--${colorScheme}`, { 'dropdown--rtl': rtl }]"
@@ -80,7 +115,7 @@ export default defineComponent({
 			<slot :dropdown-shown="dropdownShown"></slot>
 		</div>
 		<transition name="dropdown">
-			<div v-show="dropdownShown" ref="dropdown" class="dropdown__body">
+			<div v-show="dropdownShown" ref="dropdown" class="dropdown__body" :style="position">
 				<div class="dropdown__content">
 					<slot name="dropdown"></slot>
 				</div>

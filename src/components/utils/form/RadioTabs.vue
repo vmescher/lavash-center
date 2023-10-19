@@ -70,6 +70,13 @@ export default defineComponent({
 		grid-auto-rows: minmax(0, 1fr)
 		gap: rem(24)
 
+		+until-tablet
+			grid-gap: rem(24) rem(16)
+
+		+while-mob-xl
+			grid-gap: rem(16)
+			grid-template-columns: 100%
+
 	&__item
 		display: block
 
@@ -87,6 +94,12 @@ export default defineComponent({
 	background-color: var(--color-neutral-tertiary)
 	border-radius: var(--radius-block-secondary)
 	transition: color .3s ease, background-color .3s ease
+
+	+until-tablet
+		padding: rem(24)
+
+	+while-mob-xl
+		padding: rem(24) rem(16)
 
 	&.active
 		color: var(--color-neutral-tertiary)
@@ -132,9 +145,15 @@ export default defineComponent({
 		font-weight: 500
 		line-height: var(--lineHeightP1)
 
+		+while-mob-xl
+			font-size: var(--fontSizeP3)
+
 	&__description
 		&:not(:last-child)
 			margin-bottom: rem(40)
+
+			+until-tablet
+				margin-bottom: rem(24)
 
 	&__note
 		margin-top: auto
@@ -156,6 +175,12 @@ export default defineComponent({
 		background-color: var(--color-neutral-fifth)
 
 		transition: background-color .3s ease
+
+		+until-tablet
+			right: rem(24)
+			top: rem(24)
+
+			size: rem(24)
 
 		&::before
 			content: ''

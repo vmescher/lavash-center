@@ -158,8 +158,12 @@ export default defineComponent({
 		max-width: rem(270)
 
 		+while-mob-xl
-			height: rem(24)
+			height: rem(32)
 			max-width: rem(200)
+
+		+while-mob
+			height: rem(28)
+			max-width: rem(180)
 
 		&-image
 			display: block

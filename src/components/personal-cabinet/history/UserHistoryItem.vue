@@ -50,27 +50,27 @@ export default defineComponent({
 <template>
 	<router-link v-slot="{navigate}" :to="{name: RouteNames.ORDER_DETAIL_PAGE, params: {id: orderData.id}}" custom>
 		<BaseTableRow @click="navigate">
-			<BaseTableColumnText>{{orderData.id}}</BaseTableColumnText>
+			<BaseTableColumnText label="Номер заказа">{{orderData.id}}</BaseTableColumnText>
 
-			<BaseTableColumnText type="grey">{{ getFormattedDate(orderData.dateCreate, false) }}</BaseTableColumnText>
+			<BaseTableColumnText type="grey" label="Дата заказа">{{ getFormattedDate(orderData.dateCreate, false) }}</BaseTableColumnText>
 
-			<BaseTableColumnImages :images="getOrderItemsImages"/>
+			<BaseTableColumnImages :images="getOrderItemsImages" label="Товары в заказе"/>
 
 			<template v-if="isPickupSelected">
-				<BaseTableColumnText>{{ deliveryData?.name || '-' }}</BaseTableColumnText>
+				<BaseTableColumnText label="Адрес доставки">{{ deliveryData?.name || '-' }}</BaseTableColumnText>
 
-				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
+				<BaseTableColumnText no-wrap label="Дата получения">{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
 			</template>
 
 			<template v-else>
-				<BaseTableColumnText>{{ orderData.address }}</BaseTableColumnText>
+				<BaseTableColumnText label="Адрес доставки">{{ orderData.address }}</BaseTableColumnText>
 
-				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}</BaseTableColumnText>
+				<BaseTableColumnText no-wrap label="Дата получения">{{ getFormattedDate(orderData.date) }}</BaseTableColumnText>
 			</template>
 
-			<BaseTableColumnText type="bold" no-wrap>{{ getFormattedPrice(orderData.sum) }}</BaseTableColumnText>
+			<BaseTableColumnText type="bold" no-wrap label="Стоимость">{{ getFormattedPrice(orderData.sum) }}</BaseTableColumnText>
 
-			<BaseTableColumnActions>
+			<BaseTableColumnActions label="Статус заказа">
 				<StatusToggler :model-value="orderData.orderStatusId" :statuses="getOrderStatuses"/>
 			</BaseTableColumnActions>
 		</BaseTableRow>

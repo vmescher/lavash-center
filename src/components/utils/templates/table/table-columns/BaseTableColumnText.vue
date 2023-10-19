@@ -10,6 +10,10 @@ export default defineComponent({
 			type: Boolean,
 			default: false
 		},
+		label: {
+			type: String,
+			default: ''
+		},
 		type: {
 			type: String as PropType<'' | 'grey' | 'bold'>,
 			default: ''
@@ -27,7 +31,7 @@ export default defineComponent({
 </script>
 
 <template>
-	<BaseTableColumn :is-wide="isWide">
+	<BaseTableColumn :is-wide="isWide" :label="label">
 		<p class="table-text" :class="[(type ? `table-text--${type}` : ''), { 'table-text--no-wrap' : noWrap}, (size ? `table-text--${size}` : '')]">
 			<slot></slot>
 		</p>
@@ -42,6 +46,9 @@ export default defineComponent({
 	font-size: var(--fontSizeP2)
 	font-weight: 500
 	line-height: var(--lineHeightP1)
+
+	+until-tablet
+		text-align: right
 
 	&--grey
 		color: var(--color-neutral-secondary)

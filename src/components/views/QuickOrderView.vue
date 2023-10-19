@@ -38,7 +38,7 @@ export default defineComponent({
 <template>
 	<main class="page">
 		<BackHeader :back-target="RouteNames.MAIN_PAGE">Вернуться в каталог</BackHeader>
-		<SectionTitle>Быстрое Оформление заказа</SectionTitle>
+		<SectionTitle>Быстрое Оформление&nbsp;заказа</SectionTitle>
 		<OrderCheckout editable-basket @submit="isFormSubmitted = true"/>
 
 		<ConfirmModal id="order-leave-confirm" ref="confirmLeave" title="Вы уверены, что хотите прервать оформление заказа?" text="Все заполненные вами данные будут безвозвратно утеряны." confirm-button="Да, прервать" cancel-button="Вернуться к оформлению"/>

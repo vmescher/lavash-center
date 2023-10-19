@@ -124,9 +124,14 @@ export default defineComponent({
 		display: flex
 		align-items: center
 		justify-content: space-between
+		flex-wrap: wrap
+		gap: rem(32)
 
 		&:not(:last-child)
 			margin-bottom: rem(40)
+
+			+while-mob-xl
+				margin-bottom: rem(24)
 
 	&__actions
 		display: flex
@@ -140,5 +145,8 @@ export default defineComponent({
 		font-weight: 700
 		line-height: var(--lineHeightH3)
 		text-transform: uppercase
+
+		+while-mob-xl
+			font-weight: 500
 
 </style>

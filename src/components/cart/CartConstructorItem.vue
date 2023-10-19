@@ -69,7 +69,7 @@ export default defineComponent({
 
 <template>
 	<BaseTableRow theme="secondary">
-		<BaseTableColumn width="60%">
+		<BaseTableColumn class="cart-constructor__product-cell">
 			<div class="cart-constructor__product">
 				<ProductSelect v-if="!productData.id" v-model="newProductId" :excluded-products="excludedProducts" :errors="errors" label="Наименование товара" placeholder="Не выбрано"/>
 				<div v-else class="cart-constructor-item">
@@ -86,17 +86,17 @@ export default defineComponent({
 			</div>
 		</BaseTableColumn>
 
-		<BaseTableColumnText no-wrap>{{ getFormattedPrice(productData.price || 0) }}</BaseTableColumnText>
+		<BaseTableColumnText label="Цена, шт" no-wrap>{{ getFormattedPrice(productData.price || 0) }}</BaseTableColumnText>
 
-		<BaseTableColumn v-if="editable">
+		<BaseTableColumn v-if="editable" label="Количество">
 			<div class="cart-constructor__quantity">
 				<InputCounter :model-value="productData.quantity || 1" :disabled="!productData.id" theme="bright" size="small" @increment="changeQuantity" @decrement="changeQuantity" @change="changeQuantityHandler"/>
 			</div>
 		</BaseTableColumn>
-		<BaseTableColumnText v-else no-wrap>{{ productData.quantity }} шт</BaseTableColumnText>
+		<BaseTableColumnText v-else label="Количество" no-wrap>{{ productData.quantity }} шт</BaseTableColumnText>
 
 
-		<BaseTableColumnText type="bold" size="large" no-wrap>{{ getFormattedPrice(productData.price || 0 * productData.quantity || 1) }}</BaseTableColumnText>
+		<BaseTableColumnText type="bold" label="Стоимость" size="large" no-wrap>{{ getFormattedPrice(productData.price || 0 * productData.quantity || 1) }}</BaseTableColumnText>
 
 		<BaseTableColumnActions v-if="editable">
 			<button class="link" :disabled="!canRemove" type="button" @click.prevent="deleteFromBasket">
@@ -117,11 +117,31 @@ export default defineComponent({
 		max-width: rem(545)
 		width: 100%
 
+		+until-tablet
+			max-width: rem(425)
+			min-height: unset
+
+		&-cell
+			width: 60%
+
+			+until-laptop
+				width: 40%
+
+			+until-tablet
+				flex: 1 1 auto
+				width: auto
+
+			+while-mob-xl
+				width: 100%
+
 .cart-constructor-item
 	position: relative
 
 	display: flex
 	gap: rem(24)
+	
+	+until-laptop
+		gap: rem(16)
 
 	&__picture
 		size: rem(128)
@@ -130,6 +150,14 @@ export default defineComponent({
 
 		background-color: var(--color-neutral-fourth)
 		border-radius: var(--radius-picture)
+
+		+until-laptop
+			size: rem(100)
+			padding: rem(8)
+
+		+until-tablet
+			size: rem(80)
+			padding: rem(6)
 
 	&__image
 		width: 100%
@@ -150,6 +178,9 @@ export default defineComponent({
 		align-items: flex-start
 		flex-direction: column
 		gap: rem(10)
+
+		+until-laptop
+			gap: rem(8)
 
 	&__name
 		font-size: var(--fontSizeP2)

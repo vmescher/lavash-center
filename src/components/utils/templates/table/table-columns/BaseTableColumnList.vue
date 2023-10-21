@@ -33,6 +33,9 @@ export default defineComponent({
 	font-weight: 500
 	line-height: var(--lineHeightP1)
 
+	+until-tablet
+		font-size: var(--fontSizeP3)
+
 	&--grey
 		color: var(--color-neutral-secondary)
 

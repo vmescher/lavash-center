@@ -78,9 +78,9 @@ export default defineComponent({
 
 <style scoped lang="sass">
 .status-toggler
-	--status-toggler-px: #{rem(20)}
-	--status-toggler-py: #{rem(10)}
-	--status-toggler-gap: #{rem(8)}
+	--status-toggler-px: #{fluid(16, 20)}
+	--status-toggler-py: #{fluid(6, 10)}
+	--status-toggler-gap: #{fluid(4, 8)}
 
 	--status-toggler-font-family: var(--font-secondary)
 	--status-toggler-font-size: var(--fontSizeP2)
@@ -93,7 +93,7 @@ export default defineComponent({
 
 	--status-toggler-radius: var(--radius-btn)
 
-	--status-toggler-icon-size: #{rem(16)}
+	--status-toggler-icon-size: #{fluid(12, 16)}
 
 	&__button
 		display: flex

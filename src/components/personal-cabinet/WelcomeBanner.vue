@@ -40,10 +40,6 @@ export default defineComponent({
 		aspect-ratio: 14 / 5
 
 		background-color: var(--color-tertiary)
-		//background-image: url("@img/base-pattern.svg")
-		//background-repeat: repeat-x
-		//background-position: 0 calc(100% - rem(80))
-		//background-size: 100% auto
 		border-radius: var(--radius-block)
 
 		overflow: hidden

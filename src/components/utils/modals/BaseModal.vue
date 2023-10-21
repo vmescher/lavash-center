@@ -121,7 +121,7 @@ export default defineComponent({
 		+hide-scroll
 
 		+until-tablet
-			padding: rem(12)
+			padding: rem(8)
 
 	&__bg
 		position: absolute

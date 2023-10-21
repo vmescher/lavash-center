@@ -33,31 +33,40 @@ export default defineComponent({
 			cursor: pointer
 
 			&:deep(td)
+				background-color: var(--color-neutral-tertiary)
+				border-top: 2px solid transparent
+				border-bottom: 2px solid transparent
+				transition: border-color .3s ease
+
 				&:first-child
-					&::before
+					border-left: 2px solid transparent
+					border-radius: var(--radius-picture) 0 0 var(--radius-picture)
+
+				&:last-child
+					border-right: 2px solid transparent
+					border-radius: 0 var(--radius-picture) var(--radius-picture) 0
+
+			+hover
+				&:deep(td)
+					border-color: var(--color-tertiary)
+
+		&-secondary
+
+			&:not(:last-child)
+				+until-tablet
+					&::after
 						content: ''
 						position: absolute
-						top: 0
+						bottom: 0
 						left: 0
 						z-index: var(--z-index-below)
 
 						display: block
 						width: 100%
-						height: 100%
+						height: 2px
 
-						background-color: var(--color-neutral-tertiary)
-						border-radius: var(--radius-picture)
-						border: 2px solid transparent
+						background-color: var(--color-neutral-fifth)
 
-						transition: border-color .3s ease
-
-			+hover
-				&:deep(td)
-					&:first-child
-						&::before
-							border-color: var(--color-tertiary)
-
-		&-secondary
 			&:first-child
 				&:deep(td)
 					padding-top: 0
@@ -69,11 +78,11 @@ export default defineComponent({
 				&:deep(td)
 					padding-bottom: 0
 
-					&:first-child
-						&::before
-							display: none
+					&::before
+						display: none
 
 			&:deep(td)
+				position: relative
 				padding-bottom: fluid(16, 24)
 
 				vertical-align: middle
@@ -81,25 +90,33 @@ export default defineComponent({
 				+until-tablet
 					padding: 0
 
+				&::before
+					content: ''
+					position: absolute
+					bottom: 0
+					left: 0
+					z-index: var(--z-index-below)
+
+					display: block
+					width: 100%
+					height: 2px
+
+					background-color: var(--color-neutral-fifth)
+
+					+until-tablet
+						display: none
+
 				&:last-child
 					padding-right: 0
+
+					&:before
+						border-radius: var(--radius-divider) 0 0 var(--radius-divider)
 
 				&:first-child
 					padding-left: 0
 
-					&::before
-						content: ''
-						position: absolute
-						top: 100%
-						left: 0
-						z-index: var(--z-index-below)
-
-						display: block
-						width: 100%
-						height: 2px
-
-						background-color: var(--color-neutral-fifth)
-						border-radius: var(--radius-divider)
+					&:before
+						border-radius: 0 var(--radius-divider) var(--radius-divider) 0
 
 	&--adaptive
 		&.table-row

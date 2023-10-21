@@ -108,21 +108,6 @@ export default defineComponent({
 		border-spacing: 0 rem(8)
 		margin: rem(-8) 0
 
-	&__head
-		position: relative
-
-		&::after
-			content: ""
-			position: absolute
-			bottom: rem(18)
-			left: 0
-
-			height: 2px
-			width: 100%
-
-			border-radius: var(--radius-divider)
-			background-color: var(--color-primary)
-
 	&__bottom
 		display: flex
 		flex-direction: column

@@ -170,7 +170,6 @@ export default defineComponent({
 		color: var(--color-neutral-tertiary)
 		background-color: var(--color-secondary)
 		border-radius: var(--radius-block)
-		transform: translate3d(0, 0, 1px)
 
 		+until-laptop
 			padding: rem(48) rem(32)

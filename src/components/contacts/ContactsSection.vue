@@ -90,7 +90,6 @@ export default defineComponent({
 		border-radius: var(--radius-block)
 		background-color: var(--color-neutral-fourth)
 		overflow: hidden
-		transform: translate3d(0, 0, 1px)
 
 		+while-mob-xl
 			aspect-ratio: 5 / 6

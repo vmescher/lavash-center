@@ -48,6 +48,8 @@ export default defineComponent({
 	line-height: var(--lineHeightP1)
 
 	+until-tablet
+		font-size: var(--fontSizeP3)
+
 		text-align: right
 
 	&--grey
@@ -60,9 +62,15 @@ export default defineComponent({
 		line-height: var(--lineHeightP1)
 		text-transform: uppercase
 
+		+until-tablet
+			font-size: var(--fontSizeP2)
+
 	&--large
 		font-size: var(--fontSizeH5)
 		line-height: var(--lineHeightH3)
+
+		+until-tablet
+			font-size: var(--fontSizeH6)
 
 	&--no-wrap
 		white-space: nowrap

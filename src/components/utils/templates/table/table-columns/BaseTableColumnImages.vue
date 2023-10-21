@@ -74,6 +74,10 @@ export default defineComponent({
 		background-color: var(--color-neutral-fourth)
 		border-radius: var(--radius-divider)
 
+		+until-tablet
+			size: rem(48)
+			padding: rem(4)
+
 		&--all
 			font-family: var(--font-secondary)
 			font-size: var(--fontSizeP1)

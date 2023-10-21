@@ -44,22 +44,16 @@ export default defineComponent({
 			return 'mouseleave';
 		},
 	},
-	mounted() {
-		if (this.isFixed) {
-			this.getPosition();
-			window.addEventListener('scroll', this.getPosition);
-		}
-	},
-	beforeUnmount() {
-		if (this.isFixed) {
-			window.removeEventListener('scroll', this.getPosition);
-		}
-	},
 	methods: {
 		showDropdown() {
 			if (this.dropdownShown) {
 				this.dropdownWillHide = false;
 				return;
+			}
+
+			if (this.isFixed) {
+				this.getPosition();
+				window.addEventListener('scroll', this.getPosition);
 			}
 
 			this.dropdownShown = true;
@@ -78,7 +72,7 @@ export default defineComponent({
 			}, 500);
 		},
 		getPosition() {
-			if (!this.isFixed || !this.dropdownShown) {
+			if (!this.isFixed) {
 				this.position = {};
 			}
 
@@ -98,6 +92,10 @@ export default defineComponent({
 		hideDropdown() {
 			this.dropdownWillHide = false;
 			this.dropdownShown = false;
+
+			if (this.isFixed) {
+				window.removeEventListener('scroll', this.getPosition);
+			}
 		},
 	},
 });

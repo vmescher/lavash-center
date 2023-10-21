@@ -14,6 +14,7 @@ export default defineComponent({
 
 <style scoped lang="sass">
 .table-title
+	position: relative
 	padding: 0 rem(28) rem(30) 0
 	margin: 0
 
@@ -24,7 +25,32 @@ export default defineComponent({
 	text-align: left
 	vertical-align: bottom
 
+	+until-tablet
+		padding: 0 rem(16) rem(18) 0
+
+	&::after
+		content: ""
+		position: absolute
+		bottom: rem(18)
+		left: 0
+
+		height: 2px
+		width: 100%
+
+		border-radius: 0
+		background-color: var(--color-primary)
+
+		+until-tablet
+			bottom: rem(8)
+
+	&:first-child
+		&:after
+			border-radius: var(--radius-divider) 0 0 var(--radius-divider)
+
 	&:last-child
 		padding-right: rem(24)
+
+		&:after
+			border-radius: 0 var(--radius-divider) var(--radius-divider) 0
 
 </style>

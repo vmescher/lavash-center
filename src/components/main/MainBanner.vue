@@ -76,7 +76,6 @@ export default defineComponent({
 		border-radius: var(--radius-block)
 
 		overflow: hidden
-		transform: translate3d(0, 0, 1px)
 
 		+until-laptop
 			padding: rem(48) rem(24)
@@ -84,7 +83,7 @@ export default defineComponent({
 			aspect-ratio: 16 / 9
 
 		+until-tablet
-			min-height: unset
+			min-height: rem(380)
 			padding: rem(48) rem(16)
 
 		+while-mob-xl
@@ -185,6 +184,9 @@ export default defineComponent({
 		width: 100%
 		height: 100%
 
+		+while-mob-xl
+			display: none
+
 	&__image
 		display: block
 		width: 100%
@@ -192,9 +194,6 @@ export default defineComponent({
 
 		object-fit: contain
 		object-position: bottom center
-
-		+while-mob-xl
-			display: none
 
 	&__anchor
 		position: absolute

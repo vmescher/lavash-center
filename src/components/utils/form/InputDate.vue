@@ -87,6 +87,11 @@ export default defineComponent({
 			},
 		},
 	},
+	mounted() {
+		this.$watch('modelValue', (value) => {
+			if (value === null) this.date = null;
+		})
+	},
 });
 </script>
 

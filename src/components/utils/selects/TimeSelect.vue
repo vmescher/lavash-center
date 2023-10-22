@@ -59,7 +59,7 @@ export default defineComponent({
 		},
 		optionsList() {
 			const options = [] as TimeSelectOption[];
-			for (let i = 9; i <= 20; i+=1) {
+			for (let i = 9; i <= 18; i+=1) {
 
 				const valueFirst = `${i}:00`.padStart(5, '0');
 				const valueSecond = `${i + 1}:00`.padStart(5, '0');

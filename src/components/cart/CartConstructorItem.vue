@@ -73,7 +73,7 @@ export default defineComponent({
 			<div class="cart-constructor__product">
 				<ProductSelect v-if="!productData.id" v-model="newProductId" :excluded-products="excludedProducts" :errors="errors" label="Наименование товара" placeholder="Не выбрано"/>
 				<div v-else class="cart-constructor-item">
-					<div class="cart-constructor-item__picture">
+					<div class="cart-constructor-item__picture" :class="{'cart-constructor-item__picture--empty' : imageLoadError || !productData.picture}">
 						<img v-if="!imageLoadError && productData.picture" class="cart-constructor-item__image" :src="productData.picture" :alt="`Фото ${productData.name || 'товара'}`" @error="imageErrorHandler">
 					</div>
 					<div class="cart-constructor-item__body">
@@ -144,12 +144,15 @@ export default defineComponent({
 		gap: rem(16)
 
 	&__picture
+		position: relative
+
 		size: rem(128)
 		padding: rem(16)
 		flex-shrink: 0
 
 		background-color: var(--color-neutral-fourth)
 		border-radius: var(--radius-picture)
+		color: var(--color-neutral-tertiary)
 
 		+until-laptop
 			size: rem(100)
@@ -158,6 +161,25 @@ export default defineComponent({
 		+until-tablet
 			size: rem(80)
 			padding: rem(6)
+
+		&--empty
+			&::before
+				content: ''
+				position: absolute
+				top: 50%
+				left: 0
+
+				width: 100%
+				height: 22.5%
+
+				background-color: currentColor
+
+				mask-image: url("@img/base-pattern.svg")
+				mask-repeat: repeat-x
+				mask-position: 6% 50%
+				mask-size: auto 100%
+
+				transform: translateY(-50%)
 
 	&__image
 		width: 100%

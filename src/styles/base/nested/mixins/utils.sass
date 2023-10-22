@@ -2,7 +2,7 @@
 
 /* Оформление горизонтального скроллбара */
 @mixin Hscroll()
-	scrollbar-color: var(--color-neutral-300) var(--color-primary-500)
+	scrollbar-color: var(--color-neutral-tertiary) var(--color-secondary)
 	scrollbar-width: thin
 
 	&::-webkit-scrollbar /* 1 - скроллбар */
@@ -13,12 +13,12 @@
 
 	&::-webkit-scrollbar-track /* 3 - трек */
 		border-radius: 2px
-		background: var(--color-neutral-300)
+		background: var(--color-neutral-tertiary)
 
 	&::-webkit-scrollbar-thumb /* 5 - ползунок */
-		background-color: var(--color-primary-500)
+		background-color: var(--color-secondary)
 		border-radius: 2px
-		border: 3px solid var(--color-primary-500)
+		border: 3px solid var(--color-secondary)
 
 /* Оформление вертикального скроллбара */
 @mixin Vscroll()

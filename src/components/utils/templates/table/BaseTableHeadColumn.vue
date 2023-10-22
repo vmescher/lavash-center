@@ -15,7 +15,7 @@ export default defineComponent({
 <style scoped lang="sass">
 .table-title
 	position: relative
-	padding: 0 rem(28) rem(30) 0
+	padding: 0 fluid(20, 28) fluid(24, 30) 0
 	margin: 0
 
 	font-size: var(--fontSizeP3)
@@ -26,12 +26,12 @@ export default defineComponent({
 	vertical-align: bottom
 
 	+until-tablet
-		padding: 0 rem(16) rem(18) 0
+		padding: 0 fluid(12, 16) fluid(14, 18) 0
 
 	&::after
 		content: ""
 		position: absolute
-		bottom: rem(18)
+		bottom: fluid(12, 18)
 		left: 0
 
 		height: 2px
@@ -41,7 +41,7 @@ export default defineComponent({
 		background-color: var(--color-primary)
 
 		+until-tablet
-			bottom: rem(8)
+			bottom: fluid(4, 8)
 
 	&:first-child
 		&:after

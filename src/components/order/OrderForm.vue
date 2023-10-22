@@ -45,7 +45,7 @@ export default defineComponent({
 				date: null as Date | null,
 				time: null as string | null,
 				address: null as string | null,
-			}
+			},
 		}
 	},
 	validations() {
@@ -74,12 +74,24 @@ export default defineComponent({
 			const deliveryData = this.getDeliveryType(this.deliveryTypeId);
 			return !!deliveryData && deliveryData.xmlId === 'pickup';
 		},
+		minDate() {
+			return this.isPickupSelected ? new Date() : new Date(new Date().setDate(new Date().getDate() + 1))
+		}
 	},
 	watch: {
 		'formData.date': {
 			handler() {
 				this.formData.time = null;
 			},
+		},
+		'isCourierSelected': {
+			handler(value) {
+				if (value) {
+					if (this.formData.date && this.formData.date <= this.minDate) {
+						this.formData.date = null
+					}
+				}
+			}
 		}
 	},
 	methods: {
@@ -119,7 +131,7 @@ export default defineComponent({
 					<AddressSelect id="order-address" v-model="formData.address" :errors="v$.formData.address.$errors" placeholder="Введите адрес" label="Адрес доставки"/>
 				</div>
 				<div class="form__input">
-					<InputDate id="order-date" v-model="formData.date" :errors="v$.formData.date.$errors" label="Дата" placeholder="ДД.ММ.ГГГГ" :min-date="new Date()"/>
+					<InputDate id="order-date" v-model="formData.date" :errors="v$.formData.date.$errors" label="Дата" placeholder="ДД.ММ.ГГГГ" :min-date="minDate"/>
 				</div>
 				<div v-if="isPickupSelected" class="form__input">
 					<TimeSelect id="order-time" v-model="formData.time" :errors="v$.formData.time.$errors" :disabled="!formData.date" :is-today="formData.date?.toLocaleDateString() === new Date().toLocaleDateString()"/>

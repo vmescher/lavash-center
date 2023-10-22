@@ -35,11 +35,20 @@ export default defineComponent({
 
 	vertical-align: top
 
+	+until-tablet
+		padding: fluid(12, 16) fluid(16, 20) fluid(12, 16) 0
+
 	&:first-child
 		padding-left: fluid(16, 24)
 
+		+until-tablet
+			padding-left: fluid(12, 16)
+
 	&:last-child
 		padding-right: fluid(16, 24)
+
+		+until-tablet
+			padding-right: fluid(12, 16)
 
 	&--adaptive
 		+until-tablet
@@ -48,6 +57,7 @@ export default defineComponent({
 			padding: 0
 
 			vertical-align: initial
+			text-align: right
 
 		&:first-child
 			+until-tablet

@@ -62,14 +62,27 @@ export default defineComponent({
 	methods: {
 		increment() {
 			if (this.value < this.max) {
-				this.$emit('increment', this.value + 1);
-				this.value += 1;
+				let newValue = this.value + 10;
+
+				if (newValue > this.max) {
+					newValue = this.max;
+				}
+
+				this.value = newValue;
+				this.$emit('increment', newValue);
 			}
 		},
 		decrement() {
 			if (this.value > this.min) {
-				this.$emit('decrement', this.value - 1);
-				this.value -= 1;
+
+				let newValue = this.value - 10;
+
+				if (newValue < this.min) {
+					newValue = this.min;
+				}
+
+				this.value = newValue;
+				this.$emit('decrement', newValue);
 			}
 		},
 		inputHandler(e: Event) {

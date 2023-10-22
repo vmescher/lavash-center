@@ -67,7 +67,7 @@ export default defineComponent({
 			<template v-if="orderData.deliveryTypeId === 1">
 				<BaseTableColumnText>Самовывоз</BaseTableColumnText>
 
-				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }}, {{ orderData.time }}</BaseTableColumnText>
+				<BaseTableColumnText no-wrap>{{ getFormattedDate(orderData.date) }},<br>{{ orderData.time }}</BaseTableColumnText>
 			</template>
 
 			<template v-else>

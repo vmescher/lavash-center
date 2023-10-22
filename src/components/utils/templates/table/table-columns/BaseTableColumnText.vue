@@ -50,8 +50,6 @@ export default defineComponent({
 	+until-tablet
 		font-size: var(--fontSizeP3)
 
-		text-align: right
-
 	&--grey
 		color: var(--color-neutral-secondary)
 

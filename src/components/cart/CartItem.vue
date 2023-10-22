@@ -58,7 +58,7 @@ export default defineComponent({
 
 <template>
 	<article class="cart-item" :class="`cart-item--theme-${theme}`">
-		<div class="cart-item__picture">
+		<div class="cart-item__picture" :class="{'cart-item__picture--empty' : imageLoadError || !productData.picture}">
 			<img v-if="!imageLoadError && productData.picture" class="cart-item__image" :src="productData.picture" :alt="`Фото ${productData.name}`" @error="imageErrorHandler">
 		</div>
 		<div class="cart-item__body">
@@ -115,12 +115,15 @@ export default defineComponent({
 				opacity: 1
 
 	&__picture
+		position: relative
+
 		size: rem(120)
 		padding: rem(8)
 		flex-shrink: 0
 
 		background-color: var(--color-neutral-primary)
 		border-radius: var(--radius-picture)
+		color: var(--color-neutral-tertiary)
 
 		+until-laptop
 			size: rem(100)
@@ -128,6 +131,25 @@ export default defineComponent({
 		+while-mob-xl
 			size: rem(80)
 			padding: rem(6)
+
+		&--empty
+			&::before
+				content: ''
+				position: absolute
+				top: 50%
+				left: 0
+
+				width: 100%
+				height: 22.5%
+
+				background-color: currentColor
+
+				mask-image: url("@img/base-pattern.svg")
+				mask-repeat: repeat-x
+				mask-position: 6% 50%
+				mask-size: auto 100%
+
+				transform: translateY(-50%)
 
 	&__image
 		width: 100%

@@ -25,9 +25,9 @@ export default defineComponent({
 				</div>
 
 				<div class="main-banner__content">
-					<h2 class="main-banner__title">
+					<h1 class="main-banner__title">
 						Мы готовим самые лучшие <br/>лаваши во вселенной!
-					</h2>
+					</h1>
 
 					<p class="main-banner__text">На протяжении 12&nbsp;лет предоставляем лаваши <br>более чем 200&nbsp;заведениям города.</p>
 

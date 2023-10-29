@@ -67,7 +67,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="sass">
-
 .table
 	display: grid
 	grid-template-columns: 100%
@@ -80,18 +79,18 @@ export default defineComponent({
 
 		& .table
 			&__wrapper
-				width: calc(100% + rem($containerPadding))
-				margin: 0 rem(-$containerPadding / 2)
-				padding: 0 rem($containerPadding / 2)
+				width: calc(100% + rem(120))
+				margin: 0 rem(-60)
+				padding: 0 rem(60)
 				overflow-x: auto
 				overflow-y: hidden
 
 				+hide-scroll
 
 				+until-laptop
-					width: calc(100% + rem($containerPaddingMobile))
-					margin: 0 rem(-$containerPaddingMobile / 2)
-					padding: 0 rem($containerPaddingMobile / 2)
+					width: calc(100% + rem(16))
+					margin: 0 rem(-8)
+					padding: 0 rem(8)
 
 	&--adaptive
 		& .table

@@ -29,7 +29,7 @@ function getParams(data: Record<string, unknown> | unknown[], parentKey = ''): P
 		} else if (isBoolean(value)) {
 			result.push([getKey(key, parentKey), encodeURIComponent(value ? 'Y' : 'N')]);
 		} else if (isDate(value)) {
-			result.push([getKey(key, parentKey), encodeURIComponent(value.toISOString())]);
+			result.push([getKey(key, parentKey), encodeURIComponent(value.toLocaleDateString())]);
 		} else if (isFile(value)) {
 			result.push([getKey(key, parentKey), value]);
 		} else if (!isNull(value) && !isUndefined(value)) {

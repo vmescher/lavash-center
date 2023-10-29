@@ -42,9 +42,13 @@ export const vitePluginDeploy = (options: DeployOptions): Plugin => {
 
 				try {
 					await client.connect(config().connect)
+
+					await client.rmdir(output, true); // true указывает на рекурсивное удаление
+
 					client.on("upload", (info) => {
 						console.log(`Uploaded ${info.source}`)
 					})
+
 					let rslt = await client.uploadDir(input, output, { useFastput: true })
 					return rslt
 				} catch (err) {

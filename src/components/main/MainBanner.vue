@@ -21,7 +21,7 @@ export default defineComponent({
 		<div class="main-banner__wrapper wrapper">
 			<div class="main-banner__body">
 				<div class="main-banner__bg">
-					<img class="main-banner__image" src="/img/main/bg-image.png" alt="Фон с лавашами">
+					<img class="main-banner__image" src="/img/main/bg-image.webp" alt="Фон с лавашами">
 				</div>
 
 				<div class="main-banner__content">

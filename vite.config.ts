@@ -23,7 +23,7 @@ export default defineConfig(({mode}) => {
 	let BASE_URL = '';
 
 	if (IS_PRODUCTION || IS_DEPLOY) {
-		BASE_URL = '/local/layout/dist/';
+		BASE_URL = '/local/templates/main/dist/';
 	}
 
 	return {
@@ -32,7 +32,7 @@ export default defineConfig(({mode}) => {
 			port: BASE_PORT,
 			proxy: {
 				'/api': {
-					target: 'https://vh74715.rdock.ru/',
+					target: 'https://lavash-center.ru/',
 					changeOrigin: true,
 					secure: false,
 					cookieDomainRewrite: {
@@ -40,7 +40,7 @@ export default defineConfig(({mode}) => {
 					},
 				},
 				'/upload': {
-					target: 'https://vh74715.rdock.ru/',
+					target: 'https://lavash-center.ru/',
 					changeOrigin: true,
 					secure: false,
 				}

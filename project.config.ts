@@ -11,10 +11,10 @@ const OUTPUT_DIR = resolve(__dirname, 'dist');
 const BASE_PORT = 8080;
 
 const FTP_OPTIONS = {
-	host: 'vh74715.rdock.ru',
-	user: 'vh74715',
-	password: 'NnCPhC4XwPXb',
-	serverPath: `/var/www/vh74715/data/www/vh74715.rdock.ru/local/layout/dist/`,
+	host: 'bx78413.rdock.ru',
+	user: 'bx78413',
+	password: 'sbe5SmDseB6E',
+	serverPath: `/var/www/bx78413/data/www/bx78413.rdock.ru/local/templates/main/dist/`,
 };
 
 export {SOURCE_DIR, OUTPUT_DIR, BASE_PORT, FTP_OPTIONS, PROJECT_NAME, PROJECT_TITLE};

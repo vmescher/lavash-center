@@ -1,4 +1,4 @@
 export type DocumentLinks = {
-	privacyPolicy: string,
-	processingPersonal: string;
+	'privacy-policy': string,
+	'processing-personal-data': string;
 }

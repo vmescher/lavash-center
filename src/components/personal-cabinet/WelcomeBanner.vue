@@ -1,8 +1,10 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
+import {useUsersStore} from "@scripts/hooks/stateHooks/useUsersStore";
 
 export default defineComponent({
 	name: "WelcomeBanner",
+	mixins: [useUsersStore]
 })
 </script>
 
@@ -12,7 +14,7 @@ export default defineComponent({
 			<div class="welcome-banner__body">
 				<div class="welcome-banner__content">
 					<h2 class="welcome-banner__title">
-						Добро пожаловать,<br/> Владислав
+						Добро пожаловать,<br/> {{ getUserData?.name || '' }}
 					</h2>
 				</div>
 			</div>

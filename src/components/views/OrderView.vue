@@ -12,8 +12,12 @@ export default defineComponent({
 	components: {ConfirmModal, OrderCheckout, SectionTitle, BackHeader},
 	mixins: [useBasketStore],
 	beforeRouteLeave() {
-		if (this.isFormSubmitted || !this.getBasket.length) {
+		if (this.isFormSubmitted) {
 			this.clearBasket();
+			return true;
+		}
+
+		if (!this.getBasket.length) {
 			return true;
 		}
 

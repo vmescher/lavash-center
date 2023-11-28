@@ -22,7 +22,10 @@ const useContentsStore = defineStore('contents', {
 				contentsApi
 					.readDocuments()
 					.then((response) => {
-						this.legalDocs = response.data;
+						this.legalDocs = {
+							privacyPolicy: response.data['privacy-policy'],
+							processingPersonal: response.data['processing-personal-data']
+						};
 						resolve(response.data);
 					})
 					.catch((error: AxiosError<ErrorResponse>) => {

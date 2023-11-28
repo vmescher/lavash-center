@@ -246,13 +246,13 @@ export default defineComponent({
 			& .cart-item
 				&__picture
 					size: rem(148)
-					padding: rem(24)
+					padding: rem(12)
 
 					background-color: var(--color-neutral-fourth)
 
 					+until-laptop
 						size: rem(128)
-						padding: rem(16)
+						padding: rem(8)
 
 					+while-mob-xl
 						size: rem(80)
@@ -290,13 +290,16 @@ export default defineComponent({
 			& .cart-item
 				&__picture
 					size: rem(128)
-					padding: rem(16)
 
 					background-color: var(--color-neutral-fourth)
 
 					+until-laptop
 						size: rem(100)
 						padding: rem(8)
+
+					+while-mob-xl
+						size: rem(80)
+						padding: rem(6)
 
 				&__name
 					font-size: var(--fontSizeP1)

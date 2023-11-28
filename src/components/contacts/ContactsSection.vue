@@ -31,9 +31,9 @@ export default defineComponent({
 				<IconSVG name="phone" class="link__icon"/>
 				+7 (995) 335-37-37
 			</a>
-			<a href="mailto:sako@gmail.com" class="contacts__contact link link--secondary" :class="viewportUntil('mobile-xl') ? 'link--size-medium' : 'link--size-big'">
+			<a href="mailto:lavashcenter74@mail.ru" class="contacts__contact link link--secondary" :class="viewportUntil('mobile-xl') ? 'link--size-medium' : 'link--size-big'">
 				<IconSVG name="mail" class="link__icon"/>
-				template@gmail.com
+		    lavashcenter74@mail.ru
 			</a>
 		</address>
 		<div class="contacts__map-wrapper">

@@ -26,10 +26,10 @@ export default defineComponent({
 
 				<div class="main-banner__content">
 					<h1 class="main-banner__title">
-						Мы готовим самые лучшие <br/>лаваши во вселенной!
+						Мы готовим лаваш с любовью <br> к деталям и традициям
 					</h1>
 
-					<p class="main-banner__text">На протяжении 12&nbsp;лет предоставляем лаваши <br>более чем 200&nbsp;заведениям города.</p>
+					<p class="main-banner__text">На протяжении 11&nbsp;лет предоставляем свежие лаваши <br>более чем 150&nbsp;заведениям города.</p>
 
 					<div class="main-banner__actions">
 						<a href="#products" class="main-banner__action btn btn--color-secondary" @click.prevent="scrollToCatalog">Смотреть товары</a>

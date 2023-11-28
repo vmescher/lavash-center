@@ -96,6 +96,8 @@ export default defineComponent({
 
 	&__body
 		padding: rem(32) 0
+		display: flex
+		flex-direction: column
 
 		background-color: var(--color-neutral-fourth)
 		border-radius: var(--radius-product)
@@ -104,13 +106,13 @@ export default defineComponent({
 		transition: background-color .3s ease
 
 		+while-mob-xl
-			padding: rem(24) 0
+			padding: rem(16) 0
 
 	&__picture
 		position: relative
 		z-index: 0
 
-		padding: rem(20) rem(56)
+		padding: rem(16) rem(32)
 		width: 100%
 
 		color: var(--color-neutral-primary)
@@ -118,7 +120,7 @@ export default defineComponent({
 		transition: color .3s ease
 
 		+while-mob-xl
-			padding: rem(16) rem(24)
+			padding: rem(8) rem(16)
 
 		&::before
 			content: ''
@@ -151,6 +153,7 @@ export default defineComponent({
 			visibility: hidden
 
 	&__content
+		flex: 1 1 auto
 		padding: rem(8) rem(32) rem(0)
 		display: flex
 		flex-direction: column
@@ -190,6 +193,8 @@ export default defineComponent({
 		text-align: center
 
 	&__price
+		margin-top: auto
+
 		font-family: var(--font-secondary)
 		font-size: var(--fontSizeH4)
 		font-weight: 700

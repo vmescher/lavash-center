@@ -4,11 +4,12 @@ import {RouteNames} from "@scripts/router/types";
 import IconSVG from "@components/utils/templates/ui/IconSVG.vue";
 import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
 import {ViewportNames} from "@scripts/hooks/useViewportHandler/types";
+import {useContentsStore} from "@scripts/hooks/stateHooks/useContentsStore";
 
 export default defineComponent({
 	name: "BaseFooter",
 	components: {IconSVG},
-	mixins: [useModalsStore],
+	mixins: [useModalsStore, useContentsStore],
 	setup() {
 		const viewportUntil = inject('viewportUntil') as (viewportName: ViewportNames) => boolean;
 
@@ -56,7 +57,7 @@ export default defineComponent({
 				</div>
 
 				<div class="footer__bottom">
-					<a href="#" target="_blank" class="footer__policy link link--secondary link--size-small">Политика конфиденциальности</a>
+					<a :href="getLegalDocs.privacyPolicy" target="_blank" class="footer__policy link link--secondary link--size-small">Политика конфиденциальности</a>
 
 					<span class="footer__copy">ИП Оганисян Т.А.</span>
 				</div>

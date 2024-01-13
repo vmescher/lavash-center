@@ -83,7 +83,7 @@ export default defineComponent({
 					@keydown.esc="hideModal">
 				<div class="modal-window__bg"></div>
 
-				<div class="modal-window__body wrapper" @click.self="hideModal">
+				<div class="modal-window__body wrapper" @mousedown.self="hideModal">
 					<slot :close="hideModal" :open="showModal"></slot>
 				</div>
 			</dialog>

@@ -46,6 +46,9 @@ export default defineComponent({
 					border-right: 2px solid transparent
 					border-radius: 0 var(--radius-picture) var(--radius-picture) 0
 
+				&:only-child
+					border-radius: var(--radius-picture)
+
 			+hover
 				&:deep(td)
 					border-color: var(--color-tertiary)
@@ -117,6 +120,10 @@ export default defineComponent({
 
 					&:before
 						border-radius: 0 var(--radius-divider) var(--radius-divider) 0
+
+				&:only-child
+					&:before
+						border-radius: var(--radius-divider)
 
 	&--adaptive
 		&.table-row

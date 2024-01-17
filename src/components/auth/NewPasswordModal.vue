@@ -30,7 +30,6 @@ export default defineComponent({
 	data() {
 		return {
 			formData: {
-				token: this.$route.query.passToken as string || '',
 				password: '',
 				confirmPassword: ''
 			}
@@ -68,6 +67,7 @@ export default defineComponent({
 				if (!result) return;
 
 				this.requestResetPassword({
+					token: String(this.$route.query.passToken) || '',
 					...this.formData,
 				}).then(() => {
 					this.openModal('new-password-notion');

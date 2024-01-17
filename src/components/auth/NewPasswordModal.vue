@@ -36,8 +36,10 @@ export default defineComponent({
 			}
 		}
 	},
-	mounted() {
-		this.checkShouldOpen();
+	created() {
+		this.$watch(() => this.$route.query, () => {
+			this.checkShouldOpen();
+		}, {immediate: true});
 	},
 	validations() {
 		return {

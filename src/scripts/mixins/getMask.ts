@@ -1,4 +1,4 @@
-import {decimalMask, integerMask, MaskType, phoneMask} from '@scripts/consts/masks';
+import {decimalMask, integerMask, MaskType, phoneMask, priceMask} from '@scripts/consts/masks';
 
 export const getMask = {
 	computed: {
@@ -11,6 +11,8 @@ export const getMask = {
 						return decimalMask;
 					case 'integerMask':
 						return integerMask;
+					case "priceMask":
+						return priceMask;
 					default:
 						return null;
 				}

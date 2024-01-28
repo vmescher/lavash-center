@@ -1,6 +1,31 @@
 import {MaskInputOptions, MaskOptions} from 'maska';
 
-type MaskType = 'phoneMask' | 'decimalMask' | 'integerMask';
+type MaskType = 'phoneMask' | 'decimalMask' | 'integerMask' | 'priceMask';
+
+const priceMask = {
+	mask: '0.99',
+	tokens: {
+		'0': {
+			pattern: /\d/,
+			multiple: true,
+		},
+		'9': {
+			pattern: /\d/,
+			optional: true,
+			multiple: true,
+		},
+	},
+	preProcess: (val: string) => val.replace(/[₽\s]/g, '').replace(/,/g, '.'),
+	postProcess: (val: string) => {
+		if (!val) return ''
+
+		return Intl.NumberFormat('ru-RU', {
+			style: 'currency',
+			currency: 'RUB',
+			minimumFractionDigits: 2,
+		}).format(Number(val))
+	}
+}
 
 const phoneMask: MaskInputOptions = {
 	mask: '+# (###) ###-##-##',
@@ -40,5 +65,5 @@ const integerMask: MaskOptions = {
 	},
 };
 
-export {phoneMask, decimalMask, integerMask};
+export {phoneMask, decimalMask, integerMask, priceMask};
 export type {MaskType};

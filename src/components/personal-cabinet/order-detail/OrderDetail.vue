@@ -6,11 +6,13 @@ import {RouteNames} from "@scripts/router/types";
 import {useOrdersStore} from "@scripts/hooks/stateHooks/useOrdersStore";
 import StatusToggler from "@components/utils/ui/StatusToggler.vue";
 import {Order} from "@scripts/api/orders/types";
+import {useModalsStore} from "@scripts/hooks/stateHooks/useModalsStore";
+import DownloadCheckModal from "@components/personal-cabinet/modals/DownloadCheckModal.vue";
 
 export default defineComponent({
 	name: "OrderDetail",
-	components: {StatusToggler, IconSVG},
-	mixins: [useUsersStore, useOrdersStore],
+	components: {DownloadCheckModal, StatusToggler, IconSVG},
+	mixins: [useUsersStore, useOrdersStore, useModalsStore],
 	props: {
 		viewMode: {
 			type: String as PropType<'viewing' | 'editing'>,
@@ -23,7 +25,7 @@ export default defineComponent({
 	},
 	emits: ['update:viewMode'],
 	setup(props) {
-		const orderData = props.newOrder ? null : inject<Order>('orderData');
+		const orderData = props.newOrder ? null : inject<Order>('orderData') as null | Order;
 		return {
 			RouteNames,
 			orderData
@@ -75,6 +77,14 @@ export default defineComponent({
 				</div>
 
 				<div v-if="viewMode !== 'editing' && isAdmin && !newOrder" class="order-detail__actions">
+					<template v-if="orderData">
+						<button class="btn" type="button" @click.prevent="openModal('download-check-modal')">
+							<span class="btn__text">Скачать накладную</span>
+							<IconSVG name="download" class="btn__icon"/>
+						</button>
+						<DownloadCheckModal :order-data="orderData"/>
+					</template>
+
 					<button class="btn btn--color-secondary" type="button" @click.prevent="$emit('update:viewMode', 'editing')">
 						<span class="btn__text">Редактировать заказ</span>
 						<IconSVG name="edit" class="btn__icon"/>

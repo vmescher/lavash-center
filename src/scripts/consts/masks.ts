@@ -12,19 +12,8 @@ const priceMask = {
 		'9': {
 			pattern: /\d/,
 			optional: true,
-			multiple: true,
 		},
 	},
-	preProcess: (val: string) => val.replace(/[₽\s]/g, '').replace(/,/g, '.'),
-	postProcess: (val: string) => {
-		if (!val) return ''
-
-		return Intl.NumberFormat('ru-RU', {
-			style: 'currency',
-			currency: 'RUB',
-			minimumFractionDigits: 2,
-		}).format(Number(val))
-	}
 }
 
 const phoneMask: MaskInputOptions = {

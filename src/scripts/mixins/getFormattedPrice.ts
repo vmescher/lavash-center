@@ -1,10 +1,10 @@
 export const getFormattedPrice = {
 	computed: {
 		getFormattedPrice() {
-			return (value: number): string => value.toLocaleString('ru-RU', {
+			return (value: number, minDigits = 0): string => value.toLocaleString('ru-RU', {
 				style: 'currency',
 				currency: 'RUB',
-				minimumFractionDigits: 0,
+				minimumFractionDigits: minDigits,
 				maximumFractionDigits: 2,
 			})
 		}

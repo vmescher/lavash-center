@@ -153,6 +153,7 @@ export default defineComponent({
 	&__actions
 		display: flex
 		align-items: center
+		flex-wrap: wrap
 		gap: rem(8)
 
 		&:not(:first-child)
